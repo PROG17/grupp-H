@@ -14,12 +14,14 @@ namespace Sudoku.Solver
             int[,] elements = new int[9, 9];
             int startIndex = 0;
 
+
+            //sparar string värde till 2D int array
             for (int i = 0; i < 9; i++)
             {
                 for (int j = 0; j < 9; j++)
                 {
+                    //converterar string till int
                     int convert = int.Parse(el.Substring(startIndex, 1));
-                    //int number = int.Parse(convert);
                     elements[i, j] = convert;
                     startIndex++;
                 }
