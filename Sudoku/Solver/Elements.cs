@@ -10,7 +10,7 @@ namespace Sudoku.Solver
     {
         public static void StringToInt()
         {
-            string el = "619030040270061008000047621486302079000014580031009060005720806320106057160400030";
+            string sudokuNumbers = "619030040270061008000047621486302079000014580031009060005720806320106057160400030";
             int[,] elements = new int[9, 9];
             int startIndex = 0;
 
@@ -21,7 +21,7 @@ namespace Sudoku.Solver
                 for (int j = 0; j < 9; j++)
                 {
                     //converterar string till int
-                    int convert = int.Parse(el.Substring(startIndex, 1));
+                    int convert = int.Parse(sudokuNumbers.Substring(startIndex, 1));
                     elements[i, j] = convert;
                     startIndex++;
                 }
