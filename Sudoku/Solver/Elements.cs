@@ -10,6 +10,7 @@ namespace Sudoku.Solver
     {
         public static void StringToInt()
         {
+            //81 elements
             string sudokuNumbers = "619030040270061008000047621486302079000014580031009060005720806320106057160400030";
             int[,] elements = new int[9, 9];
             int startIndex = 0;
