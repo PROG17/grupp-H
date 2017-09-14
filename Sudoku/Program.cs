@@ -20,7 +20,9 @@ namespace Sudoku
                                                     "002609500" +
                                                     "800203009" +
                                                     "005010300");
-            Console.WriteLine(sudoku.boardToText());
+            sudoku.Solve();
+
+            Console.WriteLine(sudoku.BoardAsText());
             Console.ReadLine();
         }
     }
