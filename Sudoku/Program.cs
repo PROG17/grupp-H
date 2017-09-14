@@ -1,4 +1,4 @@
-﻿using Sudoku.Solver;
+﻿using Sudoku.Sudoku;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +11,16 @@ namespace Sudoku
     {
         static void Main(string[] args)
         {
-            Elements.StringToInt();
+           Sudoku.Sudoku sudoku = new Sudoku.Sudoku("003020600" +
+                                                    "900305001" +
+                                                    "001806400" +
+                                                    "008102900" +
+                                                    "700000008" +
+                                                    "006708200" +
+                                                    "002609500" +
+                                                    "800203009" +
+                                                    "005010300");
+            Console.WriteLine(sudoku.boardToText());
             Console.ReadLine();
         }
     }
