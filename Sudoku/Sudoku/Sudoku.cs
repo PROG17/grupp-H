@@ -8,6 +8,7 @@ namespace Sudoku.Sudoku
 {
     class Sudoku
     {
+        // En array som håller sudokut
         private string[] Board { get; set; }
 
         public Sudoku(string boardString)
