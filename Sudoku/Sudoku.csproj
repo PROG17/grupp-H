@@ -42,12 +42,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Board\Board.cs" />
-    <Compile Include="Board\Box.cs" />
-    <Compile Include="Board\Tile.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Solver\Elements.cs" />
+    <Compile Include="Sudoku\Elements.cs" />
+    <Compile Include="Sudoku\Sudoku.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
