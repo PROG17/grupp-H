@@ -10,6 +10,8 @@ namespace Sudoku.Sudoku
 {
     class Sudoku
     {
+        Random rnd = new Random();
+
         private string[] Board { get; set; }
 
         public Sudoku(string boardString)
@@ -117,6 +119,7 @@ namespace Sudoku.Sudoku
             }
             return "0";
         }
+
         private bool ContainsNumber(int x, int y, Zones zone, int numberToLookFor)
         {
             var numbers = GetListOfNumbers(x, y, zone);

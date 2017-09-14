@@ -23,6 +23,14 @@ namespace Sudoku
             sudoku.Solve();
 
             Console.WriteLine(sudoku.BoardAsText());
+
+
+            Sudoku.Sudoku gameMedium = new Sudoku.Sudoku("830060050905000040401020300100002070050040020090800005009050701020000604010090082");
+
+
+
+            Console.WriteLine(gameMedium.BoardAsText());
+
             Console.ReadLine();
         }
     }
