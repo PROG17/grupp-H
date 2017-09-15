@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -19,7 +20,13 @@ namespace Sudoku
                                                     "002609500" +
                                                     "800203009" +
                                                     "005010300");
-            sudoku.SolveAndShow();
+            //sudoku.SolveAndShow();
+
+            SudokuCreator create = new SudokuCreator();
+
+            Sudoku game = new Sudoku(create.Sudoku);
+
+            Console.WriteLine(game.BoardAsText());
 
             //Console.WriteLine(sudoku.BoardAsText());
 

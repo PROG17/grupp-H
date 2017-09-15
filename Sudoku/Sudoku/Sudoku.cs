@@ -108,7 +108,6 @@ namespace Sudoku
 
             while (boardString.Contains('0'))
             {
-                
                 for (int y = 0; y < Board.Length; y++)
                 {
                     for (int x = 0; x < Board[y].Length; x++)
@@ -119,9 +118,9 @@ namespace Sudoku
                             charList[x] = Convert.ToChar(GetRightNumber(x, y, ref isChanged));
                             Board[y] = string.Join("", charList);
 
-                            Thread.Sleep(50);
                             Console.Clear();
                             Console.WriteLine(BoardAsText());
+                            Thread.Sleep(50);
                         }
                     }
 
@@ -156,6 +155,7 @@ namespace Sudoku
             if (possibleNumbers.Count == 1)
             {
                 isChanged = true;
+                
                 return possibleNumbers[0].ToString();
             }
             return "0";
