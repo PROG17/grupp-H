@@ -1,5 +1,4 @@
-﻿using Sudoku.Sudoku;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,7 +10,7 @@ namespace Sudoku
     {
         static void Main(string[] args)
         {
-           Sudoku.Sudoku sudoku = new Sudoku.Sudoku("003020600" +
+           Sudoku sudoku = new Sudoku("003020600" +
                                                     "900305001" +
                                                     "001806400" +
                                                     "008102900" +
@@ -25,7 +24,7 @@ namespace Sudoku
             Console.WriteLine(sudoku.BoardAsText());
 
 
-            Sudoku.Sudoku gameMedium = new Sudoku.Sudoku("830060050905000040401020300100002070050040020090800005009050701020000604010090082");
+            Sudoku gameMedium = new Sudoku("830060050905000040401020300100002070050040020090800005009050701020000604010090082");
 
 
 

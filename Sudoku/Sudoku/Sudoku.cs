@@ -6,7 +6,7 @@ using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Sudoku.Sudoku
+namespace Sudoku
 {
     class Sudoku
     {
@@ -153,13 +153,14 @@ namespace Sudoku.Sudoku
         // Hjälpmetod till GetListOfNumbers som returnerar en sträng av alla nummer i den aktuella boxen
         private string GetBox(int x, int y)
         {
+            // Hämtar Y-värdena
             List<int> yList = new List<int>();
             if (y < 3)
-                yList.AddRange(new[] { 0, 1, 2 });
+                yList.AddRange(new int[] { 0, 1, 2 });
             else if (y < 6)
-                yList.AddRange(new[] { 3, 4, 5 });
+                yList.AddRange(new int[] { 3, 4, 5 });
             else if (y < 9)
-                yList.AddRange(new[] { 6, 7, 8 });
+                yList.AddRange(new int[] { 6, 7, 8 });
 
             if (x < 3)
             {
