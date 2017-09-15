@@ -11,10 +11,10 @@ namespace Sudoku
 {
     class Sudoku
     {
-        Random rnd = new Random();
-
+        // Auto-Property för själva brädan
         private string[] Board { get; set; }
 
+        // Konstruktor - delar upp in-strängen i 9 delar och sparar som array ("Board")
         public Sudoku(string boardString)
         {
             List<string> boardList = new List<string>();
@@ -25,7 +25,7 @@ namespace Sudoku
             Board = boardList.ToArray();
         }
 
-        // Skriver ut brädan i konsollen
+        // Skickar en sträng som används för att skriva ut brädan i aktuellt skick
         public string BoardAsText()
         {
             var graphicBoard = Board.ToArray();
@@ -67,6 +67,7 @@ namespace Sudoku
             return sb.ToString();
         }
 
+        // Metod som anropas i Main för att lösa sudokut. Skriver ut "Går ej at lösa" om inte alla nollar kunde ändras
         public void Solve()
         {
             string boardString = string.Join("", Board);
@@ -82,6 +83,7 @@ namespace Sudoku
                         if (Board[y][x] == '0')
                         {
                             var charList = Board[y].ToCharArray();
+
                             charList[x] = Convert.ToChar(GetRightNumber(x, y, ref isChanged));
                             Board[y] = string.Join("", charList);
                         }
@@ -99,6 +101,7 @@ namespace Sudoku
             }
         }
 
+        // Metod som kan anropas i Main som löser sudokut (om möjligt) och skriver ut en varje steg i en "animation" 
         public void SolveAndShow()
         {
             string boardString = string.Join("", Board);
@@ -138,6 +141,9 @@ namespace Sudoku
             Console.WriteLine(BoardAsText());
         }
 
+        // Kollar varje tom plats in sudokut och provar vilka siffro 1-9 som
+        // skulle fungera där. Om det bara finns et möjligt alternativ så
+        // returneras den siffran. Annars returneras "0".
         private string GetRightNumber(int x, int y, ref bool isChanged)
         {
             List<int> possibleNumbers = new List<int>();
@@ -161,6 +167,9 @@ namespace Sudoku
             return "0";
         }
 
+        // Metod för att kolla om den zon ("zone") som skickats in innehåller den 
+        // aktuella siffran ("numberToLookFor") som skickats in. Returnerar ett bool-värde
+        // Metoden används i GetRightNumber för att kolla möjliga korrekta siffror.
         private bool ContainsNumber(int x, int y, Zones zone, int numberToLookFor)
         {
             var numbers = GetListOfNumbers(x, y, zone);
@@ -168,6 +177,7 @@ namespace Sudoku
             return isNumberPresent;
         }
 
+        // Metod som returnerar en sträng med alla siffror i aktuell zon ("Zone").
         private string GetListOfNumbers(int x, int y, Zones zone)
         {
             StringBuilder sb = new StringBuilder();
@@ -194,7 +204,8 @@ namespace Sudoku
         // Hjälpmetod till GetListOfNumbers som returnerar en sträng av alla nummer i den aktuella boxen
         private string GetBox(int x, int y)
         {
-            // Hämtar Y-värdena
+            // Hämtar de samlade Y-värdena för en box-rad
+            // beroende på vilken box-rad "y" är i
             List<int> yList = new List<int>();
             if (y < 3)
                 yList.AddRange(new int[] { 0, 1, 2 });
@@ -203,6 +214,9 @@ namespace Sudoku
             else if (y < 9)
                 yList.AddRange(new int[] { 6, 7, 8 });
 
+            // Hämtar och returnerar en sträng med boxens alla
+            // värden beroende på vilken box-kolumn och box-rad
+            // "x" är i
             if (x < 3)
             {
                 return GetBoxValues(0, yList);
@@ -233,7 +247,8 @@ namespace Sudoku
             return sb.ToString();
         }
 
-
+        // Enums för att ange zoner som ska kollas av. 
+        // Används i GetRightNumber och dess anropade metoder
         private enum Zones
         {
             Horizontal,
