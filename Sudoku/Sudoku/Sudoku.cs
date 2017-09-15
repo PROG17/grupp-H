@@ -4,6 +4,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Sudoku
@@ -96,6 +97,46 @@ namespace Sudoku
                 }
                 isChanged = false;
             }
+        }
+
+        public void SolveAndShow()
+        {
+            string boardString = string.Join("", Board);
+            bool isChanged = false;
+
+            Console.WriteLine(BoardAsText());
+
+            while (boardString.Contains('0'))
+            {
+                
+                for (int y = 0; y < Board.Length; y++)
+                {
+                    for (int x = 0; x < Board[y].Length; x++)
+                    {
+                        if (Board[y][x] == '0')
+                        {
+                            var charList = Board[y].ToCharArray();
+                            charList[x] = Convert.ToChar(GetRightNumber(x, y, ref isChanged));
+                            Board[y] = string.Join("", charList);
+
+                            Thread.Sleep(50);
+                            Console.Clear();
+                            Console.WriteLine(BoardAsText());
+                        }
+                    }
+
+                }
+                boardString = string.Join("", Board);
+
+                if (!isChanged)
+                {
+                    Console.WriteLine("Sudokun gick inte att lösa");
+                    break;
+                }
+                isChanged = false;
+            }
+            Console.Clear();
+            Console.WriteLine(BoardAsText());
         }
 
         private string GetRightNumber(int x, int y, ref bool isChanged)

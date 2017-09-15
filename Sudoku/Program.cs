@@ -19,16 +19,16 @@ namespace Sudoku
                                                     "002609500" +
                                                     "800203009" +
                                                     "005010300");
-            sudoku.Solve();
+            sudoku.SolveAndShow();
 
-            Console.WriteLine(sudoku.BoardAsText());
-
-
-            Sudoku gameMedium = new Sudoku("830060050905000040401020300100002070050040020090800005009050701020000604010090082");
+            //Console.WriteLine(sudoku.BoardAsText());
 
 
+            //Sudoku gameMedium = new Sudoku("830060050905000040401020300100002070050040020090800005009050701020000604010090082");
 
-            Console.WriteLine(gameMedium.BoardAsText());
+
+
+            //Console.WriteLine(gameMedium.BoardAsText());
 
             Console.ReadLine();
         }
