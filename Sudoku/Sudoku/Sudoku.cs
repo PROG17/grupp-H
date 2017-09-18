@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Emit;
 using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices.ComTypes;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading;
@@ -130,6 +132,7 @@ namespace Sudoku
                 if (!isChanged)
                 {
                     Console.WriteLine("Sudokun gick inte att lösa");
+                    
                     break;
                 }
                 isChanged = false;
@@ -231,6 +234,107 @@ namespace Sudoku
             }
 
             return sb.ToString();
+        }
+        //Metod för att skapa en lista med kandidater för varje cell i sudokun.
+        private List<int> GetPossibleNumbers(int x, int y)
+        {
+            List<int> possibleNumbersTemp = new List<int>();
+            for (int i = 1; i < 9; i++)
+            {
+                bool isNumberInBox = ContainsNumber(x, y, Zones.Box, i);
+                bool isNumberInHorizontal = ContainsNumber(x, y, Zones.Horizontal, i);
+                bool isNumberInVertical = ContainsNumber(x, y, Zones.Vertical, i);
+
+                if (!isNumberInBox && !isNumberInHorizontal && !isNumberInVertical)
+                {
+                    possibleNumbersTemp.Add(i);
+                }
+            }
+            return possibleNumbersTemp;
+        }
+
+        //Om första solven misslyckas att lösa tar recursiveSolve över. 
+        //Hittar första cellen med minst möjliga alternativ och gissar på det första. Hoppar till nästa
+        //och upprepar tills sudokun löser sig eller det blir en konflikt. 
+        public void RecursiveSolve()
+        {
+           List<List<List<int>>> possibleNumbers = new List<List<List<int>>>();
+            for (int i = 0; i < 9; i++)
+            {
+                possibleNumbers.Add(new List<List<int>>());
+                
+            }
+        
+           List<int> subList = new List<int>();
+            Console.WriteLine(BoardAsText());
+
+            for (int y = 0; y < Board.Length; y++)
+            {
+                for (int x = 0; x < Board[y].Length;x++)
+                {
+                    if (Board[y][x] == '0')
+                    {
+                        subList = GetPossibleNumbers(x, y);
+                        possibleNumbers[y].Add(subList);
+                    }
+                    else
+                    {
+                        possibleNumbers[y].Add(new List<int>());
+                    }
+                    
+                }
+            }
+            RecursiveSolver(possibleNumbers);
+
+
+        }
+
+        public void RecursiveSolver(List<List<List<int>>> possibleNumbers)
+        {
+            string recursiveBoardString = Board.ToString();
+            string[] recursiveBoardArr = Board.ToArray();
+
+            while (recursiveBoardString.Contains('0'))
+            {
+                
+                for (int y = 0; y < recursiveBoardArr.Length; y++)
+                {
+                    
+                    for (int x = 0; x < recursiveBoardArr[y].Length; x++)
+                    {
+                        
+                        if (recursiveBoardArr[x][y] == '0')
+                        {
+                            recursiveBoardArr[y] = possibleNumbers[1].ToString();
+                        }
+                        else
+                        {
+                            Console.WriteLine("Test");
+                        }
+                    }
+                }
+            }
+
+        }
+        public int[] FindLowestValue(List<List<List<int>>> possibleList)
+        {
+            int[] indexCounter = new int[2];
+            int counter = 8;
+            
+            for (int y = 0; y < possibleList.Count; y++)
+            {
+                for (int x = 0; x < possibleList[y].Count; x++)
+                {
+                    if (counter>possibleList[y][x].Count)
+                    {
+                        counter = possibleList[y][x].Count;
+                        indexCounter[0] = y;
+                        indexCounter[1] = x;
+                        
+                    }
+                }
+            }
+            return indexCounter;
         }
 
 

@@ -11,31 +11,33 @@ namespace Sudoku
     {
         static void Main(string[] args)
         {
-           Sudoku sudoku = new Sudoku("003020600" +
-                                                    "900305001" +
-                                                    "001806400" +
-                                                    "008102900" +
-                                                    "700000008" +
-                                                    "006708200" +
-                                                    "002609500" +
-                                                    "800203009" +
-                                                    "005010300");
+           //Sudoku sudoku = new Sudoku("003020600" +
+           //                                         "900305001" +
+           //                                         "001806400" +
+           //                                         "008102900" +
+           //                                         "700000008" +
+           //                                         "006708200" +
+           //                                         "002609500" +
+           //                                         "800203009" +
+           //                                         "005010300");
             //sudoku.SolveAndShow();
 
-            SudokuCreator create = new SudokuCreator();
+            //SudokuCreator create = new SudokuCreator();
 
-            Sudoku game = new Sudoku(create.Sudoku);
+            //Sudoku game = new Sudoku(create.Sudoku);
 
-            Console.WriteLine(game.BoardAsText());
+            //Console.WriteLine(game.BoardAsText());
 
             //Console.WriteLine(sudoku.BoardAsText());
 
 
-            //Sudoku gameMedium = new Sudoku("830060050905000040401020300100002070050040020090800005009050701020000604010090082");
+            Sudoku gameMedium = new Sudoku("830060050905000040401020300100002070050040020090800005009050701020000604010090082");
 
 
 
-            //Console.WriteLine(gameMedium.BoardAsText());
+            Console.WriteLine(gameMedium.BoardAsText());
+            
+            gameMedium.SolveAndShow();
 
             Console.ReadLine();
         }
