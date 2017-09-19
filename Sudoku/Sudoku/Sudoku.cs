@@ -22,7 +22,7 @@ namespace Sudoku
             public int Y { get; set; }
         }
 
-        private List<Guess> Guesses { get; set; } = new List<Guess>();
+        private Stack<Guess> Guesses { get; set; } = new Stack<Guess>();
 
         private char[,] Board { get; set; } = new char[9, 9];
 
