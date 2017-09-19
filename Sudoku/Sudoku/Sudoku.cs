@@ -150,7 +150,7 @@ namespace Sudoku
                             if (isChanged)
                             {
                                 changeCounter++;
-                                
+
                             }
                             board[y, x] = c;
                         }
@@ -282,44 +282,22 @@ namespace Sudoku
         // Hjälpmetod till GetListOfNumbers som returnerar en sträng av alla nummer i den aktuella boxen
         private string GetBox(char[,] board, int x, int y)
         {
-            // Hämtar Y-värdena
-            List<int> yList = new List<int>();
-            if (y < 3)
-                yList.AddRange(new int[] { 0, 1, 2 });
-            else if (y < 6)
-                yList.AddRange(new int[] { 3, 4, 5 });
-            else if (y < 9)
-                yList.AddRange(new int[] { 6, 7, 8 });
-
-            if (x < 3)
-            {
-                return GetBoxValues(board, 0, yList);
-            }
-            else if (x < 6)
-            {
-                return GetBoxValues(board, 3, yList);
-            }
-            else
-            {
-                return GetBoxValues(board, 6, yList);
-            }
-        }
-
-        // Hjälpmetod till GetBox som hämtar en sträng baserad på aktuellt x och y värde
-        private string GetBoxValues(char[,] board, int x, List<int> yList)
-        {
             StringBuilder sb = new StringBuilder();
+            int upperRow = (y / 3) * 3;
+            int leftCol = (x / 3) * 3;
 
-            for (int i = 0; i < 3; i++)
+            // Gå igenom boxens tre rader och kolumner
+            for (int boxRow = 0; boxRow < 3; boxRow++)
             {
-                for (int j = 0; j < 3; j++)
+                for (int boxCol = 0; boxCol < 3; boxCol++)
                 {
-                    sb.Append(board[yList[i], j + x]);
+                    sb.Append(board[upperRow + boxRow, leftCol + boxCol]);
                 }
-            }
 
+            }
             return sb.ToString();
         }
+
         //Metod för att skapa en lista med kandidater för varje cell i sudokun.
         private Stack<int> GetPossibleNumbers(char[,] board, int x, int y)
         {
@@ -479,38 +457,38 @@ namespace Sudoku
 
 
 
-        public int[] GetWorkingNumbers(char[,] board, List<List<Stack<int>>> possibleNumbers)
-        {
-            for (int y = 0; y < 9; y++)
+        //public int[] GetWorkingNumbers(char[,] board, List<List<Stack<int>>> possibleNumbers)
+        //{
+        //    for (int y = 0; y < 9; y++)
+        //    {
+        //        for (int x = 0; x < 9; x++)
+        //        {
+        //            try
+        //        }
+        //    }
+        //    }
+
+
+
+
+
+
+
+            private List<List<Stack<int>>> GetNewListOfPossibleNumbers(char[,] board)
             {
-                for (int x = 0; x < 9; x++)
+                List<List<Stack<int>>> possibleNumbersOfBoard = new List<List<Stack<int>>>();
+                for (int y = 0; y < 9; y++)
                 {
-                    try
+                    possibleNumbersOfBoard.Add(new List<Stack<int>>());
+                    for (int x = 0; x < 9; x++)
+                    {
+                        possibleNumbersOfBoard[y].Add(GetPossibleNumbers(board, x, y));
+                    }
                 }
+
+
+                return possibleNumbersOfBoard;
             }
-        }
-
-
-
-
-
-
-
-        private List<List<Stack<int>>> GetNewListOfPossibleNumbers(char[,] board)
-        {
-            List<List<Stack<int>>> possibleNumbersOfBoard = new List<List<Stack<int>>>();
-            for (int y = 0; y < 9; y++)
-            {
-                possibleNumbersOfBoard.Add(new List<Stack<int>>());
-                for (int x = 0; x < 9; x++)
-                {
-                    possibleNumbersOfBoard[y].Add(GetPossibleNumbers(board, x, y));
-                }
-            }
-
-
-            return possibleNumbersOfBoard;
-        }
 
         private enum Zones
         {
