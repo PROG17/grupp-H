@@ -37,7 +37,9 @@ namespace Sudoku
 
             Console.WriteLine(gameMedium.BoardAsText());
             
-            gameMedium.SolveAndShow();
+            gameMedium.TrySolve(gameMedium.Board);
+
+            Console.WriteLine(gameMedium.BoardAsText());
 
             Console.ReadLine();
         }
