@@ -22,7 +22,7 @@ namespace Sudoku
             public int Y { get; set; }
         }
 
-        private List<Guess> Guesses { get; set; } = new List<Guess>();
+        private Stack<Guess> Guesses { get; set; } = new Stack<Guess>();
 
         private char[,] Board { get; set; } = new char[9, 9];
 
@@ -318,34 +318,7 @@ namespace Sudoku
             {
                 for (int x = 0; x < 9; x++)
                 {
-                    recursiveBoardArr[y,x] = Board[]
-                }
-            }
-
-
-
-
-
-            //char[] recursiveBoardArr = Board.ToArray();
-
-            while (recursiveBoardString.Contains('0'))
-            {
-
-                for (int y = 0; y < recursiveBoardArr.Length; y++)
-                {
-
-                    for (int x = 0; x < recursiveBoardArr[y].Length; x++)
-                    {
-
-                        if (recursiveBoardArr[x,y] == '0')
-                        {
-                            recursiveBoardArr[y] = possibleNumbers[1].ToString();
-                        }
-                        else
-                        {
-                            Console.WriteLine("Test");
-                        }
-                    }
+                    recursiveBoardArr[y, x] = Board[y, x];
                 }
             }
 
