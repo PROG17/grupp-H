@@ -15,7 +15,16 @@ namespace Sudoku
     {
         Random rnd = new Random();
 
-        private string[] Board { get; set; }
+        private class Guess
+        {
+            public List<int> NumbersGuessed { get; set; }
+            public int X { get; set; }
+            public int Y { get; set; }
+        }
+
+        private List<Guess> Guesses { get; set; } = new List<Guess>();
+
+        private char[,] Board { get; set; } = new char[9, 9];
 
         public Sudoku(string boardString)
         {
@@ -24,38 +33,51 @@ namespace Sudoku
             {
                 boardList.Add(boardString.Substring(i, 9));
             }
-            Board = boardList.ToArray();
+
+            for (int y = 0; y < boardList.Count; y++)
+            {
+                for (int x = 0; x < boardList[y].Length; x++)
+                {
+                    Board[y, x] = boardList[y][x];
+                }
+            }
         }
 
         // Skriver ut brädan i konsollen
         public string BoardAsText()
         {
-            var graphicBoard = Board.ToArray();
+            var graphicBoard = Board;
 
             StringBuilder sb = new StringBuilder();
 
-            for (int i = 0; i < graphicBoard.Length; i++)
+            for (int y = 0; y < 9; y++)
             {
-                graphicBoard[i] = graphicBoard[i].Replace("0", " ");
+                for (int x = 0; x < 9; x++)
+                {
+                    if (graphicBoard[y, x] == '0')
+                    {
+                        graphicBoard[y, x] = ' ';
+                    }
+                }
             }
 
             sb.AppendLine("\n\t-------------------------------");
-            for (int i = 0; i < graphicBoard.Length; i++)
+            for (int y = 0; y < 9; y++)
             {
                 sb.Append("\t");
-                for (int j = 0; j < graphicBoard[i].Length; j++)
+                for (int x = 0; x < 9; x++)
                 {
-                    if (j == 2 || j == 5)
+                    if (x == 2 || x == 5)
                     {
-                        sb.Append(graphicBoard[i][j] + "  |  ");
+                        sb.Append(graphicBoard[y, x] + "  |  ");
                     }
                     else
                     {
-                        sb.Append(graphicBoard[i][j] + "  ");
+                        sb.Append(graphicBoard[y, x] + "  ");
                     }
 
                 }
-                if (i == 2 || i == 5)
+                if (y == 2 || y == 5)
                 {
                     sb.AppendLine("\n\t-------------------------------");
                 }
@@ -77,15 +99,13 @@ namespace Sudoku
 
             while (boardString.Contains('0'))
             {
-                for (int y = 0; y < Board.Length; y++)
+                for (int y = 0; y < 9; y++)
                 {
-                    for (int x = 0; x < Board[y].Length; x++)
+                    for (int x = 0; x < 9; x++)
                     {
-                        if (Board[y][x] == '0')
+                        if (Board[y, x] == '0')
                         {
-                            var charList = Board[y].ToCharArray();
-                            charList[x] = Convert.ToChar(GetRightNumber(x, y, ref isChanged));
-                            Board[y] = string.Join("", charList);
+                            Board[y, x] = GetRightNumber(x, y, ref isChanged);
                         }
                     }
 
@@ -110,15 +130,13 @@ namespace Sudoku
 
             while (boardString.Contains('0'))
             {
-                for (int y = 0; y < Board.Length; y++)
+                for (int y = 0; y < 9; y++)
                 {
-                    for (int x = 0; x < Board[y].Length; x++)
+                    for (int x = 0; x < 9; x++)
                     {
-                        if (Board[y][x] == '0')
+                        if (Board[y, x] == '0')
                         {
-                            var charList = Board[y].ToCharArray();
-                            charList[x] = Convert.ToChar(GetRightNumber(x, y, ref isChanged));
-                            Board[y] = string.Join("", charList);
+                            Board[y, x] = GetRightNumber(x, y, ref isChanged);
 
                             Console.Clear();
                             Console.WriteLine(BoardAsText());
@@ -132,7 +150,7 @@ namespace Sudoku
                 if (!isChanged)
                 {
                     Console.WriteLine("Sudokun gick inte att lösa");
-                    
+
                     break;
                 }
                 isChanged = false;
@@ -141,7 +159,7 @@ namespace Sudoku
             Console.WriteLine(BoardAsText());
         }
 
-        private string GetRightNumber(int x, int y, ref bool isChanged)
+        private char GetRightNumber(int x, int y, ref bool isChanged)
         {
             List<int> possibleNumbers = new List<int>();
             for (int i = 1; i <= 9; i++)
@@ -158,10 +176,10 @@ namespace Sudoku
             if (possibleNumbers.Count == 1)
             {
                 isChanged = true;
-                
-                return possibleNumbers[0].ToString();
+
+                return Convert.ToChar(possibleNumbers[0]);
             }
-            return "0";
+            return '0';
         }
 
         private bool ContainsNumber(int x, int y, Zones zone, int numberToLookFor)
@@ -182,13 +200,16 @@ namespace Sudoku
 
             else if (zone == Zones.Horizontal)
             {
-                sb.Append(Board[y]);
+                for (int xPos = 0; xPos < 9; xPos++)
+                {
+                    sb.Append(Board[y, xPos]);
+                }
             }
             else
             {
-                for (int i = 0; i < Board.Length; i++)
+                for (int yPos = 0; yPos < Board.Length; yPos++)
                 {
-                    sb.Append(Board[i][x]);
+                    sb.Append(Board[yPos, x]);
                 }
             }
             return sb.ToString();
@@ -229,7 +250,7 @@ namespace Sudoku
             {
                 for (int j = 0; j < 3; j++)
                 {
-                    sb.Append(Board[yList[i]][j + x]);
+                    sb.Append(Board[yList[i],j + x]);
                 }
             }
 
@@ -258,21 +279,21 @@ namespace Sudoku
         //och upprepar tills sudokun löser sig eller det blir en konflikt. 
         public void RecursiveSolve()
         {
-           List<List<List<int>>> possibleNumbers = new List<List<List<int>>>();
+            List<List<List<int>>> possibleNumbers = new List<List<List<int>>>();
             for (int i = 0; i < 9; i++)
             {
                 possibleNumbers.Add(new List<List<int>>());
-                
+
             }
-        
-           List<int> subList = new List<int>();
+
+            List<int> subList = new List<int>();
             Console.WriteLine(BoardAsText());
 
             for (int y = 0; y < Board.Length; y++)
             {
-                for (int x = 0; x < Board[y].Length;x++)
+                for (int x = 0; x < 9; x++)
                 {
-                    if (Board[y][x] == '0')
+                    if (Board[y,x] == '0')
                     {
                         subList = GetPossibleNumbers(x, y);
                         possibleNumbers[y].Add(subList);
@@ -281,7 +302,7 @@ namespace Sudoku
                     {
                         possibleNumbers[y].Add(new List<int>());
                     }
-                    
+
                 }
             }
             RecursiveSolver(possibleNumbers);
@@ -292,18 +313,31 @@ namespace Sudoku
         public void RecursiveSolver(List<List<List<int>>> possibleNumbers)
         {
             string recursiveBoardString = Board.ToString();
-            string[] recursiveBoardArr = Board.ToArray();
+            char[,] recursiveBoardArr = new char[9, 9];
+            for (int y = 0; y < 9; y++)
+            {
+                for (int x = 0; x < 9; x++)
+                {
+                    recursiveBoardArr[y,x] = Board[]
+                }
+            }
+
+
+
+
+
+            //char[] recursiveBoardArr = Board.ToArray();
 
             while (recursiveBoardString.Contains('0'))
             {
-                
+
                 for (int y = 0; y < recursiveBoardArr.Length; y++)
                 {
-                    
+
                     for (int x = 0; x < recursiveBoardArr[y].Length; x++)
                     {
-                        
-                        if (recursiveBoardArr[x][y] == '0')
+
+                        if (recursiveBoardArr[x,y] == '0')
                         {
                             recursiveBoardArr[y] = possibleNumbers[1].ToString();
                         }
@@ -320,23 +354,55 @@ namespace Sudoku
         {
             int[] indexCounter = new int[2];
             int counter = 8;
-            
+
             for (int y = 0; y < possibleList.Count; y++)
             {
                 for (int x = 0; x < possibleList[y].Count; x++)
                 {
-                    if (counter>possibleList[y][x].Count)
+                    if (counter > possibleList[y][x].Count)
                     {
                         counter = possibleList[y][x].Count;
                         indexCounter[0] = y;
                         indexCounter[1] = x;
-                        
+
                     }
                 }
             }
             return indexCounter;
         }
 
+        //public bool Guesser(/*Kopia av brädan*/)
+        //{
+
+        //    List<List<List<int>>> possibleNumbersOfBoard = new List<List<List<int>>>();
+        //    for (int i = 0; i < 9; i++)
+        //    {
+        //        possibleNumbersOfBoard.Add(new List<List<int>>());
+        //        for (int j = 0; j < 9; j++)
+        //        {
+        //            possibleNumbersOfBoard[i].Add(new List<int>());
+        //        }
+        //    }
+        //    for (int y = 0; y < 9; y++)
+        //    {
+        //        for (int x = 0; x < 9; x++)
+        //        {
+        //            possibleNumbersOfBoard[x].Add(GetPossibleNumbers(x, y));
+        //        }
+        //    }
+
+        //    // Hittar cell med lägst alternativ, jämför med de sparade också
+
+        //    // Gissa en av siffrorna
+
+        //    // Spara index och gissad siffra
+
+        //    // Prova lösa sudokut, returnera true eller false
+
+        //    // Är sudokut löst så returnas true i annat fall anropas Guess rekursivt
+
+
+        //}
 
         private enum Zones
         {
