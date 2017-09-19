@@ -35,11 +35,11 @@ namespace Sudoku
 
 
 
-            Console.WriteLine(gameMedium.BoardAsText());
+            Console.WriteLine(gameMedium.BoardAsText(gameMedium.Board));
             
-            gameMedium.TrySolve(gameMedium.Board);
+            gameMedium.Solve();
 
-            Console.WriteLine(gameMedium.BoardAsText());
+            Console.WriteLine(gameMedium.BoardAsText(Sudoku.TryBoard));
 
             Console.ReadLine();
         }
