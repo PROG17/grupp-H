@@ -12,7 +12,7 @@ namespace Sudoku
         private char[,] _board = new char[9, 9];
 
         // Property för _board
-        public char[,] Board
+        private char[,] Board
         {
             get { return _board; }
             set { _board = value; }
@@ -323,7 +323,7 @@ namespace Sudoku
 
         // Returnerar en int-array av koordinater för platsen i possibleList som har lägst
         // antal möjliga nummer. Om alla är 0 returneras 0,0
-        public int[] FindLowestValue(List<List<List<int>>> possibleList)
+        private int[] FindLowestValue(List<List<List<int>>> possibleList)
         {
             int[] indexCounter = new int[2];
             int counter = 8;
