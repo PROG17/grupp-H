@@ -1,54 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection.Emit;
-using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices.ComTypes;
-using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace Sudoku
 {
     class Sudoku
     {
-        Random rnd = new Random();
+        // Fält för brädan
+        private char[,] _board = new char[9, 9];
 
-        private class Guess
+        // Property för _board
+        public char[,] Board
         {
-            public List<int> NumbersGuessed { get; set; }
-            public int X { get; set; }
-            public int Y { get; set; }
-
-            public Guess(int y, int x, int guess)
-            {
-                NumbersGuessed = new List<int>();
-                X = x;
-                Y = y;
-                NumbersGuessed.Add(guess);
-            }
+            get { return _board; }
+            set { _board = value; }
         }
 
-        private class Cell
-        {
-            public char value;
-            public int X { get; set; }
-            public int Y { get; set; }
-
-            public Cell(int y, int x, char value)
-            {
-                this.value = value;
-
-            }
-        }
-
-        private Stack<Guess> Guesses { get; set; } = new Stack<Guess>();
-
-        public char[,] Board { get; set; } = new char[9, 9];
-
-        public static char[,] TryBoard { get; set; }
-
+        // Konstruktor som tar in en sträng och omvandlar till 2D-chararray
         public Sudoku(string boardString)
         {
             List<string> boardList = new List<string>();
@@ -66,9 +36,30 @@ namespace Sudoku
             }
         }
 
+        // Konstruktor som tar in en 2D-chararray och skapar en "djup"-kopia
+        // Används endast inom klassen i rekursion, därmed "private"
+        private Sudoku(char[,] boardChar)
+        {
+            Board = MakeDeepCopyOfBoard(boardChar);
+        }
 
-        // Skriver ut brädan i konsollen
-        public string BoardAsText(char[,] board)
+        // Returnerar en "djup" kopia av "board"
+        private static char[,] MakeDeepCopyOfBoard(char[,] board)
+        {
+            var tryBoard = new char[9, 9];
+            for (int yPos = 0; yPos < 9; yPos++)
+            {
+                for (int xPos = 0; xPos < 9; xPos++)
+                {
+                    tryBoard[yPos, xPos] = board[yPos, xPos];
+                }
+            }
+
+            return tryBoard;
+        }
+
+        // Returnerar en sträng av brädan för att se ut som ett sudoku-bräde
+        public string BoardAsText()
         {
             var graphicBoard = new char[9, 9];
 
@@ -76,7 +67,7 @@ namespace Sudoku
             {
                 for (int x = 0; x < 9; x++)
                 {
-                    graphicBoard[y, x] = board[y, x];
+                    graphicBoard[y, x] = Board[y, x];
                 }
             }
 
@@ -124,18 +115,72 @@ namespace Sudoku
             return sb.ToString();
         }
 
-        public void Solve()
+        // Den metod som anropas för att lösa sudokut utanför klassen.
+        // Skriver ut felmeddelande om TrySolve returnerar false.
+        // Tar en bool som argument beroende på om man vill se pusslet lösas
+        // i en animation eller ej. Är som default false.
+        public void Solve(bool isDebug = false)
         {
-            if (!TrySolve(Board))
+            bool isSolved = TrySolve(isDebug, ref _board);
+
+            if (!isSolved)
             {
-                Guesser(Board);
+                Console.WriteLine("Sudokut är inte lösbart...");
+                Console.ReadLine();
             }
         }
 
-        private bool TrySolve(char[,] board)
+        // TrySolve returnerar sant eller falskt beroende på om sudokut är löst eller ej.
+        // Anropas rekursivt i sig själv efter att den försökt lösa sudokut logiskt och
+        // provat en "gissning". "headBoard" är den ytterta brädan som skickas in med ref 
+        // för att se till att brädan som lösts allra sista ledet följer med tillbaka.
+        // Om "isDebug" är true så skrivs datorns pysslande ut i en animation
+        private bool TrySolve(bool isDebug, ref char[,] headBoard)
         {
-            //string boardString = string.Join("", board);
+            if (!LogicalSolve(Board, isDebug))
+            {
+                bool isSuccess = false;
+                var possibleNumbers = GetNewListOfPossibleNumbers(Board);
+                var coordinates = FindLowestValue(possibleNumbers);
+                int y = coordinates[0];
+                int x = coordinates[1];
 
+                for (int i = 0; i < possibleNumbers[y][x].Count; i++)
+                {
+                    Board[y, x] = possibleNumbers[y][x][i].ToString()[0];
+
+                    if (isDebug)
+                    {
+                        PrintBoardProgress();
+                    }
+
+                    Sudoku tryGame = new Sudoku(Board);
+
+                    isSuccess = tryGame.TrySolve(isDebug, ref headBoard);
+
+                    if (isSuccess)
+                    {
+                        break;
+                    }
+                }
+                return isSuccess;
+            }
+            headBoard = _board;
+            return true;
+        }
+
+        // Metod som skriver ut brädan under pysslandets gång
+        private void PrintBoardProgress()
+        {
+            Console.WriteLine(BoardAsText());
+            Thread.Sleep(8);
+            Console.Clear();
+        }
+
+        // Löser alla celler som endast har ett alternativ, returnerar
+        // bool beronde på om sudokut lösts eller ej. Anropas i TrySolve.
+        private bool LogicalSolve(char[,] board, bool isDebug)
+        {
             bool isChanged = false;
             int changeCounter = 0;
             while (GetStringRepOfBoard(board).Contains('0'))
@@ -146,22 +191,23 @@ namespace Sudoku
                     {
                         if (board[y, x] == '0')
                         {
-                            var c = GetRightNumber(board, x, y, ref isChanged);
+                            var c = GetSingleRightNumber(board, x, y, ref isChanged);
                             if (isChanged)
                             {
                                 changeCounter++;
 
                             }
                             board[y, x] = c;
+
+                            if (isDebug)
+                            {
+                                PrintBoardProgress();
+                            }
                         }
                     }
-
                 }
-
                 if (changeCounter == 0)
                 {
-                    Console.WriteLine(BoardAsText(board));
-                    Console.ReadLine();
                     return false;
                 }
 
@@ -171,6 +217,9 @@ namespace Sudoku
             return true;
         }
 
+        // Returnerar en sträng av brädan. Används tillsammans med
+        // String-metoden Contains() för att kolla om det finns nollor
+        // kvar i brädan. Anropas i LogicalSolve
         private static string GetStringRepOfBoard(char[,] board)
         {
             StringBuilder sb = new StringBuilder();
@@ -185,58 +234,12 @@ namespace Sudoku
             return sb.ToString();
         }
 
-        //public void SolveAndShow()
-        //{
-        //    string boardString = string.Join("", Board);
-        //    bool isChanged = false;
-
-        //    Console.WriteLine(BoardAsText());
-
-        //    while (boardString.Contains('0'))
-        //    {
-        //        for (int y = 0; y < 9; y++)
-        //        {
-        //            for (int x = 0; x < 9; x++)
-        //            {
-        //                if (Board[y, x] == '0')
-        //                {
-        //                    Board[y, x] = GetRightNumber(Board, x, y, ref isChanged);
-
-        //                    Console.Clear();
-        //                    Console.WriteLine(BoardAsText());
-        //                    Thread.Sleep(50);
-        //                }
-        //            }
-
-        //        }
-        //        boardString = string.Join("", Board);
-
-        //        if (!isChanged)
-        //        {
-        //            Console.WriteLine("Sudokun gick inte att lösa");
-
-        //            break;
-        //        }
-        //        isChanged = false;
-        //    }
-        //    Console.Clear();
-        //    Console.WriteLine(BoardAsText());
-        //}
-
-        private char GetRightNumber(char[,] board, int x, int y, ref bool isChanged)
+        // Returnerar en siffra (som char). Om koordinaten i brädan endast har ett alternativ så är
+        // det den som returneras, annars returneras 0
+        private char GetSingleRightNumber(char[,] board, int x, int y, ref bool isChanged)
         {
-            List<int> possibleNumbers = new List<int>();
-            for (int i = 1; i <= 9; i++)
-            {
-                bool isNumberInBox = ContainsNumber(board, x, y, Zones.Box, i);
-                bool isNumberInHorizontal = ContainsNumber(board, x, y, Zones.Horizontal, i);
-                bool isNumberInVertical = ContainsNumber(board, x, y, Zones.Vertical, i);
+            var possibleNumbers = GetPossibleNumbers(board, x, y);
 
-                if (!isNumberInBox && !isNumberInHorizontal && !isNumberInVertical)
-                {
-                    possibleNumbers.Add(i);
-                }
-            }
             if (possibleNumbers.Count == 1)
             {
                 isChanged = true;
@@ -246,6 +249,25 @@ namespace Sudoku
             return '0';
         }
 
+        // Returnerar en lista med alla möjliga rätta nummer för den koordinat i brädan som skickats in
+        private List<int> GetPossibleNumbers(char[,] board, int x, int y)
+        {
+            List<int> possibleNumbersTemp = new List<int>();
+            for (int i = 1; i <= 9; i++)
+            {
+                bool isNumberInBox = ContainsNumber(board, x, y, Zones.Box, i);
+                bool isNumberInHorizontal = ContainsNumber(board, x, y, Zones.Horizontal, i);
+                bool isNumberInVertical = ContainsNumber(board, x, y, Zones.Vertical, i);
+
+                if (!isNumberInBox && !isNumberInHorizontal && !isNumberInVertical)
+                {
+                    possibleNumbersTemp.Add(i);
+                }
+            }
+            return possibleNumbersTemp;
+        }
+
+        // Metod som kollar om aktuell siffran ("numberToLookFor") finns i aktuella zonen (Zone)
         private bool ContainsNumber(char[,] board, int x, int y, Zones zone, int numberToLookFor)
         {
             var numbers = GetListOfNumbers(board, x, y, zone);
@@ -253,6 +275,7 @@ namespace Sudoku
             return isNumberPresent;
         }
 
+        // Returnerar en sträng med de aktuella nummer i zonen "zone" som skickas in
         private string GetListOfNumbers(char[,] board, int x, int y, Zones zone)
         {
             StringBuilder sb = new StringBuilder();
@@ -298,80 +321,9 @@ namespace Sudoku
             return sb.ToString();
         }
 
-        //Metod för att skapa en lista med kandidater för varje cell i sudokun.
-        private Stack<int> GetPossibleNumbers(char[,] board, int x, int y)
-        {
-            Stack<int> possibleNumbersTemp = new Stack<int>();
-            for (int i = 1; i <= 9; i++)
-            {
-                bool isNumberInBox = ContainsNumber(board, x, y, Zones.Box, i);
-                bool isNumberInHorizontal = ContainsNumber(board, x, y, Zones.Horizontal, i);
-                bool isNumberInVertical = ContainsNumber(board, x, y, Zones.Vertical, i);
-
-                if (!isNumberInBox && !isNumberInHorizontal && !isNumberInVertical)
-                {
-                    if (board[y, x] == '0')
-                    {
-                        possibleNumbersTemp.Push(i);
-                    }
-                }
-            }
-            return possibleNumbersTemp;
-        }
-
-        //Om första solven misslyckas att lösa tar recursiveSolve över. 
-        //Hittar första cellen med minst möjliga alternativ och gissar på det första. Hoppar till nästa
-        //och upprepar tills sudokun löser sig eller det blir en konflikt. 
-        //public void RecursiveSolve()
-        //{
-        //    List<List<Stack<int>>> possibleNumbers = new List<List<Stack<int>>>();
-        //    for (int i = 0; i < 9; i++)
-        //    {
-        //        possibleNumbers.Add(new List<Stack<int>>());
-
-        //    }
-
-        //    Stack<int> subList = new Stack<int>();
-        //    Console.WriteLine(BoardAsText());
-
-        //    for (int y = 0; y < Board.Length; y++)
-        //    {
-        //        for (int x = 0; x < 9; x++)
-        //        {
-        //            if (Board[y,x] == '0')
-        //            {
-        //                subList = GetPossibleNumbers(board, x, y);
-        //                possibleNumbers[y].Add(subList);
-        //            }
-        //            else
-        //            {
-        //                possibleNumbers[y].Add(new Stack<int>());
-        //            }
-
-        //        }
-        //    }
-        //    RecursiveSolver(possibleNumbers);
-
-
-        //}
-
-        //public void RecursiveSolver(List<List<Stack<int>>> possibleNumbers)
-        //{
-        //    string recursiveBoardString = Board.ToString();
-        //    char[,] recursiveBoardArr = new char[9, 9];
-        //    for (int y = 0; y < 9; y++)
-        //    {
-        //        for (int x = 0; x < 9; x++)
-        //        {
-        //            recursiveBoardArr[y, x] = Board[y, x];
-        //        }
-        //    }
-
-        //}
-
         // Returnerar en int-array av koordinater för platsen i possibleList som har lägst
         // antal möjliga nummer. Om alla är 0 returneras 0,0
-        public int[] FindLowestValue(List<List<Stack<int>>> possibleList)
+        public int[] FindLowestValue(List<List<List<int>>> possibleList)
         {
             int[] indexCounter = new int[2];
             int counter = 8;
@@ -387,7 +339,6 @@ namespace Sudoku
                             counter = possibleList[y][x].Count;
                             indexCounter[0] = y;
                             indexCounter[1] = x;
-
                         }
                     }
 
@@ -396,100 +347,31 @@ namespace Sudoku
             return indexCounter;
         }
 
-        public bool Guesser(char[,] board)
+        // Returnerar nästad lista där yttersta är "y"-koordinat, mellersta är "x"-koordinat
+        // och inre listan är antal möjliga nummer per koordinat
+        private List<List<List<int>>> GetNewListOfPossibleNumbers(char[,] board)
         {
-            // Ny board för att inte pajja gamla board
-            var tryBoard = new char[9, 9];
-            for (int yPos = 0; yPos < 9; yPos++)
+            List<List<List<int>>> possibleNumbersOfBoard = new List<List<List<int>>>();
+            for (int y = 0; y < 9; y++)
             {
-                for (int xPos = 0; xPos < 9; xPos++)
+                possibleNumbersOfBoard.Add(new List<List<int>>());
+                for (int x = 0; x < 9; x++)
                 {
-                    tryBoard[yPos, xPos] = board[yPos, xPos];
-                }
-            }
-
-            // Hämtar lista av möjliga rätta svar för varje rad och kolumn
-            // möjliga nummer returneras som Stack<int> (List<List<Stack<int>>>)
-            var possibleNumbers = GetNewListOfPossibleNumbers(tryBoard);
-
-            // Hämtar koordinaterna från en av de rutor med lägst alternativ
-            var coordinatesOfLowest = FindLowestValue(possibleNumbers);
-
-            // För att göra det mer lättläst så läggs koordinaterna i nya variabler
-            int x = coordinatesOfLowest[1];
-            int y = coordinatesOfLowest[0];
-
-            // Om alla nummer används och fortfarande inte löst
-            if (possibleNumbers[y][x].Count != 0)
-            {
-                // Här gissas det översta numret i Stack-listan
-                tryBoard[y, x] = possibleNumbers[y][x].Peek().ToString()[0];
-                // Spara index och gissad siffra
-                Guesses.Push(new Guess(y, x, possibleNumbers[y][x].Pop()));
-            }
-            else
-            {
-                return false;
-            }
-
-            // Prova lösa sudokut, returnera true eller false
-            bool isSolved = TrySolve(tryBoard);
-
-            // Är sudokut löst så returnas true i annat fall anropas Guess rekursivt
-            if (!isSolved)
-            {
-                bool isGuessRight = Guesser(tryBoard);
-
-                if (!isGuessRight)
-                {
-                    tryBoard[y, x] = '0';
-                    Guesser(tryBoard);
-                }
-                else
-                {
-                    return true;
-                }
-            }
-
-            return false;
-
-        }
-
-
-
-        //public int[] GetWorkingNumbers(char[,] board, List<List<Stack<int>>> possibleNumbers)
-        //{
-        //    for (int y = 0; y < 9; y++)
-        //    {
-        //        for (int x = 0; x < 9; x++)
-        //        {
-        //            try
-        //        }
-        //    }
-        //    }
-
-
-
-
-
-
-
-            private List<List<Stack<int>>> GetNewListOfPossibleNumbers(char[,] board)
-            {
-                List<List<Stack<int>>> possibleNumbersOfBoard = new List<List<Stack<int>>>();
-                for (int y = 0; y < 9; y++)
-                {
-                    possibleNumbersOfBoard.Add(new List<Stack<int>>());
-                    for (int x = 0; x < 9; x++)
+                    if (board[y, x] == '0')
                     {
                         possibleNumbersOfBoard[y].Add(GetPossibleNumbers(board, x, y));
                     }
+                    else
+                    {
+                        possibleNumbersOfBoard[y].Add(new List<int>());
+                    }
                 }
-
-
-                return possibleNumbersOfBoard;
             }
 
+            return possibleNumbersOfBoard;
+        }
+
+        // Enum som representerar de zoner som kollas i GetPossibleNumbers
         private enum Zones
         {
             Horizontal,
