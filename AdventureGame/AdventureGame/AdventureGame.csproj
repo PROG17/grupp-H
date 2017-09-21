@@ -42,6 +42,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AdventureData\Directions.cs" />
     <Compile Include="AdventureData\Exit.cs" />
     <Compile Include="AdventureData\Game.cs" />
     <Compile Include="AdventureData\GameObject.cs" />

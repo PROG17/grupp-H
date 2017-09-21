@@ -8,11 +8,11 @@ namespace AdventureGame.AdventureData
 {
     class GameObjectsHolder : GameObject
     {
-        public List<Object> Objects { get; set; }
+        public Dictionary<string, Object> Objects { get; set; }
 
         public GameObjectsHolder()
         {
-            Objects = new List<Object>();
+            Objects = new Dictionary<string, Object>();
         }
     }
 }

@@ -8,5 +8,6 @@ namespace AdventureGame.AdventureData
 {
     class Room : GameObjectsHolder
     {
+        public bool IsEndPoint { get; set; }
     }
 }
