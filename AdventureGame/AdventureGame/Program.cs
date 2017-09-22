@@ -46,18 +46,18 @@ namespace AdventureGame
 
                 if (split.Length == 1)
                 {
-                    firstWord = split[0];
+                    firstWord = split[0].ToLower();
                 }
                 else if (split.Length == 2)
                 {
-                    firstWord = split[0];
-                    secondWord = split[1];
+                    firstWord = split[0].ToLower();
+                    secondWord = split[1].ToLower();
                 }
                 else
                 {
-                    firstWord = split[0];
-                    secondWord = split[1];
-                    thirdWord = split[2];
+                    firstWord = split[0].ToLower();
+                    secondWord = split[1].ToLower();
+                    thirdWord = split[2].ToLower();
                 }
 
                 if (!Action.TryParse(firstWord, true, out Action action))
@@ -100,8 +100,9 @@ namespace AdventureGame
 
                         if (split.Length == 3)
                         {
-                            if (player.Objects.TryGetValue(secondWord, out GameObject obj1) && 
-                                currentRoom.Objects.TryGetValue(thirdWord, out GameObject obj2))
+                            bool hasOject1 = player.Objects.TryGetValue(secondWord, out GameObject obj1);
+                            bool hasObject2 = currentRoom.Objects.TryGetValue(thirdWord, out GameObject obj2);
+                            if (hasOject1 && hasObject2)
                             {
 
                                 Act.Use(player, obj1, obj2);

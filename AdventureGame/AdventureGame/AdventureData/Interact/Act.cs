@@ -10,6 +10,7 @@ namespace AdventureGame.AdventureData.Interact
         public static void Get(Player player, GameObject obj)
         {
             player.Objects.Add(obj.Name, obj as Object);
+            player.PlayerLocation.Objects.Remove(obj.Name);
         }
 
         public static void Drop(Player player, Object obj, Room room)
@@ -35,7 +36,10 @@ namespace AdventureGame.AdventureData.Interact
 
             if (obj1.CanUseWith == obj2.Name)
             {
-                obj1 = obj2.ObjectTransformed;
+                player.PlayerLocation.Objects.Remove(obj2.Name);
+                player.PlayerLocation.Objects.Add(obj2.Name.ToLower(), obj2.ObjectTransformed);
+
+                
 
                 if (obj2 is Exit)
                 {

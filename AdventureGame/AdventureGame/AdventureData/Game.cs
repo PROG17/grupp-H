@@ -44,7 +44,7 @@ namespace AdventureGame.AdventureData
             };
             var tunna = new GameObjectContainer
             {
-                Name = "Stor Tunna",
+                Name = "tunna",
                 Description = "Stor tunna i trä och gjutjärn. Tunnan går inte att öppna utan något verktyg...",
                 CanUseWith = "HAMMARE",
                 ObjectTransformed = trasigTunna,
@@ -84,13 +84,13 @@ namespace AdventureGame.AdventureData
             };
 
             Player.PlayerLocation = start;
-            tunna.Objects.Add(nyckel.Name.ToUpper(), nyckel);
-            start.Objects.Add(dorr.Name.ToUpper(), dorr);
-            start.Objects.Add(tunna.Name.ToUpper(), tunna);
-            start.Objects.Add(hammer.Name.ToUpper(), hammer);
-            //start.Objects.Add(nyckel.Name.ToUpper(), nyckel);
-            //tunna.Objects.Add(nyckel.Name.ToUpper(), nyckel);
-            start.Exits.Add(dorr.Name.ToUpper(), dorr);
+            tunna.Objects.Add(nyckel.Name.ToLower(), nyckel);
+            start.Objects.Add(dorr.Name.ToLower(), dorr);
+            start.Objects.Add(tunna.Name.ToLower(), tunna);
+            start.Objects.Add(hammer.Name.ToLower(), hammer);
+            //start.Objects.Add(nyckel.Name.ToLower(), nyckel);
+            //tunna.Objects.Add(nyckel.Name.ToLower(), nyckel);
+            start.Exits.Add(dorr.Name.ToLower(), dorr);
             Rooms.Add("start", start);
             Rooms.Add("end", end);
             
