@@ -10,6 +10,6 @@ namespace AdventureGame.AdventureData
     {
         public string CanUseWith { get; set; }
         public Object ObjectTransformed { get; set; }
-        public Directions Direction { get; set; }
+        
     }
 }

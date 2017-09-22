@@ -11,7 +11,7 @@ namespace AdventureGame.AdventureData
         public new Dictionary<String, GameObjectsHolder> Objects { get; set; }
         public string CanUseWith { get; set; }
         public GameObjectContainer ObjectTransformed { get; set; }
-        public Directions Direction { get; set; }
+        
 
         public GameObjectContainer()
         {

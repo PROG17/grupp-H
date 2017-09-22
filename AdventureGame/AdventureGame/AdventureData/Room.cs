@@ -34,11 +34,11 @@ namespace AdventureGame.AdventureData
 
         public bool TryFindObjectInDirection(Room room, Directions key, out GameObject objects)
         {
-            foreach (var obj in room.Objects)
+            foreach (var obj in room.Objects )
             {
-                if (obj.Value is Object)
+                if (obj.Value is GameObject)
                 {
-                    if ((obj.Value as Object).Direction == key)
+                    if ((obj.Value as GameObject).Direction == key)
                     {
                         objects = obj.Value;
                         return true;
@@ -53,7 +53,7 @@ namespace AdventureGame.AdventureData
                         objects = obj.Value;
                         return true;
                     }
-                    
+                    continue;
 
                 }
                 
