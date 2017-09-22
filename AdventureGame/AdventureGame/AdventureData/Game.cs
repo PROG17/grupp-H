@@ -46,15 +46,33 @@ namespace AdventureGame.AdventureData
             {
                 Name = "tunna",
                 Description = "Stor tunna i trä och gjutjärn. Tunnan går inte att öppna utan något verktyg...",
-                CanUseWith = "HAMMARE",
+                CanUseWith = "Hammare",
                 ObjectTransformed = trasigTunna,
                 DirectionalPosition = Directions.syd
                 
                 
             };
+            var trasigBokhylla = new GameObjectContainer
+            {
+                Name = "Spillrorna efter en bokhylla",
+                Description = "En hög av träflisor och böcker.",
+                DirectionalPosition = Directions.väst,
+                ObjectTransformed = null
+                
+            };
+           
             
             
+            var bokhylla = new GameObjectContainer
+            {
+                Name = "bokhylla",
+                Description = "Gammal bokhylla. Ingen av böckerna ser intressanta ut",
+                CanUseWith = "HAMMARE",
+                ObjectTransformed = trasigBokhylla,
+                DirectionalPosition = Directions.väst
 
+
+            };
             var dorr = new Exit
             {
                 Name = "dörr",
@@ -88,8 +106,7 @@ namespace AdventureGame.AdventureData
             start.Objects.Add(dorr.Name.ToLower(), dorr);
             start.Objects.Add(tunna.Name.ToLower(), tunna);
             start.Objects.Add(hammer.Name.ToLower(), hammer);
-            //start.Objects.Add(nyckel.Name.ToLower(), nyckel);
-            //tunna.Objects.Add(nyckel.Name.ToLower(), nyckel);
+            start.Objects.Add(bokhylla.Name.ToUpper(), bokhylla);
             start.Exits.Add(dorr.Name.ToLower(), dorr);
             Rooms.Add("start", start);
             Rooms.Add("end", end);

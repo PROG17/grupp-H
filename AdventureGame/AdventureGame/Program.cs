@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,6 +24,7 @@ namespace AdventureGame
             while (true)
             {
                 Console.WriteLine(game.Player.PlayerLocation.Description);
+               
                 Console.Write("Vad vill du göra? ");
                 Console.WriteLine();
                 string input = Console.ReadLine();
@@ -44,6 +46,8 @@ namespace AdventureGame
                 string secondWord = "";
                 string thirdWord = "";
 
+                //detta går att göra om till en for loop tänker jag. 
+                //När vi flyttar detta till egna metoder tycker jag vi gör detta
                 if (split.Length == 1)
                 {
                     firstWord = split[0].ToLower();
@@ -253,6 +257,7 @@ namespace AdventureGame
                 //        Act.Go(game.Player, game.Player.PlayerLocation, Directions.North);
                 //    }
                 //}
+                
                 if (input.ToUpper() == "HJÄLP")
                 {
                     Console.WriteLine("\n[GÅ]+[NORR|SYD|ÖST|VÄST]" +
@@ -266,6 +271,15 @@ namespace AdventureGame
                                       "\n[ANVÄND] + [<FÖREMÅL>] + [PÅ] + [<FÖREMÅL> | <UTGÅNG>]" +
                                       "\n\tAnvänder föremål på annat föremål/utgång\n");
                 }
+            }
+        }
+
+        public void Contents(Dictionary<string, GameObject> gameobjectdictDictionary)
+        {
+            Console.WriteLine("I rummet finns även");
+            foreach (KeyValuePair<string, GameObject> t in gameobjectdictDictionary)
+            {
+                Console.WriteLine(gameobjectdictDictionary.Keys);
             }
         }
     }
