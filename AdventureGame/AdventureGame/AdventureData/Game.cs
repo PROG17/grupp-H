@@ -39,14 +39,16 @@ namespace AdventureGame.AdventureData
             {
                 Name = "Spillrorna efter en stor tunna",
                 Description = "Trasig tunna, träflisor och gjutjärnsringar. Kanske ligger det något bland spillrorna",
+                DirectionalPosition =  Directions.syd,
                 ObjectTransformed = null
             };
             var tunna = new GameObjectContainer
             {
-                Name = "Stor Tunna",
+                Name = "tunna",
                 Description = "Stor tunna i trä och gjutjärn. Tunnan går inte att öppna utan något verktyg...",
+                CanUseWith = "HAMMARE",
                 ObjectTransformed = trasigTunna,
-                Direction = Directions.syd
+                DirectionalPosition = Directions.syd
                 
                 
             };
@@ -55,11 +57,11 @@ namespace AdventureGame.AdventureData
 
             var dorr = new Exit
             {
-                Name = "Stor dörr",
+                Name = "dörr",
                 Description = "Stor trädörr",
                 GoesTo = end,
                 IsLocked = true,
-                InDirection = Directions.Norr,
+                DirectionalPosition = Directions.Norr,
 
             };
 
@@ -68,16 +70,27 @@ namespace AdventureGame.AdventureData
                 Name = "nyckel",
                 Description = "En stor rostig nyckel",
                 CanUseWith = dorr.Name,
-                Direction = Directions.Öst,
+                DirectionalPosition = Directions.syd,
+                ObjectTransformed = null
+            };
+
+            var hammer = new Object
+            {
+                Name = "hammare",
+                Description = "en robust hammare",
+                CanUseWith = tunna.Name,
+                DirectionalPosition = Directions.väst,
                 ObjectTransformed = null
             };
 
             Player.PlayerLocation = start;
-            start.Objects.Add(dorr.Name.ToUpper(), dorr);
-            start.Objects.Add(tunna.Name.ToUpper(), tunna);
-            start.Objects.Add(nyckel.Name.ToUpper(), nyckel);
-            //tunna.Objects.Add(nyckel.Name.ToUpper(), nyckel);
-            start.Exits.Add(dorr.Name.ToUpper(), dorr);
+            tunna.Objects.Add(nyckel.Name.ToLower(), nyckel);
+            start.Objects.Add(dorr.Name.ToLower(), dorr);
+            start.Objects.Add(tunna.Name.ToLower(), tunna);
+            start.Objects.Add(hammer.Name.ToLower(), hammer);
+            //start.Objects.Add(nyckel.Name.ToLower(), nyckel);
+            //tunna.Objects.Add(nyckel.Name.ToLower(), nyckel);
+            start.Exits.Add(dorr.Name.ToLower(), dorr);
             Rooms.Add("start", start);
             Rooms.Add("end", end);
             

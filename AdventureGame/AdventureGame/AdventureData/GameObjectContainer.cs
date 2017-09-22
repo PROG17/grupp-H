@@ -8,14 +8,14 @@ namespace AdventureGame.AdventureData
 {
     class GameObjectContainer : GameObjectsHolder
     {
-        public new Dictionary<String, GameObjectsHolder> Objects { get; set; }
-        public string CanUseWith { get; set; }
-        public GameObjectContainer ObjectTransformed { get; set; }
-        
+        //public new Dictionary<String, GameObjectsHolder> Objects { get; set; }
+        //public string CanUseWith { get; set; }
+        //public GameObjectContainer ObjectTransformed { get; set; }
 
         public GameObjectContainer()
         {
-            Objects = new Dictionary<string, GameObjectsHolder>();
+            //Objects = new Dictionary<string, GameObjectsHolder>();
+            Objects = new Dictionary<string, GameObject>();
         }
     }
 }

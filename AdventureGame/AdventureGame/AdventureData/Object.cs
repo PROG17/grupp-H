@@ -8,8 +8,7 @@ namespace AdventureGame.AdventureData
 {
     public class Object : GameObject
     {
-        public string CanUseWith { get; set; }
-        public Object ObjectTransformed { get; set; }
-        
+        //public string CanUseWith { get; set; }
+        //public Object ObjectTransformed { get; set; }
     }
 }

@@ -27,9 +27,38 @@ namespace AdventureGame
                 Console.WriteLine();
                 string input = Console.ReadLine();
 
-                var split = input.Split(' ');
-                var firstWord = split[0];
-                var lastWord = split[split.Length - 1];
+                if (input == "")
+                {
+                    continue;
+                }
+
+                var split = input.ToUpper().Split(new []{" ", "PÅ", "MED", "TILL"}, StringSplitOptions.RemoveEmptyEntries);
+
+                if (split.Length > 3)
+                {
+                    Console.WriteLine("Jag förstod inte vad du menade...");
+                    continue;
+                }
+
+                string firstWord = "";
+                string secondWord = "";
+                string thirdWord = "";
+
+                if (split.Length == 1)
+                {
+                    firstWord = split[0].ToLower();
+                }
+                else if (split.Length == 2)
+                {
+                    firstWord = split[0].ToLower();
+                    secondWord = split[1].ToLower();
+                }
+                else
+                {
+                    firstWord = split[0].ToLower();
+                    secondWord = split[1].ToLower();
+                    thirdWord = split[2].ToLower();
+                }
 
                 if (!Action.TryParse(firstWord, true, out Action action))
                 {
@@ -39,22 +68,25 @@ namespace AdventureGame
                     continue;
                 }
 
+
                 switch (action)
                 {
                     case Action.Titta:
 
-                        if (Directions.TryParse(lastWord, true, out Directions lookDirection))
+                        string startString = "Du ser ";
+
+                        if (Directions.TryParse(secondWord, true, out Directions lookDirection))
                         {
                             string writeOut =
                                 currentRoom.TryFindObjectInDirection(currentRoom, lookDirection, out GameObject roomobj)
                                     ? roomobj.Description.ToLower()
                                     : "en vägg";
-                            Console.WriteLine($"Du ser {writeOut}");
+                            Console.WriteLine($"{startString}{writeOut}");
                             Console.ReadLine();
                         }
-                        else if (currentRoom.Objects.ContainsKey(lastWord.ToUpper()))
+                        else if (currentRoom.Objects.ContainsKey(secondWord.ToUpper()))
                         {
-                            Console.WriteLine(currentRoom.Objects[lastWord.ToUpper()].Description);
+                            Console.WriteLine(currentRoom.Objects[secondWord.ToUpper()].Description);
                             Console.ReadLine();
                         }
                         else
@@ -65,19 +97,26 @@ namespace AdventureGame
 
                         break;
                     case Action.Använd:
-                        if (player.Objects.TryGetValue(lastWord, out GameObject obj))
+
+                        if (split.Length == 3)
                         {
-                            
-                            //Act.Use(game.Player, game.Player.Objects["nyckel"], );
-                            Console.WriteLine("Dörren är nu olåst");
-                            Console.ReadLine();
-                            Console.Clear();
-                        }
-                        else
-                        {
-                            Console.WriteLine("Du har ingen nyckel!");
-                            Console.ReadLine();
-                            Console.Clear();
+                            bool hasOject1 = player.Objects.TryGetValue(secondWord, out GameObject obj1);
+                            bool hasObject2 = currentRoom.Objects.TryGetValue(thirdWord, out GameObject obj2);
+                            if (hasOject1 && hasObject2)
+                            {
+
+                                Act.Use(player, obj1, obj2);
+
+                                Console.WriteLine("Dörren är nu olåst");
+                                Console.ReadLine();
+                                Console.Clear();
+                            }
+                            else
+                            {
+                                Console.WriteLine("Du har ingen nyckel!");
+                                Console.ReadLine();
+                                Console.Clear();
+                            }
                         }
 
                         break;
@@ -85,7 +124,7 @@ namespace AdventureGame
                         break;
                     case Action.Gå:
 
-                        if (!Directions.TryParse(lastWord, true, out Directions walkDirection))
+                        if (!Directions.TryParse(secondWord, true, out Directions walkDirection))
                         {
                             Console.WriteLine("Jag förstod inte vad du menade...");
                             Console.ReadLine();
@@ -117,9 +156,12 @@ namespace AdventureGame
 
                         break;
                     case Action.Ta:
-                        //    AdventureData.Interact.Act.Get(game.Player, game.Player.PlayerLocation.Objects["nyckel"]);
-                        //    Console.WriteLine("Du tog nyckeln");
-                        //    Console.ReadLine();
+                        if (currentRoom.Objects.TryGetValue(secondWord, out GameObject takeObject))
+                        {
+                            Act.Get(player, takeObject);
+                            Console.WriteLine($"Du tog {takeObject.Name}");
+                            Console.ReadLine();
+                        }
                         break;
                     default:
                         throw new ArgumentOutOfRangeException();

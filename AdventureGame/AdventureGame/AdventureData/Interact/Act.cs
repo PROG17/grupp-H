@@ -1,6 +1,7 @@
 ﻿using System;
 using System.CodeDom.Compiler;
 using System.Dynamic;
+using System.Xml.Linq;
 
 namespace AdventureGame.AdventureData.Interact
 {
@@ -9,6 +10,7 @@ namespace AdventureGame.AdventureData.Interact
         public static void Get(Player player, GameObject obj)
         {
             player.Objects.Add(obj.Name, obj as Object);
+            player.PlayerLocation.Objects.Remove(obj.Name);
         }
 
         public static void Drop(Player player, Object obj, Room room)
@@ -23,12 +25,25 @@ namespace AdventureGame.AdventureData.Interact
             //{
             //    obj1 = obj1.ObjectTransformed;
             //}
-            if (obj2 is Exit)
+            //if (obj2 is Exit)
+            //{
+            //    if ((obj1 as Object).CanUseWith == obj2.Name)
+            //    {
+            //        var door = obj2 as Exit;
+            //        door.IsLocked = false;
+            //    }
+            //}
+
+            if (obj1.CanUseWith == obj2.Name)
             {
-                if ((obj1 as Object).CanUseWith == obj2.Name)
+                player.PlayerLocation.Objects.Remove(obj2.Name);
+                player.PlayerLocation.Objects.Add(obj2.Name.ToLower(), obj2.ObjectTransformed);
+
+                
+
+                if (obj2 is Exit)
                 {
-                    var door = obj2 as Exit;
-                    door.IsLocked = false;
+                    (obj2 as Exit).IsLocked = false;
                 }
             }
         }
