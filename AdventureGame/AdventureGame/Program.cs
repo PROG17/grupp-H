@@ -32,7 +32,7 @@ namespace AdventureGame
                     }
                     else if (Regex.IsMatch("NORR|SYD|ÖST|VÄST", objString))
                     {
-                        var objectsInDriection = game.Player.PlayerLocation.Exits.
+                        var objectsInDriection = game.Player.PlayerLocation.Exits;
                     }
                     else if (objString == split[0])
                     {

@@ -28,6 +28,6 @@ namespace AdventureGame.AdventureData
             player.PlayerLocation = GoesTo;
         }
 
-        public Exit FindExit
+        public Exit FindExit;
     }
 }

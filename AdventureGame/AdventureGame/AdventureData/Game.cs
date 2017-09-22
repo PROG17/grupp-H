@@ -72,7 +72,7 @@ namespace AdventureGame.AdventureData
 
             
             start.Objects.Add("dörr", dorr);
-            start.Objects.Add("Tunna", Tunna);
+            start.Objects.Add("Stor Tunna", Tunna);
             Tunna.Objects.Add("nyckel", nyckel);
             start.Exits.Add(dorr.Name, dorr);
             Rooms.Add("start", start);
