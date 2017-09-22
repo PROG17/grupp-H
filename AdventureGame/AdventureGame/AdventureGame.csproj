@@ -46,6 +46,7 @@
     <Compile Include="AdventureData\Exit.cs" />
     <Compile Include="AdventureData\Game.cs" />
     <Compile Include="AdventureData\GameObject.cs" />
+    <Compile Include="AdventureData\GameObjectContainer.cs" />
     <Compile Include="AdventureData\Interact\Prompt.cs" />
     <Compile Include="AdventureData\Interact\Action.cs" />
     <Compile Include="AdventureData\Interact\Interaction.cs" />
