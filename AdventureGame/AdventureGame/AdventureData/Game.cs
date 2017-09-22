@@ -14,23 +14,53 @@ namespace AdventureGame.AdventureData
 
         public Game()
         {
-            Player = new Player();
+            Player = new Player
+            {
+                Name = "Andreas",
+                Description = "Aktuell spelare",
+            };
             Rooms = new Dictionary<string, Room>();
 
             var start = new Room
             {
                 Name = "Källare",
-                Description = "Du är i en mörk källare"
+                Description = "Du är i en mörk källare",
+                Exits = new List<Exit>(),
+                IsEndPoint = false,
+            };
+            var end = new Room
+            {
+                Name = "Baksidan av huset",
+                Description = "Du står på baksidan av huset, luften är frisk",
+                Exits = new List<Exit>(),
+                IsEndPoint = true
+            };
+
+            var dorr = new Exit
+            {
+                Name = "Stor dörr",
+                Description = "Stor trädörr",
+                GoesTo = end,
+                IsLocked = true,
+                InDirection = Directions.North,
+
             };
 
             var nyckel = new Object
             {
-                Name = "Nyckel",
-                Description = "En stor rostig nyckel"
+                Name = "nyckel",
+                Description = "En stor rostig nyckel",
+                CanUseWith = dorr.Name,
+                Direction = Directions.East,
+                ObjectTransformed = null
             };
+            Player.PlayerLocation = start;
 
             start.Objects.Add("nyckel", nyckel);
+            start.Objects.Add("dörr", dorr);
+            start.Exits.Add(dorr);
             Rooms.Add("start", start);
+            Rooms.Add("end", end);
         }
     }
 }

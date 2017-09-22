@@ -6,8 +6,16 @@ using System.Threading.Tasks;
 
 namespace AdventureGame.AdventureData
 {
-    class Room : GameObjectsHolder
+    public class Room : GameObjectsHolder
     {
+        public List<Exit> Exits { get; set; }
         public bool IsEndPoint { get; set; }
+
+        //public Room(string name, string description, bool isEndPoint)
+        //{
+        //    base.Name = name;
+        //    base.Description = description;
+        //    IsEndPoint = isEndPoint;
+        //}
     }
 }

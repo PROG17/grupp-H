@@ -46,10 +46,15 @@
     <Compile Include="AdventureData\Exit.cs" />
     <Compile Include="AdventureData\Game.cs" />
     <Compile Include="AdventureData\GameObject.cs" />
+    <Compile Include="AdventureData\Interact\Prompt.cs" />
+    <Compile Include="AdventureData\Interact\Action.cs" />
+    <Compile Include="AdventureData\Interact\Interaction.cs" />
     <Compile Include="AdventureData\Object.cs" />
     <Compile Include="AdventureData\GameObjectsHolder.cs" />
     <Compile Include="AdventureData\Player.cs" />
     <Compile Include="AdventureData\Room.cs" />
+    <Compile Include="AdventureData\RoomList.cs" />
+    <Compile Include="AdventureData\Wall.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

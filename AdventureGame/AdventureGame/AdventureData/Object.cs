@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace AdventureGame.AdventureData
 {
-    class Object : GameObject
+    public class Object : GameObject
     {
+        public string CanUseWith { get; set; }
+        public Object ObjectTransformed { get; set; }
+        public Directions Direction { get; set; }
     }
 }
