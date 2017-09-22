@@ -4,7 +4,7 @@ using System.Dynamic;
 
 namespace AdventureGame.AdventureData.Interact
 {
-    public static class Actions
+    public static class Act
     {
         public static void Get(Player player, GameObject obj)
         {
@@ -40,10 +40,14 @@ namespace AdventureGame.AdventureData.Interact
 
         public static void Go(Player player, Room room, Directions direction)
         {
-            var exit = room.Exits.Find(p => p.InDirection == direction);
-            if (exit != null)
+            if (room.TryFindExitFromDirection(room, direction, out Exit exit))
             {
                 exit.GoThrough(player);
+            }
+            else
+            {
+                Console.WriteLine("Du slog i en vägg...");
+                Console.ReadLine();
             }
         }
 

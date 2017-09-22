@@ -17,5 +17,19 @@ namespace AdventureGame.AdventureData
         //    base.Description = description;
         //    IsEndPoint = isEndPoint;
         //}
+
+        public bool TryFindExitFromDirection(Room room, Directions key, out Exit exit)
+        {
+            foreach (var e in room.Exits)
+            {
+                if (e.Value.InDirection == key)
+                {
+                    exit = e.Value;
+                    return true;
+                }
+            }
+            exit = null;
+            return false;
+        }
     }
 }

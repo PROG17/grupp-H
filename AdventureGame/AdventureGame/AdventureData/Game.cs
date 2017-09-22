@@ -25,14 +25,14 @@ namespace AdventureGame.AdventureData
             {
                 Name = "Källare",
                 Description = "Du är i en mörk källare",
-                Exits = new List<Exit>(),
+                Exits = new Dictionary<string, Exit>(),
                 IsEndPoint = false,
             };
             var end = new Room
             {
                 Name = "Baksidan av huset",
                 Description = "Du står på baksidan av huset, luften är frisk",
-                Exits = new List<Exit>(),
+                Exits = new Dictionary<string, Exit>(),
                 IsEndPoint = true
             };
 
@@ -42,7 +42,7 @@ namespace AdventureGame.AdventureData
                 Description = "Stor trädörr",
                 GoesTo = end,
                 IsLocked = true,
-                InDirection = Directions.North,
+                InDirection = Directions.Norr,
 
             };
 
@@ -51,14 +51,14 @@ namespace AdventureGame.AdventureData
                 Name = "nyckel",
                 Description = "En stor rostig nyckel",
                 CanUseWith = dorr.Name,
-                Direction = Directions.East,
+                Direction = Directions.Öst,
                 ObjectTransformed = null
             };
             Player.PlayerLocation = start;
 
-            start.Objects.Add("nyckel", nyckel);
-            start.Objects.Add("dörr", dorr);
-            start.Exits.Add(dorr);
+            start.Objects.Add(nyckel.Name.ToUpper(), nyckel);
+            start.Objects.Add(dorr.Name.ToUpper(), dorr);
+            start.Exits.Add(dorr.Name.ToUpper(),dorr);
             Rooms.Add("start", start);
             Rooms.Add("end", end);
         }
