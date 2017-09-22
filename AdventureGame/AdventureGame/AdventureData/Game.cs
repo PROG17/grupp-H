@@ -44,7 +44,7 @@ namespace AdventureGame.AdventureData
             {
                 Name = "Stor Tunna",
                 Description = "Stor tunna i trä och gjutjärn. Tunnan går inte att öppna utan något verktyg...",
-                ObjectTransformed = TrasigTunna,
+                ObjectTransformed = trasigTunna,
                 
                 
             };
@@ -72,8 +72,8 @@ namespace AdventureGame.AdventureData
             start.Objects.Add(dorr.Name.ToUpper(), dorr);
             
             
-            start.Objects.Add("Stor Tunna", Tunna);
-            Tunna.Objects.Add(nyckel.Name.ToUpper(), nyckel);
+            start.Objects.Add("Stor Tunna", tunna);
+            tunna.Objects.Add(nyckel.Name.ToUpper(), nyckel);
             start.Exits.Add(dorr.Name.ToUpper(), dorr);
             Rooms.Add("start", start);
             Rooms.Add("end", end);
