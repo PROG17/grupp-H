@@ -8,7 +8,7 @@ namespace AdventureGame.AdventureData
 {
     public class Room : GameObjectsHolder
     {
-        public List<Exit> Exits { get; set; }
+        public Dictionary<string,Exit> Exits { get; set; }
         public bool IsEndPoint { get; set; }
 
         //public Room(string name, string description, bool isEndPoint)

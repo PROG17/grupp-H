@@ -18,7 +18,7 @@ namespace AdventureGame.AdventureData
         //    base.Name = name;
         //    base.Description = description;
         //    GoesTo = goesTo;
-        //    OpensWith = opensWith;
+        //    OpensWith = opensWith;   
         //    InDirection = inDirection;
         //    IsLocked = isLocked;
         //}
@@ -27,5 +27,7 @@ namespace AdventureGame.AdventureData
         {
             player.PlayerLocation = GoesTo;
         }
+
+        public Exit FindExit
     }
 }
