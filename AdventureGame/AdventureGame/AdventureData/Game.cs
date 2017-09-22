@@ -35,12 +35,12 @@ namespace AdventureGame.AdventureData
                 Exits = new Dictionary<string, Exit>(),
                 IsEndPoint = true
             };
-            var TrasigTunna = new GameObjectContainer
+            var trasigTunna = new GameObjectContainer
             {
                 Name = "Spillrorna efter en stor tunna",
                 Description = "Trasig tunna, träflisor och gjutjärnsringar. Kanske ligger det något bland spillrorna",
             };
-            var Tunna = new GameObjectContainer
+            var tunna = new GameObjectContainer
             {
                 Name = "Stor Tunna",
                 Description = "Stor tunna i trä och gjutjärn. Tunnan går inte att öppna utan något verktyg...",
