@@ -6,10 +6,16 @@ using System.Threading.Tasks;
 
 namespace AdventureGame.AdventureData
 {
-    class GameObjectContainer : GameObject
+    class GameObjectContainer : GameObjectsHolder
     {
-        public Dictionary<String, GameObject> Objects { get; set; } 
+        public new Dictionary<String, GameObjectsHolder> Objects { get; set; }
         public string CanUseWith { get; set; }
         public GameObjectContainer ObjectTransformed { get; set; }
+        public Directions Direction { get; set; }
+
+        public GameObjectContainer()
+        {
+            Objects = new Dictionary<string, GameObjectsHolder>();
+        }
     }
 }

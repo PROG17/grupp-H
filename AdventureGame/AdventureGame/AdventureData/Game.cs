@@ -39,15 +39,18 @@ namespace AdventureGame.AdventureData
             {
                 Name = "Spillrorna efter en stor tunna",
                 Description = "Trasig tunna, träflisor och gjutjärnsringar. Kanske ligger det något bland spillrorna",
+                ObjectTransformed = null
             };
             var tunna = new GameObjectContainer
             {
                 Name = "Stor Tunna",
                 Description = "Stor tunna i trä och gjutjärn. Tunnan går inte att öppna utan något verktyg...",
                 ObjectTransformed = trasigTunna,
+                Direction = Directions.syd
                 
                 
             };
+            
             
 
             var dorr = new Exit
@@ -68,15 +71,16 @@ namespace AdventureGame.AdventureData
                 Direction = Directions.Öst,
                 ObjectTransformed = null
             };
+
             Player.PlayerLocation = start;
             start.Objects.Add(dorr.Name.ToUpper(), dorr);
-            
-            
-            start.Objects.Add("Stor Tunna", tunna);
-            tunna.Objects.Add(nyckel.Name.ToUpper(), nyckel);
+            start.Objects.Add(tunna.Name.ToUpper(), tunna);
+            start.Objects.Add(nyckel.Name.ToUpper(), nyckel);
+            //tunna.Objects.Add(nyckel.Name.ToUpper(), nyckel);
             start.Exits.Add(dorr.Name.ToUpper(), dorr);
             Rooms.Add("start", start);
             Rooms.Add("end", end);
+            
         }
     }
 }

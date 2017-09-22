@@ -8,7 +8,7 @@ namespace AdventureGame.AdventureData
 {
     public class GameObjectsHolder : GameObject
     {
-        public Dictionary<string, GameObject> Objects { get; set; }
+        public virtual Dictionary<string, GameObject> Objects { get; set; }
 
         public GameObjectsHolder()
         {

@@ -31,5 +31,35 @@ namespace AdventureGame.AdventureData
             exit = null;
             return false;
         }
+
+        public bool TryFindObjectInDirection(Room room, Directions key, out GameObject objects)
+        {
+            foreach (var obj in room.Objects)
+            {
+                if (obj.Value is Object)
+                {
+                    if ((obj.Value as Object).Direction == key)
+                    {
+                        objects = obj.Value;
+                        return true;
+                    }
+              
+
+                }
+                else if (obj.Value is Exit)
+                {
+                    if ((obj.Value as Exit).InDirection == key)
+                    {
+                        objects = obj.Value;
+                        return true;
+                    }
+                    
+
+                }
+                
+            }
+            objects = null;
+            return false;
+        }
     }
 }

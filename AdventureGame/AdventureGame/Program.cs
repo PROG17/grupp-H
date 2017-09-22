@@ -24,6 +24,7 @@ namespace AdventureGame
             {
                 Console.WriteLine(game.Player.PlayerLocation.Description);
                 Console.Write("Vad vill du göra? ");
+                Console.WriteLine();
                 string input = Console.ReadLine();
 
                 var split = input.Split(' ');
@@ -45,8 +46,8 @@ namespace AdventureGame
                         if (Directions.TryParse(lastWord, true, out Directions lookDirection))
                         {
                             string writeOut =
-                                currentRoom.TryFindExitFromDirection(currentRoom, lookDirection, out Exit exit)
-                                    ? exit.Description.ToLower()
+                                currentRoom.TryFindObjectInDirection(currentRoom, lookDirection, out GameObject roomobj)
+                                    ? roomobj.Description.ToLower()
                                     : "en vägg";
                             Console.WriteLine($"Du ser {writeOut}");
                             Console.ReadLine();
