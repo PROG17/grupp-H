@@ -22,7 +22,7 @@ namespace AdventureGame.AdventureData
         {
             foreach (var e in room.Exits)
             {
-                if (e.Value.InDirection == key)
+                if (e.Value.DirectionalPosition == key)
                 {
                     exit = e.Value;
                     return true;
@@ -38,7 +38,7 @@ namespace AdventureGame.AdventureData
             {
                 if (obj.Value is Object)
                 {
-                    if ((obj.Value as Object).Direction == key)
+                    if ((obj.Value as Object).DirectionalPosition == key)
                     {
                         objects = obj.Value;
                         return true;
@@ -48,15 +48,23 @@ namespace AdventureGame.AdventureData
                 }
                 else if (obj.Value is Exit)
                 {
-                    if ((obj.Value as Exit).InDirection == key)
+                    if ((obj.Value as Exit).DirectionalPosition == key)
                     {
                         objects = obj.Value;
                         return true;
                     }
-                    
 
                 }
-                
+                else if (obj.Value is GameObjectContainer)
+                {
+                    if ((obj.Value as GameObjectContainer).DirectionalPosition == key)
+                    {
+                        objects = obj.Value;
+                        return true;
+                    }
+
+                }
+
             }
             objects = null;
             return false;

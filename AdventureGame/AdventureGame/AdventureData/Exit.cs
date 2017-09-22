@@ -10,7 +10,6 @@ namespace AdventureGame.AdventureData
     {
         public Room GoesTo { get; set; }
         public Object OpensWith { get; set; }
-        public Directions InDirection { get; set; }
         public bool IsLocked { get; set; }
 
         //public Exit(string name, string description, Room goesTo, Object opensWith, Directions inDirection, bool isLocked)
@@ -19,7 +18,7 @@ namespace AdventureGame.AdventureData
         //    base.Description = description;
         //    GoesTo = goesTo;
         //    OpensWith = opensWith;   
-        //    InDirection = inDirection;
+        //    DirectionalPosition = inDirection;
         //    IsLocked = isLocked;
         //}
 
