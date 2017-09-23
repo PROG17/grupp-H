@@ -18,7 +18,7 @@ namespace AdventureGame.AdventureData
         //    IsEndPoint = isEndPoint;
         //}
 
-        public bool TryFindExitFromDirection(Room room, Directions key, out Exit exit)
+        public bool TryFindExitFromDirection(Room room, Direction key, out Exit exit)
         {
             foreach (var e in room.Exits)
             {
@@ -32,7 +32,7 @@ namespace AdventureGame.AdventureData
             return false;
         }
 
-        public bool TryFindObjectInDirection(Room room, Directions key, out GameObject objects)
+        public bool TryFindObjectInDirection(Room room, Direction key, out GameObject objects)
         {
             foreach (var obj in room.Objects)
             {

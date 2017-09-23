@@ -42,8 +42,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AdventureData\Action.cs" />
-    <Compile Include="AdventureData\Directions.cs" />
+    <Compile Include="AdventureData\Interact\Enums\Action.cs" />
+    <Compile Include="AdventureData\Interact\Enums\Direction.cs" />
+    <Compile Include="AdventureData\Interact\Enums\Preposition.cs" />
     <Compile Include="AdventureData\Exit.cs" />
     <Compile Include="AdventureData\Game.cs" />
     <Compile Include="AdventureData\GameObject.cs" />

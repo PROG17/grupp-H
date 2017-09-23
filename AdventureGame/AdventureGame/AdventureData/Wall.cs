@@ -8,6 +8,6 @@ namespace AdventureGame.AdventureData
 {
     class Wall : GameObject
     {
-        public Directions InDirection { get; set; }
+        public Direction InDirection { get; set; }
     }
 }

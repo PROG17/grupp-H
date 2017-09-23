@@ -19,48 +19,16 @@ namespace AdventureGame
             Player player = game.Player;
             Room currentRoom = player.PlayerLocation;
 
-
+            Console.WriteLine(currentRoom.Description);
             while (true)
             {
-                Console.WriteLine(game.Player.PlayerLocation.Description);
                 Console.Write("Vad vill du göra? ");
                 Console.WriteLine();
                 string input = Console.ReadLine();
 
-                if (input == "")
-                {
-                    continue;
-                }
+                var split = input.ToLower().Split(' ');
 
-                var split = input.ToUpper().Split(new []{" ", "PÅ", "MED", "TILL"}, StringSplitOptions.RemoveEmptyEntries);
-
-                if (split.Length > 3)
-                {
-                    Console.WriteLine("Jag förstod inte vad du menade...");
-                    continue;
-                }
-
-                string firstWord = "";
-                string secondWord = "";
-                string thirdWord = "";
-
-                if (split.Length == 1)
-                {
-                    firstWord = split[0].ToLower();
-                }
-                else if (split.Length == 2)
-                {
-                    firstWord = split[0].ToLower();
-                    secondWord = split[1].ToLower();
-                }
-                else
-                {
-                    firstWord = split[0].ToLower();
-                    secondWord = split[1].ToLower();
-                    thirdWord = split[2].ToLower();
-                }
-
-                if (!Action.TryParse(firstWord, true, out Action action))
+                if (!Game.ValidateSentence(split, out string[] sentence))
                 {
                     Console.WriteLine("Jag förstod inte vad du menade...");
                     Console.ReadLine();
@@ -68,27 +36,86 @@ namespace AdventureGame
                     continue;
                 }
 
+                string firstWord = "";
+                string secondWord = "";
+                string thirdWord = "";
 
-                switch (action)
+                string actionStr = "";
+                string preposString = "";
+                string directionStr = "";
+                string obj_1 = "";
+                string obj_2 = "";
+
+                //if (split.Length == 1)
+                //{
+                //    firstWord = split[0].ToLower();
+                //}
+                //else if (split.Length == 2)
+                //{
+                //    firstWord = split[0].ToLower();
+                //    secondWord = split[1].ToLower();
+                //}
+                //else
+                //{
+                //    firstWord = split[0].ToLower();
+                //    secondWord = split[1].ToLower();
+                //    thirdWord = split[2].ToLower();
+                //}
+                if (split.Length == 1)
+                {
+                    actionStr = split[0];
+                }
+                else if (split.Length == 2)
+                {
+                    actionStr = split[0];
+
+                    if (Direction.TryParse())
+                    directionStr = split[1];
+
+                }
+                else if (split.Length == 3)
+                {
+                    actionStr = split[0];
+                    preposString = split[1];
+                    obj_1 = split[2];
+                }
+                else if (split.Length == 4)
+                {
+                    actionStr = split[0];
+                    obj_1 = split[1];
+                    preposString = split[2];
+                    obj_2 = split[3];
+                }
+
+
+                switch (Enum.Parse(typeof(Action), actionStr, true))
                 {
                     case Action.Titta:
 
                         string startString = "Du ser ";
+                        if (split.Length == 2)
+                        {
+                            if (Direction.TryParse(directionStr, true, out Direction lookDirection))
+                            {
+                                string writeOut =
+                                    currentRoom.TryFindObjectInDirection(currentRoom, lookDirection, out GameObject roomobj)
+                                        ? roomobj.Description.ToLower()
+                                        : "en vägg";
+                                Console.WriteLine($"{startString}{writeOut}");
+                                Console.ReadLine();
+                            }
+                        }
+                        else if (split.Length == 3)
+                        {
 
-                        if (Directions.TryParse(secondWord, true, out Directions lookDirection))
-                        {
-                            string writeOut =
-                                currentRoom.TryFindObjectInDirection(currentRoom, lookDirection, out GameObject roomobj)
-                                    ? roomobj.Description.ToLower()
-                                    : "en vägg";
-                            Console.WriteLine($"{startString}{writeOut}");
-                            Console.ReadLine();
+                            if (currentRoom.Objects.ContainsKey(obj_1))
+                            {
+                                Console.WriteLine(
+                                    Act.Look(currentRoom.Objects[obj_1],(Preposition)Enum.Parse(typeof(Preposition), preposString, true)));
+                                Console.ReadLine();
+                            }
                         }
-                        else if (currentRoom.Objects.ContainsKey(secondWord.ToUpper()))
-                        {
-                            Console.WriteLine(currentRoom.Objects[secondWord.ToUpper()].Description);
-                            Console.ReadLine();
-                        }
+                        
                         else
                         {
                             Console.WriteLine(currentRoom.Description);
@@ -100,22 +127,30 @@ namespace AdventureGame
 
                         if (split.Length == 3)
                         {
-                            bool hasOject1 = player.Objects.TryGetValue(secondWord, out GameObject obj1);
-                            bool hasObject2 = currentRoom.Objects.TryGetValue(thirdWord, out GameObject obj2);
+                            bool hasOject1 = player.Objects.TryGetValue(obj_1, out GameObject obj1);
+                            bool hasObject2 = currentRoom.Objects.TryGetValue(obj_2, out GameObject obj2);
                             if (hasOject1 && hasObject2)
                             {
 
-                                Act.Use(player, obj1, obj2);
-
-                                Console.WriteLine("Dörren är nu olåst");
-                                Console.ReadLine();
-                                Console.Clear();
+                                if (Act.Use(player, obj1, obj2))
+                                {
+                                    Console.WriteLine("Det gick!");
+                                    Console.ReadLine();
+                                    Console.Clear();
+                                }
+                                else
+                                {
+                                    Console.WriteLine("Det gick inte...");
+                                    Console.ReadLine();
+                                    Console.Clear();
+                                }
                             }
                             else
                             {
-                                Console.WriteLine("Du har ingen nyckel!");
-                                Console.ReadLine();
-                                Console.Clear();
+                                string noObj = "Det fanns ingen ";
+                                noObj += hasOject1 ? obj_1 : "";
+                                noObj += hasOject1 && hasObject2 ? " eller " + obj_2 : "";
+                                noObj += hasObject2 ? obj_2 : "";
                             }
                         }
 
@@ -124,7 +159,7 @@ namespace AdventureGame
                         break;
                     case Action.Gå:
 
-                        if (!Directions.TryParse(secondWord, true, out Directions walkDirection))
+                        if (!Direction.TryParse(secondWord, true, out Direction walkDirection))
                         {
                             Console.WriteLine("Jag förstod inte vad du menade...");
                             Console.ReadLine();
@@ -143,7 +178,7 @@ namespace AdventureGame
                             }
                             else
                             {
-                                Act.Go(game.Player, game.Player.PlayerLocation, Directions.Norr);
+                                Act.Go(game.Player, game.Player.PlayerLocation, Direction.Norr);
                             }
                         }
                         else
@@ -156,7 +191,7 @@ namespace AdventureGame
 
                         break;
                     case Action.Ta:
-                        if (currentRoom.Objects.TryGetValue(secondWord, out GameObject takeObject))
+                        if (currentRoom.Objects.TryGetValue(obj_1, out GameObject takeObject))
                         {
                             Act.Get(player, takeObject);
                             Console.WriteLine($"Du tog {takeObject.Name}");
@@ -177,7 +212,7 @@ namespace AdventureGame
                 //    }
                 //    else if (Regex.IsMatch("NORR|SYD|ÖST|VÄST", firstWord))
                 //    {
-                //        Directions.TryParse(firstWord, true, out Directions direction);
+                //        Direction.TryParse(firstWord, true, out Direction direction);
                 //        if (currentRoom.TryFindExitFromDirection(currentRoom, direction, out Exit exit))
                 //        {
                 //            Console.WriteLine($"Till {firstWord.ToLower()} ser du {exit.Description}");
@@ -250,7 +285,7 @@ namespace AdventureGame
                 //    }
                 //    else
                 //    {
-                //        Act.Go(game.Player, game.Player.PlayerLocation, Directions.North);
+                //        Act.Go(game.Player, game.Player.PlayerLocation, Direction.North);
                 //    }
                 //}
                 if (input.ToUpper() == "HJÄLP")
