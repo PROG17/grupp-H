@@ -24,6 +24,8 @@ namespace AdventureGame.AdventureData
 
         public void GoThrough(Player player)
         {
+            var temp = GoesTo;
+            player.PlayerLocation = null;
             player.PlayerLocation = GoesTo;
         }
     }

@@ -22,6 +22,7 @@ namespace AdventureGame
             Console.WriteLine(currentRoom.Description);
             while (true)
             {
+                currentRoom = player.PlayerLocation;
                 Console.Write("Vad vill du göra? ");
                 Console.WriteLine();
                 string input = Console.ReadLine();
@@ -46,21 +47,6 @@ namespace AdventureGame
                 string obj_1 = "";
                 string obj_2 = "";
 
-                //if (split.Length == 1)
-                //{
-                //    firstWord = split[0].ToLower();
-                //}
-                //else if (split.Length == 2)
-                //{
-                //    firstWord = split[0].ToLower();
-                //    secondWord = split[1].ToLower();
-                //}
-                //else
-                //{
-                //    firstWord = split[0].ToLower();
-                //    secondWord = split[1].ToLower();
-                //    thirdWord = split[2].ToLower();
-                //}
                 if (split.Length == 1)
                 {
                     actionStr = split[0];
@@ -166,7 +152,7 @@ namespace AdventureGame
                         break;
                     case Action.Gå:
 
-                        if (!Direction.TryParse(secondWord, true, out Direction walkDirection))
+                        if (!Direction.TryParse(directionStr, true, out Direction walkDirection))
                         {
                             Console.WriteLine("Jag förstod inte vad du menade...");
                             Console.ReadLine();
@@ -185,7 +171,7 @@ namespace AdventureGame
                             }
                             else
                             {
-                                Act.Go(game.Player, game.Player.PlayerLocation, Direction.Norr);
+                                Act.Go(player, currentRoom, walkDirection);
                             }
                         }
                         else
@@ -198,6 +184,14 @@ namespace AdventureGame
 
                         break;
                     case Action.Ta:
+
+                        if (Preposition.TryParse(preposString, true, out Preposition prep))
+                        {
+                            Act.Get(player, obj_1, obj_2);
+                            Console.WriteLine($"Du tog {player.Objects[obj_1].Name}");
+                            Console.ReadLine();
+                        }
+
                         if (currentRoom.Objects.TryGetValue(obj_1, out GameObject takeObject))
                         {
                             Act.Get(player, takeObject);

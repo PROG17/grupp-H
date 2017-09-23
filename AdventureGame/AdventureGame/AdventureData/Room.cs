@@ -55,9 +55,9 @@ namespace AdventureGame.AdventureData
                     }
 
                 }
-                else if (obj.Value is GameObjectContainer)
+                else if (obj.Value is ObjectContainer)
                 {
-                    if ((obj.Value as GameObjectContainer).DirectionalPosition == key)
+                    if ((obj.Value as ObjectContainer).DirectionalPosition == key)
                     {
                         objects = obj.Value;
                         return true;

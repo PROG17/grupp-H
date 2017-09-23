@@ -12,6 +12,19 @@ namespace AdventureGame.AdventureData.Interact
             player.Objects.Add(obj.Name, obj as Object);
             player.PlayerLocation.Objects.Remove(obj.Name);
         }
+        public static bool Get(Player player, string objToGet, string objGetFrom)
+        {
+            if (player.PlayerLocation.Objects.TryGetValue(objGetFrom, out GameObject container))
+            {
+                if ((container as ObjectContainer).Objects.TryGetValue(objToGet, out GameObject obj))
+                {
+                    player.Objects.Add(obj.Name, obj as Object);
+                    (container as ObjectContainer).Objects.Remove(obj.Name);
+                    return true;
+                }
+            }
+            return false;
+        }
 
         public static void Drop(Player player, Object obj, Room room)
         {
@@ -36,14 +49,14 @@ namespace AdventureGame.AdventureData.Interact
 
             if (obj1.CanUseWith == obj2.Name)
             {
-                player.PlayerLocation.Objects.Remove(obj2.Name);
-                player.PlayerLocation.Objects.Add(obj2.Name.ToLower(), obj2.ObjectTransformed);
-
-
-
-                if (obj2 is Exit)
+                if ((obj2 is Exit))
                 {
                     (obj2 as Exit).IsLocked = false;
+                }
+                else
+                {
+                    player.PlayerLocation.Objects.Remove(obj2.Name);
+                    player.PlayerLocation.Objects.Add(obj2.Name.ToLower(), obj2.ObjectTransformed);
                 }
                 return true;
             }
@@ -56,11 +69,11 @@ namespace AdventureGame.AdventureData.Interact
             string returnString = "";
             if (preposition == Preposition.I)
             {
-                if ((obj as GameObjectContainer) != null)
+                if ((obj as ObjectContainer) != null)
                 {
-                    if ((obj as GameObjectContainer).Objects.Count > 0)
+                    if ((obj as ObjectContainer).Objects.Count > 0)
                     {
-                        foreach (var o in (obj as GameObjectContainer).Objects)
+                        foreach (var o in (obj as ObjectContainer).Objects)
                         {
                             returnString += o.Value.Name + "\n";
                         }
