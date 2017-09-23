@@ -97,5 +97,17 @@ namespace AdventureGame.AdventureData.Interact
             }
         }
 
+        public static bool IsPrepositionEnum(string str)
+        {
+            return Preposition.TryParse(str, true, out Preposition prep);
+        }
+        public static bool IsDirectionEnum(string str)
+        {
+            return Direction.TryParse(str, true, out Direction dir);
+        }
+        public static bool IsActionEnum(string str)
+        {
+            return Action.TryParse(str, true, out Action act);
+        }
     }
 }

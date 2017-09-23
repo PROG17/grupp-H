@@ -42,7 +42,7 @@ namespace AdventureGame.AdventureData
                 DirectionalPosition = Direction.Syd,
                 ObjectTransformed = null
             };
-            var tunna = new GameObjectContainer
+            var tunna = new Object
             {
                 Name = "tunna",
                 Description = "en stor tunna i trä och gjutjärn. Tunnan går inte att öppna utan något verktyg...",
@@ -98,7 +98,7 @@ namespace AdventureGame.AdventureData
 
         public static bool ValidateSentence(string[] split, out string[] strings)
         {
-            if (split.Length > 0 && split.Length < 4)
+            if (split.Length > 0 && split.Length < 5)
             {
                 if (split.Length == 1)
                 {
@@ -112,7 +112,7 @@ namespace AdventureGame.AdventureData
                 {
                     if (Action.TryParse(split[0], true, out Action action))
                     {
-                        if (action == Action.Gå)
+                        if (action == Action.Gå || action == Action.Titta)
                         {
                             if (Direction.TryParse(split[1], true, out Direction dir))
                             {

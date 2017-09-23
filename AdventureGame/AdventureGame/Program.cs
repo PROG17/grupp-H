@@ -69,8 +69,15 @@ namespace AdventureGame
                 {
                     actionStr = split[0];
 
-                    if (Direction.TryParse())
-                    directionStr = split[1];
+                    if (Act.IsDirectionEnum(split[1]))
+                    {
+                        directionStr = split[1];
+                    }
+                    else
+                    {
+                        obj_1 = split[1];
+                    }
+                    
 
                 }
                 else if (split.Length == 3)
@@ -125,7 +132,7 @@ namespace AdventureGame
                         break;
                     case Action.Använd:
 
-                        if (split.Length == 3)
+                        if (split.Length == 4)
                         {
                             bool hasOject1 = player.Objects.TryGetValue(obj_1, out GameObject obj1);
                             bool hasObject2 = currentRoom.Objects.TryGetValue(obj_2, out GameObject obj2);
