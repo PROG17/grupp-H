@@ -8,7 +8,7 @@ namespace AdventureGame.AdventureData
 {
     public class Room : GameObjectsHolder
     {
-        public Dictionary<string,Exit> Exits { get; set; }
+        public Dictionary<string, Exit> Exits { get; set; }
         public bool IsEndPoint { get; set; }
 
         //public Room(string name, string description, bool isEndPoint)
@@ -33,6 +33,27 @@ namespace AdventureGame.AdventureData
             return false;
         }
 
+        public string GetRoomDescriptionWithContent()
+        {
+            StringBuilder sb = new StringBuilder();
+
+            sb.AppendLine(this.Description);
+
+            foreach (var gameObject in this.Objects)
+            {
+                if (gameObject.Value.DirectionalPosition != null)
+                {
+                    sb.AppendLine($"Åt {gameObject.Value.DirectionalPosition} ser du {gameObject.Value.Name}");
+                }
+                else
+                {
+                    sb.AppendLine($"På marken ser du {gameObject.Value.Name}");
+                }
+            }
+
+            return sb.ToString();
+        }
+
         public bool TryFindObjectInDirection(Room room, Direction key, out GameObject objects)
         {
             foreach (var obj in room.Objects)
@@ -44,7 +65,7 @@ namespace AdventureGame.AdventureData
                         objects = obj.Value;
                         return true;
                     }
-              
+
 
                 }
                 else if (obj.Value is Exit)

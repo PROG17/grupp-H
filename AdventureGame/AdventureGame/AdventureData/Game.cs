@@ -23,12 +23,27 @@ namespace AdventureGame.AdventureData
             };
             Rooms = new Dictionary<string, Room>();
 
+            // Skapar rum
             var start = new Room
             {
                 Name = "Källare",
                 Description = "Du är i en mörk källare",
                 Exits = new Dictionary<string, Exit>(),
                 IsEndPoint = false,
+            };
+            var room1 = new Room
+            {
+                Name = "Gammalt badrum",
+                Description = "Du är i ett gammalt, sedan länge oanvänt, badrum. Det är svart mögel på väggarna",
+                Exits = new Dictionary<string, Exit>(),
+                IsEndPoint = false
+            };
+            var room2 = new Room
+            {
+                Name = "Maskinrum",
+                Description = "Du är i ett bullrigt maskinrum. Det luktar diesel...",
+                Exits = new Dictionary<string, Exit>(),
+                IsEndPoint = false
             };
             var end = new Room
             {
@@ -37,29 +52,11 @@ namespace AdventureGame.AdventureData
                 Exits = new Dictionary<string, Exit>(),
                 IsEndPoint = true
             };
-            var trasigTunna = new ObjectContainer
-            {
-                Name = "trasig tunna",
-                Description = "en trasig tunna, träflisor och gjutjärnsringar. Kanske ligger det något bland spillrorna",
-                DirectionalPosition = Direction.Syd,
-                ObjectTransformed = null
-            };
-            var tunna = new Object
-            {
-                Name = "tunna",
-                Description = "en stor tunna i trä och gjutjärn. Tunnan går inte att öppna utan något verktyg...",
-                CanUseWith = "HAMMARE",
-                ObjectTransformed = trasigTunna,
-                DirectionalPosition = Direction.Syd
 
-
-            };
-
-
-
+            // Ett gäng dörrar
             var dorr = new Exit
             {
-                Name = "trädörr",
+                Name = "en trädörr",
                 Description = "en stor trädörr",
                 GoesTo = end,
                 IsLocked = true,
@@ -69,45 +66,120 @@ namespace AdventureGame.AdventureData
 
             var dorr2 = new Exit
             {
-                Name = "trädörr",
+                Name = "en trädörr",
                 Description = "en stor trädörr",
                 GoesTo = start,
                 IsLocked = false,
                 DirectionalPosition = Direction.Syd,
-
             };
 
+            var dorr3 = new Exit
+            {
+                Name = "en plåtdörr",
+                Description = "en bucklig plåtdörr",
+                GoesTo = room1,
+                IsLocked = false,
+                DirectionalPosition = Direction.Öst,
+            };
+            var dorr4 = new Exit
+            {
+                Name = "en plåtdörr",
+                Description = "en bucklig plåtdörr",
+                GoesTo = start,
+                IsLocked = false,
+                DirectionalPosition = Direction.Väst,
+            };
+            var dorr5 = new Exit
+            {
+                Name = "ett hål i väggen",
+                Description = "ett stort hål i väggen, förmodligen en misslyckad renovering...",
+                GoesTo = room2,
+                IsLocked = false,
+                DirectionalPosition = Direction.Väst,
+            };
+            var dorr6 = new Exit
+            {
+                Name = "ett hål i väggen",
+                Description = "ett stort hål i väggen, förmodligen en misslyckad renovering...",
+                GoesTo = start,
+                IsLocked = false,
+                DirectionalPosition = Direction.Öst,
+            };
+
+            // Objekt
+            var trasigTunna = new ObjectContainer
+            {
+                Name = "en trasig tunna",
+                Description = "en trasig tunna, träflisor och gjutjärnsringar. Kanske ligger det något bland spillrorna",
+                DirectionalPosition = Direction.Syd,
+                ObjectTransformed = null
+            };
+            var tunna = new Object
+            {
+                Name = "en tunna",
+                Description = "en stor tunna i trä och gjutjärn. Tunnan går inte att öppna utan något verktyg...",
+                CanUseWith = "en hammare",
+                ObjectTransformed = trasigTunna,
+                DirectionalPosition = Direction.Syd
+            };
+            var bokhylla = new Object
+            {
+                Name = "en bokhylla",
+                Description = "En bokhylla med några mögliga böcker...",
+                CanUseWith = "en hammare",
+                ObjectTransformed = null,
+                DirectionalPosition = Direction.Syd
+            };
+
+            var soptunna = new ObjectContainer
+            {
+                Name = "en soptunna",
+                Description = "En soptunna som ser ut att vara full av grejer",
+                CanUseWith = null,
+                ObjectTransformed = null,
+                DirectionalPosition = null
+            };
             var nyckel = new Object
             {
-                Name = "nyckel",
+                Name = "en nyckel",
                 Description = "En stor rostig nyckel",
                 CanUseWith = dorr.Name,
-                DirectionalPosition = Direction.Syd,
+                DirectionalPosition = null,
                 ObjectTransformed = null
             };
 
             var hammer = new Object
             {
-                Name = "hammare",
+                Name = "en hammare",
                 Description = "en robust hammare",
                 CanUseWith = tunna.Name,
-                DirectionalPosition = Direction.Väst,
+                DirectionalPosition = null,
                 ObjectTransformed = null
             };
 
             Player.PlayerLocation = start;
-            trasigTunna.Objects.Add(nyckel.Name.ToLower(), nyckel);
-            start.Objects.Add(dorr.Name.ToLower(), dorr);
-            start.Objects.Add(tunna.Name.ToLower(), tunna);
-            start.Objects.Add(hammer.Name.ToLower(), hammer);
-            //start.Objects.Add(nyckel.Name.ToLower(), nyckel);
-            //tunna.Objects.Add(nyckel.Name.ToLower(), nyckel);
-            start.Exits.Add(dorr.Name.ToLower(), dorr);
-            end.Exits.Add(dorr2.Name.ToLower(), dorr2);
-            end.Objects.Add(dorr2.Name.ToLower(), dorr2);
+            trasigTunna.Objects.Add(nyckel.Key.ToLower(), nyckel);
+            soptunna.Objects.Add(hammer.Key.ToLower(), hammer);
+            start.Objects.Add(dorr.Key.ToLower(), dorr);
+            start.Objects.Add(tunna.Key.ToLower(), tunna);
+            start.Exits.Add(dorr.Key.ToLower(), dorr);
+            start.Exits.Add(dorr3.Key.ToLower(), dorr3);
+            start.Objects.Add(dorr3.Key.ToLower(), dorr3);
+            start.Exits.Add(dorr5.Key.ToLower(), dorr5);
+            start.Objects.Add(dorr5.Key.ToLower(), dorr5);
+            room1.Exits.Add(dorr4.Key.ToLower(), dorr4);
+            room1.Objects.Add(dorr4.Key.ToLower(), dorr4);
+            room1.Objects.Add(bokhylla.Key.ToLower(), bokhylla);
+            room2.Exits.Add(dorr6.Key.ToLower(), dorr6);
+            room2.Objects.Add(dorr6.Key.ToLower(), dorr6);
+            room2.Objects.Add(soptunna.Key.ToLower(), soptunna);
+            end.Exits.Add(dorr2.Key.ToLower(), dorr2);
+            end.Objects.Add(dorr2.Key.ToLower(), dorr2);
 
             Rooms.Add("start", start);
             Rooms.Add("end", end);
+            Rooms.Add("rum1", room1);
+            Rooms.Add("rum2", room2);
 
         }
 
@@ -211,7 +283,8 @@ namespace AdventureGame.AdventureData
         public bool Prompt()
         {
             Room currentRoom = Player.PlayerLocation;
-            Console.WriteLine(currentRoom.Description);
+            Console.WriteLine(currentRoom.GetRoomDescriptionWithContent());
+
             while (true)
             {
                 currentRoom = Player.PlayerLocation;
@@ -283,7 +356,7 @@ namespace AdventureGame.AdventureData
                         }
                         else
                         {
-                            Console.WriteLine(currentRoom.Description);
+                            Console.WriteLine(currentRoom.GetRoomDescriptionWithContent());
                             Console.ReadLine();
                         }
 
@@ -292,18 +365,67 @@ namespace AdventureGame.AdventureData
 
                         if (objStr1 != null)
                         {
-
-                            if (currentRoom.Objects.ContainsKey(objStr1))
+                            if (objStr2 != null && objStr2 != "ficka")
                             {
-                                Console.WriteLine(
-                                    Act.Inspect(currentRoom.Objects[objStr1]));
-                                Console.ReadLine();
+                                if (currentRoom.Objects.ContainsKey(objStr1))
+                                {
+                                    Console.WriteLine(
+                                        Act.Inspect(currentRoom.Objects[objStr1]));
+                                    Console.ReadLine();
+                                }
+                                else
+                                {
+                                    Console.WriteLine($"Du ser ingen {objStr1}");
+                                    Console.ReadLine();
+                                }
+                            }
+                            else if (objStr1 == "ficka")
+                            {
+                                if (Player.Objects.Count != 0)
+                                {
+                                    Console.WriteLine($"I din {objStr1} ligger det:");
+                                    foreach (var keyValuePair in Player.Objects)
+                                    {
+                                        Console.WriteLine(keyValuePair.Value.Name);
+                                    }
+                                    Console.ReadLine();
+                                }
+                                else
+                                {
+                                    Console.WriteLine("Den är tom...");
+                                    Console.ReadLine();
+                                }
+                            }
+                            else if (objStr2 == "ficka")
+                            {
+                                if (Player.Objects.ContainsKey(objStr1))
+                                {
+                                    Console.WriteLine(
+                                        Act.Inspect(Player.Objects[objStr1]));
+                                    Console.ReadLine();
+                                }
+                                else
+                                {
+                                    Console.WriteLine($"Du har ingen {objStr1} i ficka...");
+                                    Console.ReadLine();
+                                }
                             }
                             else
                             {
-                                Console.WriteLine($"Du ser ingen {objStr1}");
-                                Console.ReadLine();
+                                if (currentRoom.Objects.ContainsKey(objStr1))
+                                {
+                                    Console.WriteLine(
+                                        Act.Inspect(currentRoom.Objects[objStr1]));
+                                    Console.ReadLine();
+                                }
+                                else
+                                {
+                                    Console.WriteLine($"Du ser ingen {objStr1}");
+                                    Console.ReadLine();
+                                }
                             }
+
+                            
                         }
                         else
                         {
@@ -386,7 +508,15 @@ namespace AdventureGame.AdventureData
                             }
                             else
                             {
-                                Act.Go(Player, currentRoom, walkDirection);
+                                if (Act.Go(Player, currentRoom, walkDirection))
+                                {
+                                    continue;
+                                }
+                                else
+                                {
+                                    Console.WriteLine("Du slog i en vägg...");
+                                    Console.ReadLine();
+                                }
                             }
                         }
                         else
@@ -407,9 +537,8 @@ namespace AdventureGame.AdventureData
                             Console.WriteLine($"Du tog {Player.Objects[objStr1].Name}");
                             Console.ReadLine();
                         }
-
                         // Om spelaren vill ta ett objekt i rummet
-                        if (currentRoom.Objects.TryGetValue(objStr1, out GameObject takeObject))
+                        else if (currentRoom.Objects.TryGetValue(objStr1, out GameObject takeObject))
                         {
                             Act.Get(Player, takeObject);
                             Console.WriteLine($"Du tog {takeObject.Name}");

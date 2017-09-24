@@ -9,8 +9,8 @@ namespace AdventureGame.AdventureData.Interact
     {
         public static void Get(Player player, GameObject obj)
         {
-            player.Objects.Add(obj.Name, obj as Object);
-            player.PlayerLocation.Objects.Remove(obj.Name);
+            player.Objects.Add(obj.Key, obj as Object);
+            player.PlayerLocation.Objects.Remove(obj.Key);
         }
         public static bool Get(Player player, string objToGet, string objGetFrom)
         {
@@ -18,8 +18,8 @@ namespace AdventureGame.AdventureData.Interact
             {
                 if ((container as ObjectContainer).Objects.TryGetValue(objToGet, out GameObject obj))
                 {
-                    player.Objects.Add(obj.Name, obj as Object);
-                    (container as ObjectContainer).Objects.Remove(obj.Name);
+                    player.Objects.Add(obj.Key, obj as Object);
+                    (container as ObjectContainer).Objects.Remove(obj.Key);
                     return true;
                 }
             }
@@ -28,10 +28,10 @@ namespace AdventureGame.AdventureData.Interact
 
         public static bool Drop(Player player, GameObject obj, Room room)
         {
-            if (player.Objects.ContainsKey(obj.Name) && !room.Objects.ContainsKey(obj.Name))
+            if (player.Objects.ContainsKey(obj.Key) && !room.Objects.ContainsKey(obj.Key))
             {
-                room.Objects.Add(obj.Name, obj);
-                player.Objects.Remove(obj.Name);
+                room.Objects.Add(obj.Key, obj);
+                player.Objects.Remove(obj.Key);
                 return true;
             }
             return false;
@@ -61,8 +61,8 @@ namespace AdventureGame.AdventureData.Interact
                 }
                 else
                 {
-                    player.PlayerLocation.Objects.Remove(obj2.Name);
-                    player.PlayerLocation.Objects.Add(obj2.Name.ToLower(), obj2.ObjectTransformed);
+                    player.PlayerLocation.Objects.Remove(obj2.Key);
+                    player.PlayerLocation.Objects.Add(obj2.Key.ToLower(), obj2.ObjectTransformed);
                 }
                 return true;
             }
@@ -109,16 +109,16 @@ namespace AdventureGame.AdventureData.Interact
             return obj.Description;
         }
 
-        public static void Go(Player player, Room room, Direction direction)
+        public static bool Go(Player player, Room room, Direction direction)
         {
             if (room.TryFindExitFromDirection(room, direction, out Exit exit))
             {
                 exit.GoThrough(player);
+                return true;
             }
             else
             {
-                Console.WriteLine("Du slog i en vägg...");
-                Console.ReadLine();
+                return false;
             }
         }
 
