@@ -3,10 +3,12 @@
     public enum Action
     {
         Titta,
+        Inspektera,
         Använd,
         Släpp,
         Gå,
-        Ta
+        Ta,
+        Avsluta
     }
 
 }

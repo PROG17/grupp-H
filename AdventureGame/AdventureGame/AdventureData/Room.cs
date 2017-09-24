@@ -20,6 +20,7 @@ namespace AdventureGame.AdventureData
 
         public bool TryFindExitFromDirection(Room room, Direction key, out Exit exit)
         {
+            exit = null;
             foreach (var e in room.Exits)
             {
                 if (e.Value.DirectionalPosition == key)

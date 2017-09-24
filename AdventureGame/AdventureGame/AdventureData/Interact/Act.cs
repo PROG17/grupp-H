@@ -26,10 +26,16 @@ namespace AdventureGame.AdventureData.Interact
             return false;
         }
 
-        public static void Drop(Player player, Object obj, Room room)
+        public static bool Drop(Player player, GameObject obj, Room room)
         {
-            room.Objects.Add(obj.Name, obj);
-            player.Objects.Remove(obj.Name);
+            if (player.Objects.ContainsKey(obj.Name) && !room.Objects.ContainsKey(obj.Name))
+            {
+                room.Objects.Add(obj.Name, obj);
+                player.Objects.Remove(obj.Name);
+                return true;
+            }
+            return false;
+
         }
 
         public static bool Use(Player player, GameObject obj1, GameObject obj2)
@@ -73,6 +79,7 @@ namespace AdventureGame.AdventureData.Interact
                 {
                     if ((obj as ObjectContainer).Objects.Count > 0)
                     {
+                        returnString = "Du tittar i den och ser...\n";
                         foreach (var o in (obj as ObjectContainer).Objects)
                         {
                             returnString += o.Value.Name + "\n";
@@ -91,10 +98,15 @@ namespace AdventureGame.AdventureData.Interact
             }
             else if (preposition == Preposition.På)
             {
-                return obj.Description;
+                return obj.Name;
             }
 
             return "Jag förstod inte vad du menade...";
+        }
+
+        public static string Inspect(GameObject obj)
+        {
+            return obj.Description;
         }
 
         public static void Go(Player player, Room room, Direction direction)
@@ -112,15 +124,15 @@ namespace AdventureGame.AdventureData.Interact
 
         public static bool IsPrepositionEnum(string str)
         {
-            return Preposition.TryParse(str, true, out Preposition prep);
+            return Enum.TryParse(str, true, out Preposition prep);
         }
         public static bool IsDirectionEnum(string str)
         {
-            return Direction.TryParse(str, true, out Direction dir);
+            return Enum.TryParse(str, true, out Direction dir);
         }
         public static bool IsActionEnum(string str)
         {
-            return Action.TryParse(str, true, out Action act);
+            return Enum.TryParse(str, true, out Action act);
         }
     }
 }
