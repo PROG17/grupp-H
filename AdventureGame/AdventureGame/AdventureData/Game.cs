@@ -31,14 +31,14 @@ namespace AdventureGame.AdventureData
                 Exits = new Dictionary<string, Exit>(),
                 IsEndPoint = false,
             };
-            var room1 = new Room
+            var rumTillÖst = new Room
             {
                 Name = "Gammalt badrum",
                 Description = "Du är i ett gammalt, sedan länge oanvänt, badrum. Det är svart mögel på väggarna",
                 Exits = new Dictionary<string, Exit>(),
                 IsEndPoint = false
             };
-            var room2 = new Room
+            var rumTillVäst = new Room
             {
                 Name = "Maskinrum",
                 Description = "Du är i ett bullrigt maskinrum. Det luktar diesel...",
@@ -83,7 +83,7 @@ namespace AdventureGame.AdventureData
             {
                 Name = "en plåtdörr",
                 Description = "en bucklig plåtdörr",
-                GoesTo = room1,
+                GoesTo = rumTillÖst,
                 IsLocked = false,
                 DirectionalPosition = Direction.Öst,
             };
@@ -99,7 +99,7 @@ namespace AdventureGame.AdventureData
             {
                 Name = "ett hål i väggen",
                 Description = "ett stort hål i väggen, förmodligen en misslyckad renovering...",
-                GoesTo = room2,
+                GoesTo = rumTillVäst,
                 IsLocked = false,
                 DirectionalPosition = Direction.Väst,
             };
@@ -143,7 +143,6 @@ namespace AdventureGame.AdventureData
                 Name = "Fredrik Haglund",
                 Description = "En lärare på nackademin i sina bästa år. ",
                 CanUseWith = "en hammare",
-                ObjectTransformed = null,
                 DirectionalPosition = Direction.Norr
             };
             var argaFredrik = new Object
@@ -155,6 +154,7 @@ namespace AdventureGame.AdventureData
                 ObjectTransformed = fredrik,
                 DirectionalPosition = Direction.Norr
             };
+            fredrik.ObjectTransformed = argaFredrik;
 
             var bokhylla = new Object
             {
@@ -201,20 +201,20 @@ namespace AdventureGame.AdventureData
             start.Objects.Add(dorr3.Key.ToLower(), dorr3);
             start.Exits.Add(dorr5.Key.ToLower(), dorr5);
             start.Objects.Add(dorr5.Key.ToLower(), dorr5);
-            room1.Exits.Add(dorr4.Key.ToLower(), dorr4);
-            room1.Objects.Add(dorr4.Key.ToLower(), dorr4);
-            room1.Objects.Add(bokhylla.Key.ToLower(), bokhylla);
-            room2.Exits.Add(dorr6.Key.ToLower(), dorr6);
-            room2.Objects.Add(dorr6.Key.ToLower(), dorr6);
-            room2.Objects.Add(soptunna.Key.ToLower(), soptunna);
-            room3.Exits.Add(dorr2.Key.ToLower(), dorr2);
-            room3.Objects.Add(dorr2.Key.ToLower(), dorr2);
+            rumTillÖst.Exits.Add(dorr4.Key.ToLower(), dorr4);
+            rumTillÖst.Objects.Add(dorr4.Key.ToLower(), dorr4);
+            rumTillÖst.Objects.Add(bokhylla.Key.ToLower(), bokhylla);
+            rumTillÖst.Objects.Add(fredrik.Key.ToLower(), fredrik);
+            rumTillVäst.Exits.Add(dorr6.Key.ToLower(), dorr6);
+            rumTillVäst.Objects.Add(dorr6.Key.ToLower(), dorr6);
+            rumTillVäst.Objects.Add(soptunna.Key.ToLower(), soptunna);
+            end.Exits.Add(dorr2.Key.ToLower(), dorr2);
+            end.Objects.Add(dorr2.Key.ToLower(), dorr2);
 
             Rooms.Add("start", start);
-            //Rooms.Add("end", end);
-            Rooms.Add("rum1", room1);
-            Rooms.Add("rum2", room2);
-            Rooms.Add("rum3", room3);
+            Rooms.Add("end", end);
+            Rooms.Add("rum1", rumTillÖst);
+            Rooms.Add("rum2", rumTillVäst);
 
         }
 
