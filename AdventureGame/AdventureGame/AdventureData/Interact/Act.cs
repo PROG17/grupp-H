@@ -119,13 +119,32 @@ namespace AdventureGame.AdventureData.Interact
             }
         }
 
-        public static string Talk(GameObject obj)
+        public static string Talk(Person obj)
         {
             if (obj.Dialog != null)
             {
-                return obj.Dialog;
+                return $"\"{obj.Dialog}\"";
             }
             return "Den svarade inte...";
+        }
+
+        public static void Hit(Player player, GameObject objToUse, GameObject objToHit)
+        {
+            if (objToHit.IsHitable)
+            {
+                if (objToHit is Person)
+                {
+                    if ((objToHit as Person).HitsBack)
+                    {
+                        Console.WriteLine($"{objToHit.Name} slog tillbaka och du dog...");
+                        player.IsAlive = false;
+                    }
+                    else
+                    {
+                        Console.WriteLine($"{objToHit.Name} tog smällen och tittar besviket på dig...");
+                    }
+                }
+            }
         }
 
         public static bool IsPrepositionEnum(string str)

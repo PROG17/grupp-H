@@ -147,6 +147,8 @@ namespace AdventureGame.AdventureData
                 Description = "En lärare på nackademin i sina bästa år. ",
                 CanUseWith = {"en hammare"},
                 DirectionalPosition = Direction.Norr,
+                Dialog = "Åh vad gott det skulle vara med en kopp kaffe...",
+                IsHitable = true,
                 DropsItemOnUse = true
             };
             var argaFredrik = new Person
@@ -156,6 +158,8 @@ namespace AdventureGame.AdventureData
                               "så loggas ditt namn och mailas efter programkörning till Fredrik.",
                 CanUseWith = {kaffe.Name},
                 ObjectTransformed = fredrik,
+                IsHitable =  true,
+                HitsBack = true,
                 DirectionalPosition = Direction.Norr,
                 Dialog = "Din idiot...Ge mig kaffe annars jävlar!"
             };
@@ -648,10 +652,25 @@ namespace AdventureGame.AdventureData
                             }
                         }
                         break;
+                    case Action.Slå:
+                        if (Player.Objects.TryGetValue(objStr1, out GameObject hitObj) &&
+                            currentRoom.Objects.TryGetValue(objStr2, out GameObject objToHit))
+                        {
+                            
+                        }
+                        break;
                     case Action.Prata:
                         if (currentRoom.Objects.TryGetValue(objStr1, out GameObject dialogObj))
                         {
-                            Console.WriteLine(Act.Talk(dialogObj));
+                            if (dialogObj is Person)
+                            {
+                                Console.WriteLine(Act.Talk(dialogObj as Person));
+                            }
+                            else
+                            {
+                                Console.WriteLine("Den verkar inte kunna prata...");
+                            }
+                            
                         }
                         else
                         {
