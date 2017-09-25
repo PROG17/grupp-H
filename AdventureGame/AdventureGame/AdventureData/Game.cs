@@ -201,13 +201,12 @@ namespace AdventureGame.AdventureData
             start.Objects.Add(dorr3.Key.ToLower(), dorr3);
             start.Exits.Add(dorr5.Key.ToLower(), dorr5);
             start.Objects.Add(dorr5.Key.ToLower(), dorr5);
-            rumTillÖst.Exits.Add(dorr4.Key.ToLower(), dorr4);
-            rumTillÖst.Objects.Add(dorr4.Key.ToLower(), dorr4);
-            rumTillÖst.Objects.Add(bokhylla.Key.ToLower(), bokhylla);
-            rumTillÖst.Objects.Add(fredrik.Key.ToLower(), fredrik);
-            rumTillVäst.Exits.Add(dorr6.Key.ToLower(), dorr6);
-            rumTillVäst.Objects.Add(dorr6.Key.ToLower(), dorr6);
-            rumTillVäst.Objects.Add(soptunna.Key.ToLower(), soptunna);
+            room1.Exits.Add(dorr4.Key.ToLower(), dorr4);
+            room1.Objects.Add(dorr4.Key.ToLower(), dorr4);
+            room1.Objects.Add(bokhylla.Key.ToLower(), bokhylla);
+            room2.Exits.Add(dorr6.Key.ToLower(), dorr6);
+            room2.Objects.Add(dorr6.Key.ToLower(), dorr6);
+            room2.Objects.Add(soptunna.Key.ToLower(), soptunna);
             end.Exits.Add(dorr2.Key.ToLower(), dorr2);
             end.Objects.Add(dorr2.Key.ToLower(), dorr2);
 
