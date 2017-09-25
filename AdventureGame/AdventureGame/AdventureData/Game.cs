@@ -135,7 +135,7 @@ namespace AdventureGame.AdventureData
             {
                 Name = "kaffe",
                 Description = "En kopp kaffe med lagom mängd mjölk. Sägs kunna blidka den argaste läraren.",
-                CanUseWith = "fredrik",
+                CanUseWith = {"fredrik"},
                 ObjectTransformed = null,
                 DirectionalPosition = null,
             };
