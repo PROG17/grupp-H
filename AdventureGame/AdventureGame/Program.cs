@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Media;
 using System.Security.Permissions;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,6 +20,10 @@ namespace AdventureGame
 
             Player player = game.Player;
             Room currentRoom = player.PlayerLocation;
+
+            //SoundPlayer Music = new SoundPlayer();
+            //Music.SoundLocation = AppDomain.CurrentDomain.BaseDirectory + "\\BeepBox-Song.wav";
+            //Music.Play();
 
             bool isPlaying = true;
             while (isPlaying)

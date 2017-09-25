@@ -52,6 +52,11 @@ namespace AdventureGame.AdventureData
                 Exits = new Dictionary<string, Exit>(),
                 IsEndPoint = false
             };
+            var room4 = new Room
+            {
+                Name = "Ett slitet kök",
+                Description = "
+            };
             var end = new Room
             {
                 Name = "En lektionssal",
