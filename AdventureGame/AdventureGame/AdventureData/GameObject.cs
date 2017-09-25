@@ -17,6 +17,7 @@ namespace AdventureGame.AdventureData
         public string Dialog { get; set; }
         public bool IsGetable { get; set; } = false;
         public virtual GameObject ObjectTransformed { get; set; }
+        public bool DropsItemOnUse { get; set; }
 
         public GameObject()
         {

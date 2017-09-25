@@ -128,7 +128,8 @@ namespace AdventureGame.AdventureData
                 Description = "en stor tunna i trä och gjutjärn. Tunnan går inte att öppna utan något verktyg...",
                 CanUseWith = { "en hammare"}, 
                 ObjectTransformed = trasigTunna,
-                DirectionalPosition = null
+                DirectionalPosition = null,
+                IsGetable = false
             };
 
             var kaffe = new Object
@@ -140,14 +141,15 @@ namespace AdventureGame.AdventureData
                 DirectionalPosition = null,
             };
             
-            var fredrik = new Object
+            var fredrik = new Person
             {
                 Name = "Fredrik",
                 Description = "En lärare på nackademin i sina bästa år. ",
                 CanUseWith = {"en hammare"},
-                DirectionalPosition = Direction.Norr
+                DirectionalPosition = Direction.Norr,
+                DropsItemOnUse = true
             };
-            var argaFredrik = new Object
+            var argaFredrik = new Person
             {
                 Name = "en arg Fredrik",
                 Description = "En arg Fredrik. Den arga fredrik håller en dator i handen och håller fingret mot en knapp. Om du gjort Fredrik arg " +
@@ -193,8 +195,17 @@ namespace AdventureGame.AdventureData
                 DirectionalPosition = null,
                 ObjectTransformed = null
             };
+            var skruvmejsel = new Object
+            {
+                Name = "en skruvmejsel",
+                Description = "en skruvmejsel med plasthandtag",
+                CanUseWith = {},
+                DirectionalPosition = null,
+                ObjectTransformed = null
+            };
 
             Player.PlayerLocation = start;
+            fredrik.Objects.Add(skruvmejsel.Key.ToLower(), skruvmejsel);
             trasigTunna.Objects.Add(nyckel.Key.ToLower(), nyckel);
             soptunna.Objects.Add(hammer.Key.ToLower(), hammer);
             start.Objects.Add(dorr.Key.ToLower(), dorr);
@@ -207,6 +218,7 @@ namespace AdventureGame.AdventureData
             rumTillÖst.Exits.Add(dorr4.Key.ToLower(), dorr4);
             rumTillÖst.Objects.Add(dorr4.Key.ToLower(), dorr4);
             rumTillÖst.Objects.Add(bokhylla.Key.ToLower(), bokhylla);
+            rumTillÖst.Objects.Add(fredrik.Key.ToLower(), fredrik);
             rumTillVäst.Exits.Add(dorr6.Key.ToLower(), dorr6);
             rumTillVäst.Objects.Add(dorr6.Key.ToLower(), dorr6);
             rumTillVäst.Objects.Add(soptunna.Key.ToLower(), soptunna);
@@ -489,6 +501,16 @@ namespace AdventureGame.AdventureData
                                 {
                                     Console.WriteLine("Det gick!");
 
+                                    if (obj2 is GameObjectsHolder)
+                                    {
+                                        if ((obj2 as GameObjectsHolder).DropsItemOnUse)
+                                        {
+                                            if ((obj2 as GameObjectsHolder).DropFirstItem(currentRoom))
+                                            {
+                                                Console.WriteLine("Någonting ramlade till marken...");
+                                            }
+                                        }
+                                    }
                                 }
                                 else
                                 {

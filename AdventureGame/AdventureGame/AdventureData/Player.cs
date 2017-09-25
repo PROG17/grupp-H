@@ -10,6 +10,8 @@ namespace AdventureGame.AdventureData
     {
         public Room PlayerLocation { get; set; }
 
+        public int DeathCounter { get; set; }
+
         public override string GetContentAsString()
         {
             if (Objects.Count != 0)
