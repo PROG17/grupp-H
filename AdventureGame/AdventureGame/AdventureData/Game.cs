@@ -50,13 +50,15 @@ namespace AdventureGame.AdventureData
                 Name = "Baksidan av huset",
                 Description = "Du står på baksidan av huset, luften är frisk",
                 Exits = new Dictionary<string, Exit>(),
-                IsEndPoint = true
+                IsEndPoint = false
             };
             var end = new Room
             {
                 Name = "En lektionssal",
                 Description = "En gammal lektionssal med dålig ventilation. I ena hörnet ligger resterna " +
-                              "av den senaste klassen som inte uplevde någon aha uplevelse."
+                              "av den senaste klassen som inte uplevde någon aha uplevelse.",
+                Exits = new Dictionary<string, Exit>(),
+                IsEndPoint = true
             };
 
             // Ett gäng dörrar
@@ -201,12 +203,12 @@ namespace AdventureGame.AdventureData
             start.Objects.Add(dorr3.Key.ToLower(), dorr3);
             start.Exits.Add(dorr5.Key.ToLower(), dorr5);
             start.Objects.Add(dorr5.Key.ToLower(), dorr5);
-            room1.Exits.Add(dorr4.Key.ToLower(), dorr4);
-            room1.Objects.Add(dorr4.Key.ToLower(), dorr4);
-            room1.Objects.Add(bokhylla.Key.ToLower(), bokhylla);
-            room2.Exits.Add(dorr6.Key.ToLower(), dorr6);
-            room2.Objects.Add(dorr6.Key.ToLower(), dorr6);
-            room2.Objects.Add(soptunna.Key.ToLower(), soptunna);
+            rumTillÖst.Exits.Add(dorr4.Key.ToLower(), dorr4);
+            rumTillÖst.Objects.Add(dorr4.Key.ToLower(), dorr4);
+            rumTillÖst.Objects.Add(bokhylla.Key.ToLower(), bokhylla);
+            rumTillVäst.Exits.Add(dorr6.Key.ToLower(), dorr6);
+            rumTillVäst.Objects.Add(dorr6.Key.ToLower(), dorr6);
+            rumTillVäst.Objects.Add(soptunna.Key.ToLower(), soptunna);
             end.Exits.Add(dorr2.Key.ToLower(), dorr2);
             end.Objects.Add(dorr2.Key.ToLower(), dorr2);
 
