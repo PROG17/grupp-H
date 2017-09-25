@@ -53,7 +53,7 @@ namespace AdventureGame.AdventureData.Interact
             //    }
             //}
 
-            if (obj1.CanUseWith == obj2.Name)
+            if (obj1.CanUseWith.Contains(obj2.Name))
             {
                 if ((obj2 is Exit))
                 {
@@ -62,7 +62,7 @@ namespace AdventureGame.AdventureData.Interact
                 else
                 {
                     player.PlayerLocation.Objects.Remove(obj2.Key);
-                    player.PlayerLocation.Objects.Add(obj2.Key.ToLower(), obj2.ObjectTransformed);
+                    player.PlayerLocation.Objects.Add(obj2.Key, obj2.ObjectTransformed);
                 }
                 return true;
             }

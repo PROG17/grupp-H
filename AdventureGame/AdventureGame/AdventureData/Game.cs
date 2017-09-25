@@ -118,7 +118,7 @@ namespace AdventureGame.AdventureData
             {
                 Name = "en tunna",
                 Description = "en stor tunna i trä och gjutjärn. Tunnan går inte att öppna utan något verktyg...",
-                CanUseWith = "en hammare",
+                CanUseWith = { "en hammare"}, 
                 ObjectTransformed = trasigTunna,
                 DirectionalPosition = null
             };
@@ -134,17 +134,17 @@ namespace AdventureGame.AdventureData
             
             var fredrik = new Object
             {
-                Name = "Fredrik Haglund",
+                Name = "Fredrik",
                 Description = "En lärare på nackademin i sina bästa år. ",
-                CanUseWith = "en hammare",
+                CanUseWith = {"en hammare"},
                 DirectionalPosition = Direction.Norr
             };
             var argaFredrik = new Object
             {
-                Name = "Arg Fredrik Haglund",
+                Name = "en arg Fredrik",
                 Description = "En arg Fredrik. Den arga fredrik håller en dator i handen och håller fingret mot en knapp. Om du gjort Fredrik arg " +
                               "så loggas ditt namn och mailas efter programkörning till Fredrik.",
-                CanUseWith = "kaffe",
+                CanUseWith = {kaffe.Name},
                 ObjectTransformed = fredrik,
                 DirectionalPosition = Direction.Norr
             };
@@ -154,7 +154,7 @@ namespace AdventureGame.AdventureData
             {
                 Name = "en bokhylla",
                 Description = "En bokhylla med några mögliga böcker...",
-                CanUseWith = "en hammare",
+                CanUseWith = {"en hammare"},
                 ObjectTransformed = null,
                 DirectionalPosition = Direction.Syd
             };
@@ -171,7 +171,7 @@ namespace AdventureGame.AdventureData
             {
                 Name = "en nyckel",
                 Description = "En stor rostig nyckel",
-                CanUseWith = dorr.Name,
+                CanUseWith = {dorr.Name},
                 DirectionalPosition = null,
                 ObjectTransformed = null
             };
@@ -180,7 +180,7 @@ namespace AdventureGame.AdventureData
             {
                 Name = "en hammare",
                 Description = "en robust hammare",
-                CanUseWith = tunna.Name,
+                CanUseWith = {tunna.Name, fredrik.Name, bokhylla.Name},
                 DirectionalPosition = null,
                 ObjectTransformed = null
             };
