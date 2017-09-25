@@ -192,6 +192,11 @@ namespace AdventureGame.AdventureData
                 DirectionalPosition = null,
                 ObjectTransformed = null
             };
+            var elskap = new Object
+            {
+                Name = "Elskåp",
+                Description = ""
+            };
 
             Player.PlayerLocation = start;
             trasigTunna.Objects.Add(nyckel.Key.ToLower(), nyckel);
