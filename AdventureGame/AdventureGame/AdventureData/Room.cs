@@ -39,6 +39,9 @@ namespace AdventureGame.AdventureData
 
             sb.AppendLine(this.Description);
 
+            List<string> groundItems = new List<string>();
+
+
             foreach (var gameObject in this.Objects)
             {
                 if (gameObject.Value.DirectionalPosition != null)
@@ -47,8 +50,12 @@ namespace AdventureGame.AdventureData
                 }
                 else
                 {
-                    sb.AppendLine($"På marken ser du {gameObject.Value.Name}");
+                    groundItems.Add($"På marken ser du {gameObject.Value.Name}");
                 }
+            }
+            foreach (var groundItem in groundItems)
+            {
+                sb.AppendLine(groundItem);
             }
 
             return sb.ToString();

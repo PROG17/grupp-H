@@ -111,7 +111,7 @@ namespace AdventureGame.AdventureData
             {
                 Name = "en trasig tunna",
                 Description = "en trasig tunna, träflisor och gjutjärnsringar. Kanske ligger det något bland spillrorna",
-                DirectionalPosition = Direction.Syd,
+                DirectionalPosition = null,
                 ObjectTransformed = null
             };
             var tunna = new Object
@@ -120,7 +120,7 @@ namespace AdventureGame.AdventureData
                 Description = "en stor tunna i trä och gjutjärn. Tunnan går inte att öppna utan något verktyg...",
                 CanUseWith = "en hammare",
                 ObjectTransformed = trasigTunna,
-                DirectionalPosition = Direction.Syd
+                DirectionalPosition = null
             };
             var bokhylla = new Object
             {
