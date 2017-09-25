@@ -8,6 +8,12 @@ namespace AdventureGame.AdventureData
 {
     public class ObjectContainer : GameObjectsHolder
     {
+        public override string GetContentAsString()
+        {
+            string returnString = "Du tittar i den och ser:\n";
+            return returnString + base.GetContentAsString();
+        }
+
         public ObjectContainer()
         {
             Objects = new Dictionary<string, GameObject>();

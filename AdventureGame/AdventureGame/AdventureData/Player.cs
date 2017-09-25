@@ -10,13 +10,13 @@ namespace AdventureGame.AdventureData
     {
         public Room PlayerLocation { get; set; }
 
-        public override string GetDescriptionWithContent()
+        public override string GetContentAsString()
         {
             if (Objects.Count != 0)
             {
                 StringBuilder sb = new StringBuilder();
                 sb.AppendLine("I din ficka ligger det:\n");
-                sb.Append(base.GetDescriptionWithContent());
+                sb.Append(base.GetContentAsString());
                 return sb.ToString();
             }
             else

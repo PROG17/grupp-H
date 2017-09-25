@@ -33,7 +33,7 @@ namespace AdventureGame.AdventureData
             return false;
         }
 
-        public override string GetDescriptionWithContent()
+        public override string GetContentAsString()
         {
             StringBuilder sb = new StringBuilder();
 

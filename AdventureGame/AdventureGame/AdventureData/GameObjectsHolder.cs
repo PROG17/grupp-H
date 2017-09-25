@@ -10,11 +10,9 @@ namespace AdventureGame.AdventureData
     {
         public virtual Dictionary<string, GameObject> Objects { get; set; }
 
-        public virtual string GetDescriptionWithContent()
+        public virtual string GetContentAsString()
         {
             StringBuilder sb = new StringBuilder();
-
-            sb.AppendLine(this.Description);
 
             foreach (var gameObject in Objects)
             {

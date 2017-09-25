@@ -283,7 +283,7 @@ namespace AdventureGame.AdventureData
         public bool Prompt()
         {
             Room currentRoom = Player.PlayerLocation;
-            Console.WriteLine(currentRoom.GetDescriptionWithContent());
+            Console.WriteLine(currentRoom.GetContentAsString());
 
             while (true)
             {
@@ -359,7 +359,7 @@ namespace AdventureGame.AdventureData
                             else if (objStr1.Contains("ficka"))
                             {
                                 //Console.WriteLine(Player.LookInPocket());
-                                Console.WriteLine(Player.GetDescriptionWithContent());
+                                Console.WriteLine(Player.GetContentAsString());
 
                             }
                             else
@@ -371,7 +371,7 @@ namespace AdventureGame.AdventureData
                         // Om användaren bara skrivit "Titta" så ges en beskrivning av rummet
                         else
                         {
-                            Console.WriteLine(currentRoom.GetDescriptionWithContent());
+                            Console.WriteLine(currentRoom.GetContentAsString());
 
                         }
 
@@ -398,7 +398,7 @@ namespace AdventureGame.AdventureData
                             else if (objStr1.Contains("ficka"))
                             {
                                 //Console.WriteLine(Player.LookInPocket());
-                                Console.WriteLine(Player.GetDescriptionWithContent());
+                                Console.WriteLine(Player.GetContentAsString());
 
                             }
                             else if (objStr2 == "ficka")
@@ -517,7 +517,7 @@ namespace AdventureGame.AdventureData
                                 {
                                     currentRoom = Player.PlayerLocation;
                                     Console.Clear();
-                                    Console.WriteLine(currentRoom.GetDescriptionWithContent());
+                                    Console.WriteLine(currentRoom.GetContentAsString());
                                 }
                                 else
                                 {

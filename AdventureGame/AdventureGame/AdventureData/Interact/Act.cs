@@ -77,19 +77,7 @@ namespace AdventureGame.AdventureData.Interact
             {
                 if ((obj as ObjectContainer) != null)
                 {
-                    if ((obj as ObjectContainer).Objects.Count > 0)
-                    {
-                        returnString = "Du tittar i den och ser...\n";
-                        foreach (var o in (obj as ObjectContainer).Objects)
-                        {
-                            returnString += o.Value.Name + "\n";
-                        }
-                        return returnString;
-                    }
-                    else
-                    {
-                        return "Den är tom...";
-                    }
+                    return (obj as ObjectContainer).GetContentAsString();
                 }
                 else
                 {
