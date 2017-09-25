@@ -283,7 +283,7 @@ namespace AdventureGame.AdventureData
         public bool Prompt()
         {
             Room currentRoom = Player.PlayerLocation;
-            Console.WriteLine(currentRoom.GetRoomDescriptionWithContent());
+            Console.WriteLine(currentRoom.GetDescriptionWithContent());
 
             while (true)
             {
@@ -294,9 +294,11 @@ namespace AdventureGame.AdventureData
                     Console.WriteLine("Grattis! Du klarade spelet!");
                     return false;
                 }
-                Console.Write("Vad vill du göra? ");
+
+                Console.Write("\nVad vill du göra? ");
                 // Spelare matar in handling
                 string input = Console.ReadLine();
+                Console.WriteLine();
 
                 // Splittar strängen inför validering och tilldelning
                 var split = input.ToLower().Split(' ');
@@ -307,7 +309,7 @@ namespace AdventureGame.AdventureData
                 if (!Game.ValidateSentence(split, out string[] sentence))
                 {
                     Console.WriteLine("Jag förstod inte vad du menade...");
-                    Console.ReadLine();
+
                     continue;
                 }
 
@@ -340,7 +342,7 @@ namespace AdventureGame.AdventureData
                                         ? roomobj.Name.ToLower()
                                         : "en vägg";
                                 Console.WriteLine($"{startString}{writeOut}");
-                                Console.ReadLine();
+
                             }
                         }
                         // Om användaren vill titta på ett objekt
@@ -352,24 +354,25 @@ namespace AdventureGame.AdventureData
                                 Console.WriteLine(
                                     Act.Look(currentRoom.Objects[objStr1],
                                         (Preposition)Enum.Parse(typeof(Preposition), preposStr, true)));
-                                Console.ReadLine();
+
                             }
                             else if (objStr1.Contains("ficka"))
                             {
-                                Console.WriteLine(Player.LookInPocket());
-                                Console.ReadLine();
+                                //Console.WriteLine(Player.LookInPocket());
+                                Console.WriteLine(Player.GetDescriptionWithContent());
+
                             }
                             else
                             {
                                 Console.WriteLine($"Du ser ingen {objStr1}");
-                                Console.ReadLine();
+
                             }
                         }
                         // Om användaren bara skrivit "Titta" så ges en beskrivning av rummet
                         else
                         {
-                            Console.WriteLine(currentRoom.GetRoomDescriptionWithContent());
-                            Console.ReadLine();
+                            Console.WriteLine(currentRoom.GetDescriptionWithContent());
+
                         }
 
                         break;
@@ -384,18 +387,19 @@ namespace AdventureGame.AdventureData
                                 {
                                     Console.WriteLine(
                                         Act.Inspect(currentRoom.Objects[objStr1]));
-                                    Console.ReadLine();
+
                                 }
                                 else
                                 {
                                     Console.WriteLine($"Du ser ingen {objStr1}");
-                                    Console.ReadLine();
+
                                 }
                             }
                             else if (objStr1.Contains("ficka"))
                             {
-                                Console.WriteLine(Player.LookInPocket());
-                                Console.ReadLine();
+                                //Console.WriteLine(Player.LookInPocket());
+                                Console.WriteLine(Player.GetDescriptionWithContent());
+
                             }
                             else if (objStr2 == "ficka")
                             {
@@ -403,12 +407,12 @@ namespace AdventureGame.AdventureData
                                 {
                                     Console.WriteLine(
                                         Act.Inspect(Player.Objects[objStr1]));
-                                    Console.ReadLine();
+
                                 }
                                 else
                                 {
                                     Console.WriteLine($"Du har ingen {objStr1} i ficka...");
-                                    Console.ReadLine();
+
                                 }
                             }
                             else
@@ -417,21 +421,21 @@ namespace AdventureGame.AdventureData
                                 {
                                     Console.WriteLine(
                                         Act.Inspect(currentRoom.Objects[objStr1]));
-                                    Console.ReadLine();
+
                                 }
                                 else
                                 {
                                     Console.WriteLine($"Du ser ingen {objStr1}");
-                                    Console.ReadLine();
+
                                 }
                             }
 
-                            
+
                         }
                         else
                         {
                             Console.WriteLine(currentRoom.Description);
-                            Console.ReadLine();
+
                         }
 
                         break;
@@ -447,28 +451,28 @@ namespace AdventureGame.AdventureData
                                 if (Act.Use(Player, obj1, obj2))
                                 {
                                     Console.WriteLine("Det gick!");
-                                    Console.ReadLine();
+
                                 }
                                 else
                                 {
                                     Console.WriteLine("Det gick inte...");
-                                    Console.ReadLine();
+
                                 }
                             }
                             else if (!hasOject1 && !hasObject2)
                             {
                                 Console.WriteLine($"Det finns ingen {objStr1} eller {objStr2}");
-                                Console.ReadLine();
+
                             }
                             else if (!hasObject2)
                             {
                                 Console.WriteLine($"Det finns ingen {objStr2}");
-                                Console.ReadLine();
+
                             }
                             else
                             {
                                 Console.WriteLine($"Du har ingen {objStr1}...");
-                                Console.ReadLine();
+
                             }
                         }
 
@@ -479,12 +483,12 @@ namespace AdventureGame.AdventureData
                             if (Act.Drop(Player, obj, currentRoom))
                             {
                                 Console.WriteLine("Det gick!");
-                                Console.ReadLine();
+
                             }
                             else
                             {
                                 Console.WriteLine("Det gick inte...");
-                                Console.ReadLine();
+
                             }
                         }
                         break;
@@ -493,7 +497,7 @@ namespace AdventureGame.AdventureData
                         if (!Enum.TryParse(directionStr, true, out Direction walkDirection))
                         {
                             Console.WriteLine("Jag förstod inte vad du menade...");
-                            Console.ReadLine();
+
                             Console.Clear();
                             continue;
                         }
@@ -503,7 +507,7 @@ namespace AdventureGame.AdventureData
                             if (walkExit.IsLocked)
                             {
                                 Console.WriteLine("Dörren är låst");
-                                Console.ReadLine();
+
                                 Console.Clear();
                                 continue;
                             }
@@ -513,19 +517,19 @@ namespace AdventureGame.AdventureData
                                 {
                                     currentRoom = Player.PlayerLocation;
                                     Console.Clear();
-                                    Console.WriteLine(currentRoom.GetRoomDescriptionWithContent());
+                                    Console.WriteLine(currentRoom.GetDescriptionWithContent());
                                 }
                                 else
                                 {
                                     Console.WriteLine("Du slog i en vägg...");
-                                    Console.ReadLine();
+
                                 }
                             }
                         }
                         else
                         {
                             Console.WriteLine("Du gick in i en vägg...");
-                            Console.ReadLine();
+
                             continue;
                         }
 
@@ -537,19 +541,19 @@ namespace AdventureGame.AdventureData
                         {
                             Act.Get(Player, objStr1, objStr2);
                             Console.WriteLine($"Du tog {Player.Objects[objStr1].Name}");
-                            Console.ReadLine();
+
                         }
                         // Om spelaren vill ta ett objekt i rummet
                         else if (currentRoom.Objects.TryGetValue(objStr1, out GameObject takeObject))
                         {
                             Act.Get(Player, takeObject);
                             Console.WriteLine($"Du tog {takeObject.Name}");
-                            Console.ReadLine();
+
                         }
                         else
                         {
                             Console.WriteLine($"Det finns ingen {objStr1} här...");
-                            Console.ReadLine();
+
                         }
                         break;
                     case Action.Avsluta:
@@ -561,20 +565,20 @@ namespace AdventureGame.AdventureData
                             if (answer.ToUpper() == "N")
                             {
                                 Console.WriteLine("Okej, spelet fortsätter!");
-                                Console.ReadLine();
+
                                 Console.Clear();
                                 break;
                             }
                             else if (answer.ToUpper() == "J")
                             {
                                 Console.WriteLine("Hej Då!");
-                                Console.ReadLine();
+
                                 return false;
                             }
                             else
                             {
                                 Console.WriteLine("Fel! Vänligen mata in J/N...");
-                                Console.ReadLine();
+
                                 Console.Clear();
                             }
                         }

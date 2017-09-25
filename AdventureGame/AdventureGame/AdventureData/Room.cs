@@ -33,7 +33,7 @@ namespace AdventureGame.AdventureData
             return false;
         }
 
-        public string GetRoomDescriptionWithContent()
+        public override string GetDescriptionWithContent()
         {
             StringBuilder sb = new StringBuilder();
 
