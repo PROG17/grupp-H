@@ -122,6 +122,26 @@ namespace AdventureGame.AdventureData
                 ObjectTransformed = trasigTunna,
                 DirectionalPosition = null
             };
+
+            Object argaFredrik;
+            var fredrik = new Object
+            {
+                Name = "Fredrik Haglund",
+                Description = "En lärare på nackademin i sina bästa år. ",
+                CanUseWith = "en hammare",
+                ObjectTransformed = argaFredrik,
+                DirectionalPosition = Direction.Norr
+            };
+            argaFredrik = new Object
+            {
+                Name = "Arg Fredrik Haglund",
+                Description = "En arg Fredrik. Den arga fredrik håller en dator i handen och håller fingret mot en knapp. Om du gjort Fredrik arg " +
+                              "så loggas ditt namn och mailas efter programkörning till Fredrik.",
+                CanUseWith = "kaffe",
+                ObjectTransformed = fredrik,
+                DirectionalPosition = Direction.Norr
+            };
+
             var bokhylla = new Object
             {
                 Name = "en bokhylla",
