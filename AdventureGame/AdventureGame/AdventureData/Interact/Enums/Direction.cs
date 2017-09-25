@@ -1,10 +1,10 @@
 ﻿namespace AdventureGame.AdventureData
 {
-    public enum Directions
+    public enum Direction
     {
         Norr,
         Öst,
-        väst,
-        syd
+        Väst,
+        Syd
     }
 }

@@ -42,12 +42,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AdventureData\Action.cs" />
-    <Compile Include="AdventureData\Directions.cs" />
+    <Compile Include="AdventureData\Interact\Enums\Action.cs" />
+    <Compile Include="AdventureData\Interact\Enums\Direction.cs" />
+    <Compile Include="AdventureData\Interact\Enums\Preposition.cs" />
     <Compile Include="AdventureData\Exit.cs" />
     <Compile Include="AdventureData\Game.cs" />
     <Compile Include="AdventureData\GameObject.cs" />
-    <Compile Include="AdventureData\GameObjectContainer.cs" />
+    <Compile Include="AdventureData\ObjectContainer.cs" />
     <Compile Include="AdventureData\Interact\Prompt.cs" />
     <Compile Include="AdventureData\Interact\Act.cs" />
     <Compile Include="AdventureData\Interact\Interaction.cs" />

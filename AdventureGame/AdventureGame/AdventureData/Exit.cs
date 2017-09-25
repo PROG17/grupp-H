@@ -12,7 +12,7 @@ namespace AdventureGame.AdventureData
         public Object OpensWith { get; set; }
         public bool IsLocked { get; set; }
 
-        //public Exit(string name, string description, Room goesTo, Object opensWith, Directions inDirection, bool isLocked)
+        //public Exit(string name, string description, Room goesTo, Object opensWith, Direction inDirection, bool isLocked)
         //{
         //    base.Name = name;
         //    base.Description = description;
@@ -24,6 +24,8 @@ namespace AdventureGame.AdventureData
 
         public void GoThrough(Player player)
         {
+            var temp = GoesTo;
+            player.PlayerLocation = null;
             player.PlayerLocation = GoesTo;
         }
     }

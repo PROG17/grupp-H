@@ -8,7 +8,7 @@ namespace AdventureGame.AdventureData
 {
     public class Room : GameObjectsHolder
     {
-        public Dictionary<string,Exit> Exits { get; set; }
+        public Dictionary<string, Exit> Exits { get; set; }
         public bool IsEndPoint { get; set; }
 
         //public Room(string name, string description, bool isEndPoint)
@@ -18,8 +18,9 @@ namespace AdventureGame.AdventureData
         //    IsEndPoint = isEndPoint;
         //}
 
-        public bool TryFindExitFromDirection(Room room, Directions key, out Exit exit)
+        public bool TryFindExitFromDirection(Room room, Direction key, out Exit exit)
         {
+            exit = null;
             foreach (var e in room.Exits)
             {
                 if (e.Value.DirectionalPosition == key)
@@ -32,7 +33,35 @@ namespace AdventureGame.AdventureData
             return false;
         }
 
-        public bool TryFindObjectInDirection(Room room, Directions key, out GameObject objects)
+        public string GetRoomDescriptionWithContent()
+        {
+            StringBuilder sb = new StringBuilder();
+
+            sb.AppendLine(this.Description);
+
+            List<string> groundItems = new List<string>();
+
+
+            foreach (var gameObject in this.Objects)
+            {
+                if (gameObject.Value.DirectionalPosition != null)
+                {
+                    sb.AppendLine($"Åt {gameObject.Value.DirectionalPosition} ser du {gameObject.Value.Name}");
+                }
+                else
+                {
+                    groundItems.Add($"På marken ser du {gameObject.Value.Name}");
+                }
+            }
+            foreach (var groundItem in groundItems)
+            {
+                sb.AppendLine(groundItem);
+            }
+
+            return sb.ToString();
+        }
+
+        public bool TryFindObjectInDirection(Room room, Direction key, out GameObject objects)
         {
             foreach (var obj in room.Objects)
             {
@@ -43,7 +72,7 @@ namespace AdventureGame.AdventureData
                         objects = obj.Value;
                         return true;
                     }
-              
+
 
                 }
                 else if (obj.Value is Exit)
@@ -55,9 +84,9 @@ namespace AdventureGame.AdventureData
                     }
 
                 }
-                else if (obj.Value is GameObjectContainer)
+                else if (obj.Value is ObjectContainer)
                 {
-                    if ((obj.Value as GameObjectContainer).DirectionalPosition == key)
+                    if ((obj.Value as ObjectContainer).DirectionalPosition == key)
                     {
                         objects = obj.Value;
                         return true;

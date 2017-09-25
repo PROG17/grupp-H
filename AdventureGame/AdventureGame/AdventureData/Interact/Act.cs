@@ -9,17 +9,36 @@ namespace AdventureGame.AdventureData.Interact
     {
         public static void Get(Player player, GameObject obj)
         {
-            player.Objects.Add(obj.Name, obj as Object);
-            player.PlayerLocation.Objects.Remove(obj.Name);
+            player.Objects.Add(obj.Key, obj as Object);
+            player.PlayerLocation.Objects.Remove(obj.Key);
         }
-
-        public static void Drop(Player player, Object obj, Room room)
+        public static bool Get(Player player, string objToGet, string objGetFrom)
         {
-            room.Objects.Add(obj.Name, obj);
-            player.Objects.Remove(obj.Name);
+            if (player.PlayerLocation.Objects.TryGetValue(objGetFrom, out GameObject container))
+            {
+                if ((container as ObjectContainer).Objects.TryGetValue(objToGet, out GameObject obj))
+                {
+                    player.Objects.Add(obj.Key, obj as Object);
+                    (container as ObjectContainer).Objects.Remove(obj.Key);
+                    return true;
+                }
+            }
+            return false;
         }
 
-        public static void Use(Player player, GameObject obj1, GameObject obj2)
+        public static bool Drop(Player player, GameObject obj, Room room)
+        {
+            if (player.Objects.ContainsKey(obj.Key) && !room.Objects.ContainsKey(obj.Key))
+            {
+                room.Objects.Add(obj.Key, obj);
+                player.Objects.Remove(obj.Key);
+                return true;
+            }
+            return false;
+
+        }
+
+        public static bool Use(Player player, GameObject obj1, GameObject obj2)
         {
             //if (obj1.CanUseWith == obj2.Name)
             //{
@@ -36,35 +55,84 @@ namespace AdventureGame.AdventureData.Interact
 
             if (obj1.CanUseWith == obj2.Name)
             {
-                player.PlayerLocation.Objects.Remove(obj2.Name);
-                player.PlayerLocation.Objects.Add(obj2.Name.ToLower(), obj2.ObjectTransformed);
-
-                
-
-                if (obj2 is Exit)
+                if ((obj2 is Exit))
                 {
                     (obj2 as Exit).IsLocked = false;
                 }
+                else
+                {
+                    player.PlayerLocation.Objects.Remove(obj2.Key);
+                    player.PlayerLocation.Objects.Add(obj2.Key.ToLower(), obj2.ObjectTransformed);
+                }
+                return true;
             }
+
+            return false;
         }
 
-        public static void Look(GameObject obj)
+        public static string Look(GameObject obj, Preposition preposition)
         {
-            Console.WriteLine(obj.Description);
+            string returnString = "";
+            if (preposition == Preposition.I)
+            {
+                if ((obj as ObjectContainer) != null)
+                {
+                    if ((obj as ObjectContainer).Objects.Count > 0)
+                    {
+                        returnString = "Du tittar i den och ser...\n";
+                        foreach (var o in (obj as ObjectContainer).Objects)
+                        {
+                            returnString += o.Value.Name + "\n";
+                        }
+                        return returnString;
+                    }
+                    else
+                    {
+                        return "Den är tom...";
+                    }
+                }
+                else
+                {
+                    return "Det går inte att titta inuti den";
+                }
+            }
+            else if (preposition == Preposition.På)
+            {
+                return obj.Name;
+            }
+
+            return "Jag förstod inte vad du menade...";
         }
 
-        public static void Go(Player player, Room room, Directions direction)
+        public static string Inspect(GameObject obj)
+        {
+            return obj.Description;
+        }
+
+        public static bool Go(Player player, Room room, Direction direction)
         {
             if (room.TryFindExitFromDirection(room, direction, out Exit exit))
             {
                 exit.GoThrough(player);
+                return true;
             }
             else
             {
-                Console.WriteLine("Du slog i en vägg...");
-                Console.ReadLine();
+                return false;
             }
         }
 
+        public static bool IsPrepositionEnum(string str)
+        {
+            return Enum.TryParse(str, true, out Preposition prep);
+        }
+        public static bool IsDirectionEnum(string str)
+        {
+            return Enum.TryParse(str, true, out Direction dir);
+        }
+        public static bool IsActionEnum(string str)
+        {
+            return Enum.TryParse(str, true, out Action act);
+        }
     }
 }

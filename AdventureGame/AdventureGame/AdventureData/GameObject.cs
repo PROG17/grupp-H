@@ -12,8 +12,17 @@ namespace AdventureGame.AdventureData
     {
         public string Name { get; set; }
         public string Description { get; set; }
-        public Nullable<Directions> DirectionalPosition { get; set; }
+        public Nullable<Direction> DirectionalPosition { get; set; }
         public string CanUseWith { get; set; }
         public GameObject ObjectTransformed { get; set; }
+
+        public string Key
+        {
+            get
+            {
+                var split = Name.Split(' ');
+                return split[split.Length - 1];
+            }
+        }
     }
 }
