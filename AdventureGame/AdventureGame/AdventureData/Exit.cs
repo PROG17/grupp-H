@@ -12,6 +12,10 @@ namespace AdventureGame.AdventureData
         public Object OpensWith { get; set; }
         public bool IsLocked { get; set; }
 
+        public Exit()
+        {
+            IsGetable = false;
+        }
         //public Exit(string name, string description, Room goesTo, Object opensWith, Direction inDirection, bool isLocked)
         //{
         //    base.Name = name;

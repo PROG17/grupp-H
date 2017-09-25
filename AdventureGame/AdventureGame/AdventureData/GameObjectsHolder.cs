@@ -12,14 +12,18 @@ namespace AdventureGame.AdventureData
 
         public virtual string GetContentAsString()
         {
-            StringBuilder sb = new StringBuilder();
-
-            foreach (var gameObject in Objects)
+            if (Objects.Count != 0)
             {
-                sb.AppendLine($"{gameObject.Value.Name}");
-            }
+                StringBuilder sb = new StringBuilder();
 
-            return sb.ToString();
+                foreach (var gameObject in Objects)
+                {
+                    sb.AppendLine($"{gameObject.Value.Name}");
+                }
+
+                return sb.ToString();
+            }
+            else return null;
         }
 
         public GameObjectsHolder()

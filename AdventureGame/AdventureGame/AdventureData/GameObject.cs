@@ -15,6 +15,7 @@ namespace AdventureGame.AdventureData
         public Nullable<Direction> DirectionalPosition { get; set; }
         public string CanUseWith { get; set; }
         public string Dialog { get; set; }
+        public bool IsGetable { get; set; } = false;
         public GameObject ObjectTransformed { get; set; }
 
         public string Key

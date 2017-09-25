@@ -582,8 +582,14 @@ namespace AdventureGame.AdventureData
                         // Om spelaren vill ta ett objekt i rummet
                         else if (currentRoom.Objects.TryGetValue(objStr1, out GameObject takeObject))
                         {
-                            Act.Get(Player, takeObject);
-                            Console.WriteLine($"Du tog {takeObject.Name}");
+                            if (Act.Get(Player, takeObject))
+                            {
+                                Console.WriteLine($"Du tog {takeObject.Name}");
+                            }
+                            else
+                            {
+                                Console.WriteLine($"Det går inte att ta upp den...");
+                            }
 
                         }
                         else
