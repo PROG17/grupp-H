@@ -16,7 +16,7 @@ namespace AdventureGame.AdventureData
         public string CanUseWith { get; set; }
         public string Dialog { get; set; }
         public bool IsGetable { get; set; } = false;
-        public GameObject ObjectTransformed { get; set; }
+        public virtual GameObject ObjectTransformed { get; set; }
 
         public string Key
         {

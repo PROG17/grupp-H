@@ -54,6 +54,7 @@
     <Compile Include="AdventureData\Interact\Interaction.cs" />
     <Compile Include="AdventureData\Object.cs" />
     <Compile Include="AdventureData\GameObjectsHolder.cs" />
+    <Compile Include="AdventureData\Person.cs" />
     <Compile Include="AdventureData\Player.cs" />
     <Compile Include="AdventureData\Room.cs" />
     <Compile Include="AdventureData\RoomList.cs" />

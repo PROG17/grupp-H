@@ -35,12 +35,12 @@ namespace AdventureGame.AdventureData.Interact
             return false;
         }
 
-        public static bool Drop(Player player, GameObject obj, Room room)
+        public static bool Drop(GameObjectsHolder holder, GameObject obj, Room room)
         {
-            if (player.Objects.ContainsKey(obj.Key) && !room.Objects.ContainsKey(obj.Key))
+            if (holder.Objects.ContainsKey(obj.Key) && !room.Objects.ContainsKey(obj.Key))
             {
                 room.Objects.Add(obj.Key, obj);
-                player.Objects.Remove(obj.Key);
+                holder.Objects.Remove(obj.Key);
                 return true;
             }
             return false;
@@ -117,6 +117,15 @@ namespace AdventureGame.AdventureData.Interact
             {
                 return false;
             }
+        }
+
+        public static string Talk(GameObject obj)
+        {
+            if (obj.Dialog != null)
+            {
+                return obj.Dialog;
+            }
+            return "Den svarade inte...";
         }
 
         public static bool IsPrepositionEnum(string str)

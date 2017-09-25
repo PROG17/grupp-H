@@ -56,7 +56,7 @@ namespace AdventureGame.AdventureData
             {
                 Name = "En lektionssal",
                 Description = "En gammal lektionssal med dålig ventilation. I ena hörnet ligger resterna " +
-                              "av den senaste klassen som inte uplevde någon aha uplevelse.",
+                              "av den senaste klassen som inte upplevde någon aha uplevelse.",
                 Exits = new Dictionary<string, Exit>(),
                 IsEndPoint = true
             };
@@ -135,7 +135,7 @@ namespace AdventureGame.AdventureData
             {
                 Name = "kaffe",
                 Description = "En kopp kaffe med lagom mängd mjölk. Sägs kunna blidka den argaste läraren.",
-                CanUseWith = null,
+                CanUseWith = "fredrik",
                 ObjectTransformed = null,
                 DirectionalPosition = null,
             };
@@ -145,7 +145,8 @@ namespace AdventureGame.AdventureData
                 Name = "Fredrik Haglund",
                 Description = "En lärare på nackademin i sina bästa år. ",
                 CanUseWith = "en hammare",
-                DirectionalPosition = Direction.Norr
+                DirectionalPosition = Direction.Norr,
+                Dialog = "Hej hej, tack för att du är här!"
             };
             var argaFredrik = new Object
             {
@@ -154,7 +155,8 @@ namespace AdventureGame.AdventureData
                               "så loggas ditt namn och mailas efter programkörning till Fredrik.",
                 CanUseWith = "kaffe",
                 ObjectTransformed = fredrik,
-                DirectionalPosition = Direction.Norr
+                DirectionalPosition = Direction.Norr,
+                Dialog = "Din idiot...Ge mig kaffe annars jävlar!"
             };
             fredrik.ObjectTransformed = argaFredrik;
 
@@ -623,6 +625,16 @@ namespace AdventureGame.AdventureData
 
                                 Console.Clear();
                             }
+                        }
+                        break;
+                    case Action.Prata:
+                        if (currentRoom.Objects.TryGetValue(objStr1, out GameObject dialogObj))
+                        {
+                            Console.WriteLine(Act.Talk(dialogObj));
+                        }
+                        else
+                        {
+                            Console.WriteLine("Vem?");
                         }
                         break;
                     default:
