@@ -288,6 +288,12 @@ namespace AdventureGame.AdventureData
             while (true)
             {
                 currentRoom = Player.PlayerLocation;
+
+                if (currentRoom.IsEndPoint)
+                {
+                    Console.WriteLine("Grattis! Du klarade spelet!");
+                    return false;
+                }
                 Console.Write("Vad vill du göra? ");
                 // Spelare matar in handling
                 string input = Console.ReadLine();
@@ -302,7 +308,6 @@ namespace AdventureGame.AdventureData
                 {
                     Console.WriteLine("Jag förstod inte vad du menade...");
                     Console.ReadLine();
-                    Console.Clear();
                     continue;
                 }
 
@@ -325,7 +330,7 @@ namespace AdventureGame.AdventureData
 
                         string startString = "Du ser ";
 
-                        // Beroende på hur många ord som skrivits in behandlas orden på olika sätt
+                        // Om användaren vill titta åt en riktning
                         if (directionStr != null)
                         {
                             if (Direction.TryParse(directionStr, true, out Direction lookDirection))
@@ -338,6 +343,7 @@ namespace AdventureGame.AdventureData
                                 Console.ReadLine();
                             }
                         }
+                        // Om användaren vill titta på ett objekt
                         else if (objStr1 != null)
                         {
 
@@ -348,12 +354,18 @@ namespace AdventureGame.AdventureData
                                         (Preposition)Enum.Parse(typeof(Preposition), preposStr, true)));
                                 Console.ReadLine();
                             }
+                            else if (objStr1.Contains("ficka"))
+                            {
+                                Console.WriteLine(Player.LookInPocket());
+                                Console.ReadLine();
+                            }
                             else
                             {
                                 Console.WriteLine($"Du ser ingen {objStr1}");
                                 Console.ReadLine();
                             }
                         }
+                        // Om användaren bara skrivit "Titta" så ges en beskrivning av rummet
                         else
                         {
                             Console.WriteLine(currentRoom.GetRoomDescriptionWithContent());
@@ -361,6 +373,7 @@ namespace AdventureGame.AdventureData
                         }
 
                         break;
+                    // "Inspektera" ger en mer detaljerad beskrivning av ett objekt
                     case Action.Inspektera:
 
                         if (objStr1 != null)
@@ -379,22 +392,10 @@ namespace AdventureGame.AdventureData
                                     Console.ReadLine();
                                 }
                             }
-                            else if (objStr1 == "ficka")
+                            else if (objStr1.Contains("ficka"))
                             {
-                                if (Player.Objects.Count != 0)
-                                {
-                                    Console.WriteLine($"I din {objStr1} ligger det:");
-                                    foreach (var keyValuePair in Player.Objects)
-                                    {
-                                        Console.WriteLine(keyValuePair.Value.Name);
-                                    }
-                                    Console.ReadLine();
-                                }
-                                else
-                                {
-                                    Console.WriteLine("Den är tom...");
-                                    Console.ReadLine();
-                                }
+                                Console.WriteLine(Player.LookInPocket());
+                                Console.ReadLine();
                             }
                             else if (objStr2 == "ficka")
                             {
@@ -510,7 +511,9 @@ namespace AdventureGame.AdventureData
                             {
                                 if (Act.Go(Player, currentRoom, walkDirection))
                                 {
-                                    continue;
+                                    currentRoom = Player.PlayerLocation;
+                                    Console.Clear();
+                                    Console.WriteLine(currentRoom.GetRoomDescriptionWithContent());
                                 }
                                 else
                                 {
@@ -523,7 +526,6 @@ namespace AdventureGame.AdventureData
                         {
                             Console.WriteLine("Du gick in i en vägg...");
                             Console.ReadLine();
-                            Console.Clear();
                             continue;
                         }
 
