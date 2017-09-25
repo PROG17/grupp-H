@@ -45,10 +45,18 @@ namespace AdventureGame.AdventureData
                 Exits = new Dictionary<string, Exit>(),
                 IsEndPoint = false
             };
-            var end = new Room
+            var room3 = new Room
             {
                 Name = "Baksidan av huset",
                 Description = "Du står på baksidan av huset, luften är frisk",
+                Exits = new Dictionary<string, Exit>(),
+                IsEndPoint = false
+            };
+            var end = new Room
+            {
+                Name = "En lektionssal",
+                Description = "En gammal lektionssal med dålig ventilation. I ena hörnet ligger resterna " +
+                              "av den senaste klassen som inte upplevde någon aha uplevelse.",
                 Exits = new Dictionary<string, Exit>(),
                 IsEndPoint = true
             };
@@ -58,7 +66,7 @@ namespace AdventureGame.AdventureData
             {
                 Name = "en trädörr",
                 Description = "en stor trädörr",
-                GoesTo = end,
+                GoesTo = room3,
                 IsLocked = true,
                 DirectionalPosition = Direction.Norr,
 
@@ -127,7 +135,7 @@ namespace AdventureGame.AdventureData
             {
                 Name = "kaffe",
                 Description = "En kopp kaffe med lagom mängd mjölk. Sägs kunna blidka den argaste läraren.",
-                CanUseWith = null,
+                CanUseWith = "fredrik",
                 ObjectTransformed = null,
                 DirectionalPosition = null,
             };
@@ -146,7 +154,8 @@ namespace AdventureGame.AdventureData
                               "så loggas ditt namn och mailas efter programkörning till Fredrik.",
                 CanUseWith = {kaffe.Name},
                 ObjectTransformed = fredrik,
-                DirectionalPosition = Direction.Norr
+                DirectionalPosition = Direction.Norr,
+                Dialog = "Din idiot...Ge mig kaffe annars jävlar!"
             };
             fredrik.ObjectTransformed = argaFredrik;
 
@@ -198,7 +207,6 @@ namespace AdventureGame.AdventureData
             rumTillÖst.Exits.Add(dorr4.Key.ToLower(), dorr4);
             rumTillÖst.Objects.Add(dorr4.Key.ToLower(), dorr4);
             rumTillÖst.Objects.Add(bokhylla.Key.ToLower(), bokhylla);
-            rumTillÖst.Objects.Add(fredrik.Key.ToLower(), fredrik);
             rumTillVäst.Exits.Add(dorr6.Key.ToLower(), dorr6);
             rumTillVäst.Objects.Add(dorr6.Key.ToLower(), dorr6);
             rumTillVäst.Objects.Add(soptunna.Key.ToLower(), soptunna);
@@ -575,8 +583,14 @@ namespace AdventureGame.AdventureData
                         // Om spelaren vill ta ett objekt i rummet
                         else if (currentRoom.Objects.TryGetValue(objStr1, out GameObject takeObject))
                         {
-                            Act.Get(Player, takeObject);
-                            Console.WriteLine($"Du tog {takeObject.Name}");
+                            if (Act.Get(Player, takeObject))
+                            {
+                                Console.WriteLine($"Du tog {takeObject.Name}");
+                            }
+                            else
+                            {
+                                Console.WriteLine($"Det går inte att ta upp den...");
+                            }
 
                         }
                         else
@@ -610,6 +624,16 @@ namespace AdventureGame.AdventureData
 
                                 Console.Clear();
                             }
+                        }
+                        break;
+                    case Action.Prata:
+                        if (currentRoom.Objects.TryGetValue(objStr1, out GameObject dialogObj))
+                        {
+                            Console.WriteLine(Act.Talk(dialogObj));
+                        }
+                        else
+                        {
+                            Console.WriteLine("Vem?");
                         }
                         break;
                     default:
