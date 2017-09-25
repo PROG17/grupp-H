@@ -123,7 +123,15 @@ namespace AdventureGame.AdventureData
                 DirectionalPosition = null
             };
 
-            Object argaFredrik;
+            var kaffe = new Object
+            {
+                Name = "kaffe",
+                Description = "En kopp kaffe med lagom mängd mjölk. Sägs kunna blidka den argaste läraren.",
+                CanUseWith = null,
+                ObjectTransformed = null,
+                DirectionalPosition = null,
+            };
+            
             var fredrik = new Object
             {
                 Name = "Fredrik Haglund",
@@ -132,7 +140,7 @@ namespace AdventureGame.AdventureData
                 ObjectTransformed = argaFredrik,
                 DirectionalPosition = Direction.Norr
             };
-            argaFredrik = new Object
+            var argaFredrik = new Object
             {
                 Name = "Arg Fredrik Haglund",
                 Description = "En arg Fredrik. Den arga fredrik håller en dator i handen och håller fingret mot en knapp. Om du gjort Fredrik arg " +
