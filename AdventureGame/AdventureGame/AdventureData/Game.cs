@@ -45,12 +45,18 @@ namespace AdventureGame.AdventureData
                 Exits = new Dictionary<string, Exit>(),
                 IsEndPoint = false
             };
-            var end = new Room
+            var room3 = new Room
             {
                 Name = "Baksidan av huset",
                 Description = "Du står på baksidan av huset, luften är frisk",
                 Exits = new Dictionary<string, Exit>(),
                 IsEndPoint = true
+            };
+            var end = new Room
+            {
+                Name = "En lektionssal",
+                Description = "En gammal lektionssal med dålig ventilation. I ena hörnet ligger resterna " +
+                              "av den senaste klassen som inte uplevde någon aha uplevelse."
             };
 
             // Ett gäng dörrar
@@ -58,7 +64,7 @@ namespace AdventureGame.AdventureData
             {
                 Name = "en trädörr",
                 Description = "en stor trädörr",
-                GoesTo = end,
+                GoesTo = room3,
                 IsLocked = true,
                 DirectionalPosition = Direction.Norr,
 
@@ -137,7 +143,7 @@ namespace AdventureGame.AdventureData
                 Name = "Fredrik Haglund",
                 Description = "En lärare på nackademin i sina bästa år. ",
                 CanUseWith = "en hammare",
-                ObjectTransformed = argaFredrik,
+                ObjectTransformed = null,
                 DirectionalPosition = Direction.Norr
             };
             var argaFredrik = new Object
@@ -201,13 +207,14 @@ namespace AdventureGame.AdventureData
             room2.Exits.Add(dorr6.Key.ToLower(), dorr6);
             room2.Objects.Add(dorr6.Key.ToLower(), dorr6);
             room2.Objects.Add(soptunna.Key.ToLower(), soptunna);
-            end.Exits.Add(dorr2.Key.ToLower(), dorr2);
-            end.Objects.Add(dorr2.Key.ToLower(), dorr2);
+            room3.Exits.Add(dorr2.Key.ToLower(), dorr2);
+            room3.Objects.Add(dorr2.Key.ToLower(), dorr2);
 
             Rooms.Add("start", start);
-            Rooms.Add("end", end);
+            //Rooms.Add("end", end);
             Rooms.Add("rum1", room1);
             Rooms.Add("rum2", room2);
+            Rooms.Add("rum3", room3);
 
         }
 
