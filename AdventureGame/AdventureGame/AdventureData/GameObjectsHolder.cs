@@ -10,6 +10,18 @@ namespace AdventureGame.AdventureData
     {
         public virtual Dictionary<string, GameObject> Objects { get; set; }
 
+        public virtual string GetContentAsString()
+        {
+            StringBuilder sb = new StringBuilder();
+
+            foreach (var gameObject in Objects)
+            {
+                sb.AppendLine($"{gameObject.Value.Name}");
+            }
+
+            return sb.ToString();
+        }
+
         public GameObjectsHolder()
         {
             Objects = new Dictionary<string, GameObject>();

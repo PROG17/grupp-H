@@ -8,14 +8,14 @@ namespace AdventureGame.AdventureData
 {
     public class ObjectContainer : GameObjectsHolder
     {
-        //public new Dictionary<String, GameObjectsHolder> Objects { get; set; }
-        //public string CanUseWith { get; set; }
-        //public ObjectContainer ObjectTransformed { get; set; }
-        private bool isPeekable;
+        public override string GetContentAsString()
+        {
+            string returnString = "Du tittar i den och ser:\n";
+            return returnString + base.GetContentAsString();
+        }
 
         public ObjectContainer()
         {
-            //Objects = new Dictionary<string, GameObjectsHolder>();
             Objects = new Dictionary<string, GameObject>();
         }
     }

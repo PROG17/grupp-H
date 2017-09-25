@@ -8,6 +8,7 @@
         Släpp,
         Gå,
         Ta,
+        Prata,
         Avsluta
     }
 
