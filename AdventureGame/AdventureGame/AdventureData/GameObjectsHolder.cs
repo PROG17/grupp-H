@@ -12,19 +12,40 @@ namespace AdventureGame.AdventureData
 
         public virtual string GetContentAsString()
         {
-            StringBuilder sb = new StringBuilder();
-
-            foreach (var gameObject in Objects)
+            if (Objects.Count != 0)
             {
-                sb.AppendLine($"{gameObject.Value.Name}");
-            }
+                StringBuilder sb = new StringBuilder();
 
-            return sb.ToString();
+                foreach (var gameObject in Objects)
+                {
+                    sb.AppendLine($"{gameObject.Value.Name}");
+                }
+
+                return sb.ToString();
+            }
+            else return null;
         }
 
         public GameObjectsHolder()
         {
             Objects = new Dictionary<string, GameObject>();
+        }
+
+        public bool DropFirstItem(Room currentRoom)
+        {
+            Stack<GameObject> listOfObjects = new Stack<GameObject>();
+            if (Objects.Count != 0)
+            {
+                foreach (var gameObject in Objects)
+                {
+                    listOfObjects.Push(gameObject.Value);
+                }
+                GameObject obj = listOfObjects.Pop();
+                currentRoom.Objects.Add(obj.Key, obj);
+                this.Objects.Remove(obj.Key);
+                return true;
+            }
+            return false;
         }
     }
 }

@@ -13,16 +13,28 @@ namespace AdventureGame.AdventureData
         public string Name { get; set; }
         public string Description { get; set; }
         public Nullable<Direction> DirectionalPosition { get; set; }
-        public string CanUseWith { get; set; }
-        public string Dialog { get; set; }
-        public GameObject ObjectTransformed { get; set; }
+        public List<string> CanUseWith { get; set; }
+        public virtual GameObject ObjectTransformed { get; set; }
+        public bool IsGetable { get; set; } = false;
+        public bool DropsItemOnUse { get; set; } = false;
+        public bool IsHitable { get; set; } = false;
+
+        public GameObject()
+        {
+            CanUseWith = new List<string>();
+        }
+
+        public bool CanBeUsedWith(string obj)
+        {
+            return CanUseWith.Contains(obj);
+        }
 
         public string Key
         {
             get
             {
                 var split = Name.Split(' ');
-                return split[split.Length - 1];
+                return split[split.Length - 1].ToLower();
             }
         }
     }

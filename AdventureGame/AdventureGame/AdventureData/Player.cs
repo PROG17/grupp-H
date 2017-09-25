@@ -10,6 +10,8 @@ namespace AdventureGame.AdventureData
     {
         public Room PlayerLocation { get; set; }
 
+        public bool IsAlive { get; internal set; }
+
         public override string GetContentAsString()
         {
             if (Objects.Count != 0)
@@ -25,29 +27,12 @@ namespace AdventureGame.AdventureData
             }
         }
 
-        //public string LookInPocket()
-        //{
-        //    string returnString = "";
-        //    if (Objects.Count != 0)
-        //    {
-        //        Console.WriteLine($"I din ficka ligger det:");
-        //        foreach (var keyValuePair in Objects)
-        //        {
-        //            returnString +=("\n" + keyValuePair.Value.Name);
-        //        }
-        //        return returnString;
-        //    }
-        //    else
-        //    {
-        //        return ("Den är tom...");
-        //    }
-        //}
-
-        //public Player(string name, string description, Room playerLocation)
-        //{
-        //    base.Name = name;
-        //    base.Description = description;
-        //    PlayerLocation = playerLocation;
-        //}
+        public void IsFighting(bool isKilled)
+        {
+            if (isKilled)
+            {
+                IsAlive = false;
+            }
+        }
     }
 }

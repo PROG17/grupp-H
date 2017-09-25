@@ -8,6 +8,10 @@ namespace AdventureGame.AdventureData
 {
     public class Object : GameObject
     {
+        public Object()
+        {
+            IsGetable = true;
+        }
         //public string CanUseWith { get; set; }
         //public Object ObjectTransformed { get; set; }
     }

@@ -56,7 +56,7 @@ namespace AdventureGame.AdventureData
             {
                 Name = "En lektionssal",
                 Description = "En gammal lektionssal med dålig ventilation. I ena hörnet ligger resterna " +
-                              "av den senaste klassen som inte uplevde någon aha uplevelse.",
+                              "av den senaste klassen som inte upplevde någon aha uplevelse.",
                 Exits = new Dictionary<string, Exit>(),
                 IsEndPoint = true
             };
@@ -126,35 +126,42 @@ namespace AdventureGame.AdventureData
             {
                 Name = "en tunna",
                 Description = "en stor tunna i trä och gjutjärn. Tunnan går inte att öppna utan något verktyg...",
-                CanUseWith = "en hammare",
+                CanUseWith = { "en hammare"}, 
                 ObjectTransformed = trasigTunna,
-                DirectionalPosition = null
+                DirectionalPosition = null,
+                IsGetable = false
             };
 
             var kaffe = new Object
             {
                 Name = "kaffe",
                 Description = "En kopp kaffe med lagom mängd mjölk. Sägs kunna blidka den argaste läraren.",
-                CanUseWith = null,
+                CanUseWith = {"fredrik"},
                 ObjectTransformed = null,
                 DirectionalPosition = null,
             };
             
-            var fredrik = new Object
+            var fredrik = new Person
             {
-                Name = "Fredrik Haglund",
+                Name = "Fredrik",
                 Description = "En lärare på nackademin i sina bästa år. ",
-                CanUseWith = "en hammare",
-                DirectionalPosition = Direction.Norr
+                CanUseWith = {"en hammare"},
+                DirectionalPosition = Direction.Norr,
+                Dialog = "Åh vad gott det skulle vara med en kopp kaffe...",
+                IsHitable = true,
+                DropsItemOnUse = true
             };
-            var argaFredrik = new Object
+            var argaFredrik = new Person
             {
-                Name = "Arg Fredrik Haglund",
+                Name = "en arg Fredrik",
                 Description = "En arg Fredrik. Den arga fredrik håller en dator i handen och håller fingret mot en knapp. Om du gjort Fredrik arg " +
                               "så loggas ditt namn och mailas efter programkörning till Fredrik.",
-                CanUseWith = "kaffe",
+                CanUseWith = {kaffe.Name},
                 ObjectTransformed = fredrik,
-                DirectionalPosition = Direction.Norr
+                IsHitable =  true,
+                HitsBack = true,
+                DirectionalPosition = Direction.Norr,
+                Dialog = "Din idiot...Ge mig kaffe annars jävlar!"
             };
             fredrik.ObjectTransformed = argaFredrik;
 
@@ -162,7 +169,7 @@ namespace AdventureGame.AdventureData
             {
                 Name = "en bokhylla",
                 Description = "En bokhylla med några mögliga böcker...",
-                CanUseWith = "en hammare",
+                CanUseWith = {"en hammare"},
                 ObjectTransformed = null,
                 DirectionalPosition = Direction.Syd
             };
@@ -179,7 +186,7 @@ namespace AdventureGame.AdventureData
             {
                 Name = "en nyckel",
                 Description = "En stor rostig nyckel",
-                CanUseWith = dorr.Name,
+                CanUseWith = {dorr.Name},
                 DirectionalPosition = null,
                 ObjectTransformed = null
             };
@@ -188,7 +195,15 @@ namespace AdventureGame.AdventureData
             {
                 Name = "en hammare",
                 Description = "en robust hammare",
-                CanUseWith = tunna.Name,
+                CanUseWith = {tunna.Name, fredrik.Name, bokhylla.Name},
+                DirectionalPosition = null,
+                ObjectTransformed = null
+            };
+            var skruvmejsel = new Object
+            {
+                Name = "en skruvmejsel",
+                Description = "en skruvmejsel med plasthandtag",
+                CanUseWith = {},
                 DirectionalPosition = null,
                 ObjectTransformed = null
             };
@@ -199,6 +214,7 @@ namespace AdventureGame.AdventureData
             };
 
             Player.PlayerLocation = start;
+            fredrik.Objects.Add(skruvmejsel.Key.ToLower(), skruvmejsel);
             trasigTunna.Objects.Add(nyckel.Key.ToLower(), nyckel);
             soptunna.Objects.Add(hammer.Key.ToLower(), hammer);
             start.Objects.Add(dorr.Key.ToLower(), dorr);
@@ -211,6 +227,7 @@ namespace AdventureGame.AdventureData
             rumTillÖst.Exits.Add(dorr4.Key.ToLower(), dorr4);
             rumTillÖst.Objects.Add(dorr4.Key.ToLower(), dorr4);
             rumTillÖst.Objects.Add(bokhylla.Key.ToLower(), bokhylla);
+            rumTillÖst.Objects.Add(fredrik.Key.ToLower(), fredrik);
             rumTillVäst.Exits.Add(dorr6.Key.ToLower(), dorr6);
             rumTillVäst.Objects.Add(dorr6.Key.ToLower(), dorr6);
             rumTillVäst.Objects.Add(soptunna.Key.ToLower(), soptunna);
@@ -493,6 +510,16 @@ namespace AdventureGame.AdventureData
                                 {
                                     Console.WriteLine("Det gick!");
 
+                                    if (obj2 is GameObjectsHolder)
+                                    {
+                                        if ((obj2 as GameObjectsHolder).DropsItemOnUse)
+                                        {
+                                            if ((obj2 as GameObjectsHolder).DropFirstItem(currentRoom))
+                                            {
+                                                Console.WriteLine("Någonting ramlade till marken...");
+                                            }
+                                        }
+                                    }
                                 }
                                 else
                                 {
@@ -587,8 +614,14 @@ namespace AdventureGame.AdventureData
                         // Om spelaren vill ta ett objekt i rummet
                         else if (currentRoom.Objects.TryGetValue(objStr1, out GameObject takeObject))
                         {
-                            Act.Get(Player, takeObject);
-                            Console.WriteLine($"Du tog {takeObject.Name}");
+                            if (Act.Get(Player, takeObject))
+                            {
+                                Console.WriteLine($"Du tog {takeObject.Name}");
+                            }
+                            else
+                            {
+                                Console.WriteLine($"Det går inte att ta upp den...");
+                            }
 
                         }
                         else
@@ -622,6 +655,31 @@ namespace AdventureGame.AdventureData
 
                                 Console.Clear();
                             }
+                        }
+                        break;
+                    case Action.Slå:
+                        if (Player.Objects.TryGetValue(objStr1, out GameObject hitObj) &&
+                            currentRoom.Objects.TryGetValue(objStr2, out GameObject objToHit))
+                        {
+                            
+                        }
+                        break;
+                    case Action.Prata:
+                        if (currentRoom.Objects.TryGetValue(objStr1, out GameObject dialogObj))
+                        {
+                            if (dialogObj is Person)
+                            {
+                                Console.WriteLine(Act.Talk(dialogObj as Person));
+                            }
+                            else
+                            {
+                                Console.WriteLine("Den verkar inte kunna prata...");
+                            }
+                            
+                        }
+                        else
+                        {
+                            Console.WriteLine("Vem?");
                         }
                         break;
                     default:

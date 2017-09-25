@@ -16,6 +16,7 @@ namespace AdventureGame.AdventureData
 
         public ObjectContainer()
         {
+            IsGetable = false;
             Objects = new Dictionary<string, GameObject>();
         }
     }

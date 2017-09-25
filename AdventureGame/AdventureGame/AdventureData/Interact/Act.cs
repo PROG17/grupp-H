@@ -7,10 +7,15 @@ namespace AdventureGame.AdventureData.Interact
 {
     public static class Act
     {
-        public static void Get(Player player, GameObject obj)
+        public static bool Get(Player player, GameObject obj)
         {
-            player.Objects.Add(obj.Key, obj as Object);
-            player.PlayerLocation.Objects.Remove(obj.Key);
+            if (obj.IsGetable)
+            {
+                player.Objects.Add(obj.Key, obj as Object);
+                player.PlayerLocation.Objects.Remove(obj.Key);
+                return true;
+            }
+            return false;
         }
         public static bool Get(Player player, string objToGet, string objGetFrom)
         {
@@ -18,20 +23,24 @@ namespace AdventureGame.AdventureData.Interact
             {
                 if ((container as ObjectContainer).Objects.TryGetValue(objToGet, out GameObject obj))
                 {
-                    player.Objects.Add(obj.Key, obj as Object);
-                    (container as ObjectContainer).Objects.Remove(obj.Key);
-                    return true;
+                    if (obj.IsGetable)
+                    {
+                        player.Objects.Add(obj.Key, obj as Object);
+                        (container as ObjectContainer).Objects.Remove(obj.Key);
+                        return true;
+                    }
+                    
                 }
             }
             return false;
         }
 
-        public static bool Drop(Player player, GameObject obj, Room room)
+        public static bool Drop(GameObjectsHolder holder, GameObject obj, Room room)
         {
-            if (player.Objects.ContainsKey(obj.Key) && !room.Objects.ContainsKey(obj.Key))
+            if (holder.Objects.ContainsKey(obj.Key) && !room.Objects.ContainsKey(obj.Key))
             {
                 room.Objects.Add(obj.Key, obj);
-                player.Objects.Remove(obj.Key);
+                holder.Objects.Remove(obj.Key);
                 return true;
             }
             return false;
@@ -53,7 +62,7 @@ namespace AdventureGame.AdventureData.Interact
             //    }
             //}
 
-            if (obj1.CanUseWith == obj2.Name)
+            if (obj1.CanUseWith.Contains(obj2.Name))
             {
                 if ((obj2 is Exit))
                 {
@@ -62,7 +71,7 @@ namespace AdventureGame.AdventureData.Interact
                 else
                 {
                     player.PlayerLocation.Objects.Remove(obj2.Key);
-                    player.PlayerLocation.Objects.Add(obj2.Key.ToLower(), obj2.ObjectTransformed);
+                    player.PlayerLocation.Objects.Add(obj2.Key, obj2.ObjectTransformed);
                 }
                 return true;
             }
@@ -107,6 +116,34 @@ namespace AdventureGame.AdventureData.Interact
             else
             {
                 return false;
+            }
+        }
+
+        public static string Talk(Person obj)
+        {
+            if (obj.Dialog != null)
+            {
+                return $"\"{obj.Dialog}\"";
+            }
+            return "Den svarade inte...";
+        }
+
+        public static void Hit(Player player, GameObject objToUse, GameObject objToHit)
+        {
+            if (objToHit.IsHitable)
+            {
+                if (objToHit is Person)
+                {
+                    if ((objToHit as Person).HitsBack)
+                    {
+                        Console.WriteLine($"{objToHit.Name} slog tillbaka och du dog...");
+                        player.IsAlive = false;
+                    }
+                    else
+                    {
+                        Console.WriteLine($"{objToHit.Name} tog smällen och tittar besviket på dig...");
+                    }
+                }
             }
         }
 
