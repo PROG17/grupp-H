@@ -24,7 +24,7 @@ namespace AdventureGame
             while (true)
             {
                 Console.WriteLine(game.Player.PlayerLocation.Description);
-               
+                Contents(game.Player.Objects);
                 Console.Write("Vad vill du göra? ");
                 Console.WriteLine();
                 string input = Console.ReadLine();
