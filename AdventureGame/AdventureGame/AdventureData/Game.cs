@@ -26,97 +26,168 @@ namespace AdventureGame.AdventureData
             // Skapar rum
             var start = new Room
             {
-                Name = "Källare",
-                Description = "Du är i en mörk källare",
+                Name = "Lobbyn",
+                Description = "Du är i lobbyn till Nackademin. Men det ser inte ut som du mins det." +
+                              "\n När du tänker efter så undrar du om man kan kalla ett " +
+                              "litet rum med fyra väggar för lobby?",
                 Exits = new Dictionary<string, Exit>(),
                 IsEndPoint = false,
             };
-            var rumTillÖst = new Room
+            var badrum = new Room
             {
-                Name = "Gammalt badrum",
-                Description = "Du är i ett gammalt, sedan länge oanvänt, badrum. Det är svart mögel på väggarna",
+                Name = "Badrum",
+                Description = "Du är i ett av skolans badrum. Undrar när det blev städat här senast?\n " +
+                              "Det luktar bygg klassare och gamla strumpor." 
+                               
+                              ,
                 Exits = new Dictionary<string, Exit>(),
                 IsEndPoint = false
             };
-            var rumTillVäst = new Room
+            var ventilationsrum = new Room
             {
-                Name = "Maskinrum",
-                Description = "Du är i ett bullrigt maskinrum. Det luktar diesel...",
+                Name = "Ventilationsrum",
+                Description = "Du är i ett bullrigt maskinrum. Kanske är det det här som kallas ventilation " +
+                              "i den här byggnaden? Det luktar diesel...",
                 Exits = new Dictionary<string, Exit>(),
                 IsEndPoint = false
             };
-            var room3 = new Room
+            
+            
+            var kok = new Room
             {
-                Name = "Baksidan av huset",
-                Description = "Du står på baksidan av huset, luften är frisk",
+                Name = "Kök",
+                Description = "Längs med väggarna står det förvånansvärt många microvågsugnar. " +
+                              "Resterna av Java klassarnas lunch ligger i högar över hela rummet." +
+                              "I hörnet står en kran och läcker, ",
+                Exits = new Dictionary<string, Exit>(),
+                IsEndPoint = false
+
+            };
+            var uppehallsrum = new Room
+            {
+                Name = "Uppehålls rum",
+                Description = "Priserna i kaffeterian hade tillslut blivit för mycket för eleverna på Nackademin. \n" +
+                              "Vad som var kvar av kaffeterian går knappt att urskilja mellan de " +
+                              "trasiga bord och stolar som blockerar dess ingång.",
+                              
+                
                 Exits = new Dictionary<string, Exit>(),
                 IsEndPoint = false
             };
-            var room4 = new Room
-            {
-                Name = "Ett slitet kök",
-                Description = ""
-            };
-            var end = new Room
+            var lektionssal = new Room
             {
                 Name = "En lektionssal",
                 Description = "En gammal lektionssal med dålig ventilation. I ena hörnet ligger resterna " +
-                              "av den senaste klassen som inte upplevde någon aha uplevelse.",
+                              "av den senaste klassen som \"inte upplevde någon aha uplevelse\".",
+                Exits = new Dictionary<string, Exit>(),
+                IsEndPoint = false
+            };
+            var end = new Room
+            {
+                Name = "Rökrutan",
+                Description = "Du står på baksidan av huset, luften är frisk. \n " +
+                              "Eller nja, den var det tills du tände en cigg...",
                 Exits = new Dictionary<string, Exit>(),
                 IsEndPoint = true
             };
 
             // Ett gäng dörrar
-            var dorr = new Exit
+            var traDorrTillKok = new Exit
             {
                 Name = "en trädörr",
                 Description = "en stor trädörr",
-                GoesTo = room3,
+                GoesTo = kok,
+                IsLocked = false,
+                DirectionalPosition = Direction.Väst,
+
+            };
+
+            var traDorrTillLobby = new Exit
+            {
+                Name = "en trädörr",
+                Description = "en stor trädörr",
+                GoesTo = start,
+                IsLocked = false,
+                DirectionalPosition = Direction.Öst,
+            };
+
+            var platDorrTillURum = new Exit
+            {
+                Name = "en plåtdörr",
+                Description = "en bucklig plåtdörr",
+                GoesTo = uppehallsrum,
+                IsLocked = false,
+                DirectionalPosition = Direction.Öst,
+            };
+            var platDorrTillLobby = new Exit
+            {
+                Name = "en plåtdörr",
+                Description = "en bucklig plåtdörr",
+                GoesTo = start,
+                IsLocked = false,
+                DirectionalPosition = Direction.Väst,
+            };
+            var halIVaggenBadrum = new Exit
+            {
+                Name = "ett hål i väggen",
+                Description = "ett stort hål i väggen, förmodligen en misslyckad renovering...",
+                GoesTo = badrum,
+                IsLocked = false,
+                DirectionalPosition = Direction.Öst,
+            };
+            var halIVaggenURum = new Exit
+            {
+                Name = "ett hål i väggen",
+                Description = "ett stort hål i väggen, förmodligen en misslyckad renovering...",
+                GoesTo = uppehallsrum,
+                IsLocked = false,
+                DirectionalPosition = Direction.Väst,
+            };
+            var hissDorrVent = new Exit
+            {
+                Name = "en hissdörr",
+                Description = "En perfekt dörr för när man vill åka hiss med stil!\n " +
+                              "Leder endast till våning 4 står det skrivet över dörren.",
+                GoesTo = ventilationsrum,
+                IsLocked = false,
+                DirectionalPosition = Direction.Norr
+
+           
+            };
+            var hissDorrURum = new Exit
+            {
+                Name = "en hissdörr",
+                Description = "En perfekt dörr för när man vill åka hiss med stil!\n " +
+                              "Leder endast till våning 0 står det skrivet över dörren.",
+                GoesTo = uppehallsrum,
+                IsLocked = false,
+                DirectionalPosition = Direction.Norr
+
+            };
+            var dorrTillEnd = new Exit
+            {
+                Name = "en säkerhetsdörr",
+                Description = "En säkerhetsdörr med ett lås gjort av lego, ett tuggummi, en hårnål och ett batteri. \n" +
+                              "Låset som Mcguyver är baserad på.",
+                GoesTo = end,
                 IsLocked = true,
-                DirectionalPosition = Direction.Norr,
-
+                DirectionalPosition = Direction.Väst
             };
-
-            var dorr2 = new Exit
+            var dorrTillKlassRum = new Exit
             {
-                Name = "en trädörr",
-                Description = "en stor trädörr",
-                GoesTo = start,
+                Name = "en klassrummsdörr",
+                Description = "ngt",
+                GoesTo = lektionssal,
                 IsLocked = false,
-                DirectionalPosition = Direction.Syd,
+                DirectionalPosition = Direction.Väst
             };
-
-            var dorr3 = new Exit
+            var dorrTillVent = new Exit
             {
-                Name = "en plåtdörr",
-                Description = "en bucklig plåtdörr",
-                GoesTo = rumTillÖst,
+                Name = "en klassrummsdörr",
+                Description = "ngt",
+                GoesTo = ventilationsrum,
                 IsLocked = false,
-                DirectionalPosition = Direction.Öst,
-            };
-            var dorr4 = new Exit
-            {
-                Name = "en plåtdörr",
-                Description = "en bucklig plåtdörr",
-                GoesTo = start,
-                IsLocked = false,
-                DirectionalPosition = Direction.Väst,
-            };
-            var dorr5 = new Exit
-            {
-                Name = "ett hål i väggen",
-                Description = "ett stort hål i väggen, förmodligen en misslyckad renovering...",
-                GoesTo = rumTillVäst,
-                IsLocked = false,
-                DirectionalPosition = Direction.Väst,
-            };
-            var dorr6 = new Exit
-            {
-                Name = "ett hål i väggen",
-                Description = "ett stort hål i väggen, förmodligen en misslyckad renovering...",
-                GoesTo = start,
-                IsLocked = false,
-                DirectionalPosition = Direction.Öst,
+                DirectionalPosition = Direction.Öst
             };
 
             // Objekt
@@ -140,8 +211,9 @@ namespace AdventureGame.AdventureData
             var kaffe = new Object
             {
                 Name = "kaffe",
-                Description = "En kopp kaffe med lagom mängd mjölk. Sägs kunna blidka den argaste läraren.",
-                CanUseWith = { "fredrik" },
+                Description = "En kopp kaffe med lagom mängd mjölk, även kallad gudarnas nektar.\n" +
+                              "Ska enligt gammal grekisk mytologi kunna blidka den argaste läraren...",
+                CanUseWith = {"fredrik"},
                 ObjectTransformed = null,
                 DirectionalPosition = null,
             };
@@ -152,29 +224,35 @@ namespace AdventureGame.AdventureData
                 Description = "En lärare på nackademin i sina bästa år. ",
                 CanUseWith = { "en hammare" },
                 DirectionalPosition = Direction.Norr,
-                Dialog = "Åh vad gott det skulle vara med en kopp kaffe...",
+                Dialog = "Vet ni hur man blir rik genom objekt orientering? Genom arv! HAHAHA fattar ni?\n" +
+                         "Den här då:\n" +
+                         "Varför behöver java programmerare använda glasögon?\n" +
+                         "För att dom c#! hahahahahahaha \n" +
+                         "Eller ja den blir bättre på engelska.",
                 IsHitable = true,
                 DropsItemOnUse = true
             };
             var argaFredrik = new Person
             {
                 Name = "en arg Fredrik",
-                Description = "En arg Fredrik. Den arga fredrik håller en dator i handen och håller fingret mot en knapp. Om du gjort Fredrik arg " +
+                Description = "En arg Fredrik. Den arga fredrik håller en dator i handen och håller fingret mot \n" +
+                              "en knapp. Om du gjort Fredrik arg " +
                               "så loggas ditt namn och mailas efter programkörning till Fredrik.",
                 CanUseWith = { kaffe.Name },
                 ObjectTransformed = fredrik,
                 IsHitable = true,
                 HitsBack = true,
                 DirectionalPosition = Direction.Norr,
-                Dialog = "Din idiot...Ge mig kaffe annars jävlar!"
+                Dialog = "Jasså du gillar inte mina skämt? Då är det dags för ett oförberett diagnostiskt test!\n" +
+                         "Mohahaha jag kan göra hur många test jag vill!"
             };
             fredrik.ObjectTransformed = argaFredrik;
 
             var bokhylla = new Object
             {
                 Name = "en bokhylla",
-                Description = "En bokhylla med några mögliga böcker...",
-                CanUseWith = { "en hammare" },
+                Description = "En bokhylla fylld med böcker om ",
+                CanUseWith = {"en hammare"},
                 ObjectTransformed = null,
                 DirectionalPosition = Direction.Syd
             };
@@ -193,6 +271,13 @@ namespace AdventureGame.AdventureData
                 Description = "En stor rostig nyckel",
                 CanUseWith = { dorr.Name },
                 DirectionalPosition = null,
+                ObjectTransformed = null
+            };
+            var bilnyckel = new Object
+            {
+                Name = "en bilnyckel",
+                Description = "en bilnyckel med ett tesla emblem på",
+                CanUseWith = null,
                 ObjectTransformed = null
             };
 
@@ -215,29 +300,63 @@ namespace AdventureGame.AdventureData
             var elskap = new Object
             {
                 Name = "Elskåp",
-                Description = ""
+                Description = "Förser rummet med ström.",
+                CanUseWith = {"en hammare"},
+                DirectionalPosition = Direction.Öst,
+                ObjectTransformed = null
             };
 
             Player.PlayerLocation = start;
+            fredrik.Objects.Add(skruvmejsel.Key.ToLower(), skruvmejsel);
+            fredrik.Objects.Add(bilnyckel.Key.ToLower(), bilnyckel);
+            trasigTunna.Objects.Add(nyckel.Key.ToLower(), nyckel);
+            soptunna.Objects.Add(hammer.Key.ToLower(), hammer);
+            start.Objects.Add(traDorrTillKok.Key.ToLower(), traDorrTillKok);
+            start.Exits.Add(traDorrTillKok.Key.ToLower(), traDorrTillKok);
+            start.Objects.Add(tunna.Key.ToLower(), tunna);
+            start.Exits.Add(platDorrTillURum.Key.ToLower(), platDorrTillURum);
+            start.Objects.Add(platDorrTillURum.Key.ToLower(), platDorrTillURum);
 
-            AddGameObjectsToContainer(soptunna, hammer);
-            AddGameObjectsToContainer(trasigTunna, nyckel);
-            AddGameObjectsToContainer(fredrik, skruvmejsel);
-            AddGameObjectsToContainer(start, dorr);
-            AddGameObjectsToContainer(start, dorr3);
-            AddGameObjectsToContainer(start, dorr5);
-            AddGameObjectsToContainer(start, tunna);
-            AddGameObjectsToContainer(rumTillÖst, dorr4);
-            AddGameObjectsToContainer(rumTillÖst, bokhylla);
-            AddGameObjectsToContainer(rumTillÖst, fredrik);
-            AddGameObjectsToContainer(rumTillVäst, dorr6);
-            AddGameObjectsToContainer(rumTillVäst, soptunna);
-            AddGameObjectsToContainer(end, dorr2);
+            //start.Exits.Add(dorr5.Key.ToLower(), dorr5);
+            //start.Objects.Add(dorr5.Key.ToLower(), dorr5);
+            uppehallsrum.Objects.Add(halIVaggenBadrum.Key.ToLower(), halIVaggenBadrum);
+            uppehallsrum.Exits.Add(halIVaggenBadrum.Key.ToLower(), halIVaggenBadrum);
+            uppehallsrum.Objects.Add(platDorrTillLobby.Key.ToLower(), platDorrTillLobby);
+            uppehallsrum.Exits.Add(platDorrTillLobby.Key.ToLower(), platDorrTillLobby);
+            uppehallsrum.Exits.Add(hissDorrVent.Key.ToLower(), hissDorrVent);
+            uppehallsrum.Objects.Add(hissDorrVent.Key.ToLower(),hissDorrVent);
+
+            
+
+            badrum.Exits.Add(halIVaggenURum.Key.ToLower(), halIVaggenURum);
+            badrum.Objects.Add(halIVaggenURum.Key.ToLower(), halIVaggenURum);
+            badrum.Objects.Add(bokhylla.Key.ToLower(), bokhylla);
+            
+            ventilationsrum.Exits.Add(hissDorrURum.Key.ToLower(), hissDorrURum);
+            ventilationsrum.Objects.Add(hissDorrURum.Key.ToLower(), hissDorrURum);
+            ventilationsrum.Exits.Add(dorrTillKlassRum.Key.ToLower(), dorrTillKlassRum);
+            ventilationsrum.Objects.Add(dorrTillKlassRum.Key.ToLower(), dorrTillKlassRum);
+            ventilationsrum.Objects.Add(soptunna.Key.ToLower(), soptunna);
+
+            kok.Exits.Add(traDorrTillLobby.Key.ToLower(), traDorrTillLobby);
+            kok.Objects.Add(traDorrTillLobby.Key.ToLower(), traDorrTillLobby);
+            
+            lektionssal.Objects.Add(dorrTillVent.Key.ToLower(), dorrTillVent);
+            lektionssal.Exits.Add(dorrTillVent.Key.ToLower(), dorrTillVent);
+            lektionssal.Objects.Add(fredrik.Key.ToLower(), fredrik);
+            lektionssal.Objects.Add(elskap.Key.ToLower(), elskap);
+            lektionssal.Exits.Add(dorrTillEnd.Key.ToLower(), dorrTillEnd);
+            lektionssal.Objects.Add(dorrTillEnd.Key.ToLower(), dorrTillEnd);
+
+            
 
             Rooms.Add("start", start);
             Rooms.Add("end", end);
-            Rooms.Add("rum1", rumTillÖst);
-            Rooms.Add("rum2", rumTillVäst);
+            Rooms.Add("rum1", badrum);
+            Rooms.Add("rum2", ventilationsrum);
+            Rooms.Add("rum3", kok);
+            Rooms.Add("rum4", uppehallsrum);
+            Rooms.Add("rum5", lektionssal);
 
         }
 
