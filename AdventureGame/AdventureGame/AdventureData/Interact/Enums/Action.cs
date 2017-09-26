@@ -9,7 +9,6 @@
         Gå,
         Ta,
         Prata,
-        Slå,
         Avsluta
     }
 

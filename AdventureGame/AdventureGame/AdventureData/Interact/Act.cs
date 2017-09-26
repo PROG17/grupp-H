@@ -128,36 +128,23 @@ namespace AdventureGame.AdventureData.Interact
             return "Den svarade inte...";
         }
 
-        public static void Hit(Player player, GameObject objToUse, GameObject objToHit)
-        {
-            if (objToHit.IsHitable)
-            {
-                if (objToHit is Person)
-                {
-                    if ((objToHit as Person).HitsBack)
-                    {
-                        Console.WriteLine($"{objToHit.Name} slog tillbaka och du dog...");
-                        player.IsAlive = false;
-                    }
-                    else
-                    {
-                        Console.WriteLine($"{objToHit.Name} tog smällen och tittar besviket på dig...");
-                    }
-                }
-            }
-        }
-
-        public static bool IsPrepositionEnum(string str)
-        {
-            return Enum.TryParse(str, true, out Preposition prep);
-        }
-        public static bool IsDirectionEnum(string str)
-        {
-            return Enum.TryParse(str, true, out Direction dir);
-        }
-        public static bool IsActionEnum(string str)
-        {
-            return Enum.TryParse(str, true, out Action act);
-        }
+        //public static void Hit(Player player, GameObject objToUse, GameObject objToHit)
+        //{
+        //    if (objToHit.IsHitable)
+        //    {
+        //        if (objToHit is Person)
+        //        {
+        //            if ((objToHit as Person).HitsBack)
+        //            {
+        //                Console.WriteLine($"{objToHit.Name} slog tillbaka och du dog...");
+        //                player.IsAlive = false;
+        //            }
+        //            else
+        //            {
+        //                Console.WriteLine($"{objToHit.Name} tog smällen och tittar besviket på dig...");
+        //            }
+        //        }
+        //    }
+        //}
     }
 }

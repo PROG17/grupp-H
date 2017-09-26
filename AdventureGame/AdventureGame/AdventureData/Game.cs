@@ -37,8 +37,8 @@ namespace AdventureGame.AdventureData
             {
                 Name = "Badrum",
                 Description = "Du är i ett av skolans badrum. Undrar när det blev städat här senast?\n " +
-                              "Det luktar bygg klassare och gamla strumpor." 
-                               
+                              "Det luktar bygg klassare och gamla strumpor."
+
                               ,
                 Exits = new Dictionary<string, Exit>(),
                 IsEndPoint = false
@@ -51,8 +51,8 @@ namespace AdventureGame.AdventureData
                 Exits = new Dictionary<string, Exit>(),
                 IsEndPoint = false
             };
-            
-            
+
+
             var kok = new Room
             {
                 Name = "Kök",
@@ -69,8 +69,8 @@ namespace AdventureGame.AdventureData
                 Description = "Priserna i kaffeterian hade tillslut blivit för mycket för eleverna på Nackademin. \n" +
                               "Vad som var kvar av kaffeterian går knappt att urskilja mellan de " +
                               "trasiga bord och stolar som blockerar dess ingång.",
-                              
-                
+
+
                 Exits = new Dictionary<string, Exit>(),
                 IsEndPoint = false
             };
@@ -152,7 +152,7 @@ namespace AdventureGame.AdventureData
                 IsLocked = false,
                 DirectionalPosition = Direction.Norr
 
-           
+
             };
             var hissDorrURum = new Exit
             {
@@ -213,7 +213,7 @@ namespace AdventureGame.AdventureData
                 Name = "kaffe",
                 Description = "En kopp kaffe med lagom mängd mjölk, även kallad gudarnas nektar.\n" +
                               "Ska enligt gammal grekisk mytologi kunna blidka den argaste läraren...",
-                CanUseWith = {"fredrik"},
+                CanUseWith = { "fredrik" },
                 ObjectTransformed = null,
                 DirectionalPosition = null,
             };
@@ -229,7 +229,6 @@ namespace AdventureGame.AdventureData
                          "Varför behöver java programmerare använda glasögon?\n" +
                          "För att dom c#! hahahahahahaha \n" +
                          "Eller ja den blir bättre på engelska.",
-                IsHitable = true,
                 DropsItemOnUse = true
             };
             var argaFredrik = new Person
@@ -240,8 +239,6 @@ namespace AdventureGame.AdventureData
                               "så loggas ditt namn och mailas efter programkörning till Fredrik.",
                 CanUseWith = { kaffe.Name },
                 ObjectTransformed = fredrik,
-                IsHitable = true,
-                HitsBack = true,
                 DirectionalPosition = Direction.Norr,
                 Dialog = "Jasså du gillar inte mina skämt? Då är det dags för ett oförberett diagnostiskt test!\n" +
                          "Mohahaha jag kan göra hur många test jag vill!"
@@ -252,7 +249,7 @@ namespace AdventureGame.AdventureData
             {
                 Name = "en bokhylla",
                 Description = "En bokhylla fylld med böcker om ",
-                CanUseWith = {"en hammare"},
+                CanUseWith = { "en hammare" },
                 ObjectTransformed = null,
                 DirectionalPosition = Direction.Syd
             };
@@ -269,7 +266,7 @@ namespace AdventureGame.AdventureData
             {
                 Name = "en nyckel",
                 Description = "En stor rostig nyckel",
-                CanUseWith = { dorr.Name },
+                CanUseWith = null,
                 DirectionalPosition = null,
                 ObjectTransformed = null
             };
@@ -301,54 +298,79 @@ namespace AdventureGame.AdventureData
             {
                 Name = "Elskåp",
                 Description = "Förser rummet med ström.",
-                CanUseWith = {"en hammare"},
+                CanUseWith = { "en hammare" },
                 DirectionalPosition = Direction.Öst,
                 ObjectTransformed = null
             };
 
             Player.PlayerLocation = start;
-            fredrik.Objects.Add(skruvmejsel.Key.ToLower(), skruvmejsel);
-            fredrik.Objects.Add(bilnyckel.Key.ToLower(), bilnyckel);
-            trasigTunna.Objects.Add(nyckel.Key.ToLower(), nyckel);
-            soptunna.Objects.Add(hammer.Key.ToLower(), hammer);
-            start.Objects.Add(traDorrTillKok.Key.ToLower(), traDorrTillKok);
-            start.Exits.Add(traDorrTillKok.Key.ToLower(), traDorrTillKok);
-            start.Objects.Add(tunna.Key.ToLower(), tunna);
-            start.Exits.Add(platDorrTillURum.Key.ToLower(), platDorrTillURum);
-            start.Objects.Add(platDorrTillURum.Key.ToLower(), platDorrTillURum);
+            //fredrik.Objects.Add(skruvmejsel.Key.ToLower(), skruvmejsel);
+            //fredrik.Objects.Add(bilnyckel.Key.ToLower(), bilnyckel);
+            //trasigTunna.Objects.Add(nyckel.Key.ToLower(), nyckel);
+            //soptunna.Objects.Add(hammer.Key.ToLower(), hammer);
+            //start.Objects.Add(traDorrTillKok.Key.ToLower(), traDorrTillKok);
+            //start.Exits.Add(traDorrTillKok.Key.ToLower(), traDorrTillKok);
+            //start.Objects.Add(tunna.Key.ToLower(), tunna);
+            //start.Exits.Add(platDorrTillURum.Key.ToLower(), platDorrTillURum);
+            //start.Objects.Add(platDorrTillURum.Key.ToLower(), platDorrTillURum);
+            AddGameObjectsToContainer(fredrik, skruvmejsel);
+            AddGameObjectsToContainer(fredrik, bilnyckel);
+            AddGameObjectsToContainer(trasigTunna, nyckel);
+            AddGameObjectsToContainer(soptunna, hammer);
+            AddGameObjectsToRoom(start, traDorrTillKok);
+            AddGameObjectsToRoom(start, tunna);
+            AddGameObjectsToRoom(start, platDorrTillURum);
 
             //start.Exits.Add(dorr5.Key.ToLower(), dorr5);
             //start.Objects.Add(dorr5.Key.ToLower(), dorr5);
-            uppehallsrum.Objects.Add(halIVaggenBadrum.Key.ToLower(), halIVaggenBadrum);
-            uppehallsrum.Exits.Add(halIVaggenBadrum.Key.ToLower(), halIVaggenBadrum);
-            uppehallsrum.Objects.Add(platDorrTillLobby.Key.ToLower(), platDorrTillLobby);
-            uppehallsrum.Exits.Add(platDorrTillLobby.Key.ToLower(), platDorrTillLobby);
-            uppehallsrum.Exits.Add(hissDorrVent.Key.ToLower(), hissDorrVent);
-            uppehallsrum.Objects.Add(hissDorrVent.Key.ToLower(),hissDorrVent);
+            //uppehallsrum.Objects.Add(halIVaggenBadrum.Key.ToLower(), halIVaggenBadrum);
+            //uppehallsrum.Exits.Add(halIVaggenBadrum.Key.ToLower(), halIVaggenBadrum);
+            //uppehallsrum.Objects.Add(platDorrTillLobby.Key.ToLower(), platDorrTillLobby);
+            //uppehallsrum.Exits.Add(platDorrTillLobby.Key.ToLower(), platDorrTillLobby);
+            //uppehallsrum.Exits.Add(hissDorrVent.Key.ToLower(), hissDorrVent);
+            //uppehallsrum.Objects.Add(hissDorrVent.Key.ToLower(),hissDorrVent);
 
-            
+            AddGameObjectsToRoom(uppehallsrum, halIVaggenBadrum);
+            AddGameObjectsToRoom(uppehallsrum, platDorrTillLobby);
+            AddGameObjectsToRoom(uppehallsrum, hissDorrVent);
 
-            badrum.Exits.Add(halIVaggenURum.Key.ToLower(), halIVaggenURum);
-            badrum.Objects.Add(halIVaggenURum.Key.ToLower(), halIVaggenURum);
-            badrum.Objects.Add(bokhylla.Key.ToLower(), bokhylla);
-            
-            ventilationsrum.Exits.Add(hissDorrURum.Key.ToLower(), hissDorrURum);
-            ventilationsrum.Objects.Add(hissDorrURum.Key.ToLower(), hissDorrURum);
-            ventilationsrum.Exits.Add(dorrTillKlassRum.Key.ToLower(), dorrTillKlassRum);
-            ventilationsrum.Objects.Add(dorrTillKlassRum.Key.ToLower(), dorrTillKlassRum);
-            ventilationsrum.Objects.Add(soptunna.Key.ToLower(), soptunna);
 
-            kok.Exits.Add(traDorrTillLobby.Key.ToLower(), traDorrTillLobby);
-            kok.Objects.Add(traDorrTillLobby.Key.ToLower(), traDorrTillLobby);
-            
-            lektionssal.Objects.Add(dorrTillVent.Key.ToLower(), dorrTillVent);
-            lektionssal.Exits.Add(dorrTillVent.Key.ToLower(), dorrTillVent);
-            lektionssal.Objects.Add(fredrik.Key.ToLower(), fredrik);
-            lektionssal.Objects.Add(elskap.Key.ToLower(), elskap);
-            lektionssal.Exits.Add(dorrTillEnd.Key.ToLower(), dorrTillEnd);
-            lektionssal.Objects.Add(dorrTillEnd.Key.ToLower(), dorrTillEnd);
 
-            
+            //badrum.Exits.Add(halIVaggenURum.Key.ToLower(), halIVaggenURum);
+            //badrum.Objects.Add(halIVaggenURum.Key.ToLower(), halIVaggenURum);
+            //badrum.Objects.Add(bokhylla.Key.ToLower(), bokhylla);
+
+            AddGameObjectsToRoom(badrum, halIVaggenURum);
+            AddGameObjectsToRoom(badrum, bokhylla);
+
+            //ventilationsrum.Exits.Add(hissDorrURum.Key.ToLower(), hissDorrURum);
+            //ventilationsrum.Objects.Add(hissDorrURum.Key.ToLower(), hissDorrURum);
+            //ventilationsrum.Exits.Add(dorrTillKlassRum.Key.ToLower(), dorrTillKlassRum);
+            //ventilationsrum.Objects.Add(dorrTillKlassRum.Key.ToLower(), dorrTillKlassRum);
+            //ventilationsrum.Objects.Add(soptunna.Key.ToLower(), soptunna);
+
+            AddGameObjectsToRoom(ventilationsrum, hissDorrURum);
+            AddGameObjectsToRoom(ventilationsrum, dorrTillKlassRum);
+            AddGameObjectsToRoom(ventilationsrum, soptunna);
+
+            //kok.Exits.Add(traDorrTillLobby.Key.ToLower(), traDorrTillLobby);
+            //kok.Objects.Add(traDorrTillLobby.Key.ToLower(), traDorrTillLobby);
+
+            AddGameObjectsToRoom(kok, traDorrTillLobby);
+
+            //lektionssal.Objects.Add(dorrTillVent.Key.ToLower(), dorrTillVent);
+            //lektionssal.Exits.Add(dorrTillVent.Key.ToLower(), dorrTillVent);
+            //lektionssal.Objects.Add(fredrik.Key.ToLower(), fredrik);
+            //lektionssal.Objects.Add(elskap.Key.ToLower(), elskap);
+            //lektionssal.Exits.Add(dorrTillEnd.Key.ToLower(), dorrTillEnd);
+            //lektionssal.Objects.Add(dorrTillEnd.Key.ToLower(), dorrTillEnd);
+
+            AddGameObjectsToRoom(lektionssal, dorrTillVent);
+            AddGameObjectsToRoom(lektionssal, fredrik);
+            AddGameObjectsToRoom(lektionssal, elskap);
+            AddGameObjectsToRoom(lektionssal, dorrTillEnd);
+
+
 
             Rooms.Add("start", start);
             Rooms.Add("end", end);
@@ -360,7 +382,7 @@ namespace AdventureGame.AdventureData
 
         }
 
-        private static void AddGameObjectsToContainer(Room room, GameObject gameObject)
+        private static void AddGameObjectsToRoom(Room room, GameObject gameObject)
         {
             if (gameObject is Exit)
             {
@@ -447,7 +469,7 @@ namespace AdventureGame.AdventureData
 
             if (split.Length == 2)
             {
-                if (Act.IsDirectionEnum(split[1]))
+                if (IsDirectionEnum(split[1]))
                 {
                     directionStr = split[1];
                 }
@@ -472,6 +494,21 @@ namespace AdventureGame.AdventureData
                 objStr2 = split[3];
                 directionStr = null;
             }
+        }
+
+        public static bool IsPrepositionEnum(string str)
+        {
+            return Enum.TryParse(str, true, out Preposition prep);
+        }
+
+        public static bool IsDirectionEnum(string str)
+        {
+            return Enum.TryParse(str, true, out Direction dir);
+        }
+
+        public static bool IsActionEnum(string str)
+        {
+            return Enum.TryParse(str, true, out Action act);
         }
 
         public bool Prompt()
@@ -521,283 +558,87 @@ namespace AdventureGame.AdventureData
                     out string preposStr,
                     out string objStr2);
 
-                // Tilldelar "action" den handling som spelaren skrivit in.
+                // Skapar bools och Enums-variabler för ordklasser
                 Action action = (Action)Enum.Parse(typeof(Action), actionStr, true);
+                bool inputContainsDirection = Direction.TryParse(directionStr, true, out Direction direction);
+                bool inputContainsPreposition = Preposition.TryParse(directionStr, true, out Preposition preposition);
 
                 // Använder action som parameter i switch-sats nedan. Varje case är en giltig handling
                 switch (action)
                 {
                     case Action.Titta:
 
-                        string startString = "Du ser ";
-
-                        // Om användaren vill titta åt en riktning
-                        if (directionStr != null)
+                        if (inputContainsPreposition)
                         {
-                            if (Direction.TryParse(directionStr, true, out Direction lookDirection))
+                            if (preposition == Preposition.I)
                             {
-                                string writeOut =
-                                    currentRoom.TryFindObjectInDirection(currentRoom, lookDirection, out GameObject roomobj)
-                                        ? roomobj.Name.ToLower()
-                                        : "en vägg";
-                                Console.WriteLine($"{startString}{writeOut}");
-
+                                Console.WriteLine(Player.LookIn(objStr1));
+                            }
+                            else if (preposition == Preposition.På)
+                            {
+                                Console.WriteLine(Player.LookAt(objStr1));
                             }
                         }
-                        // Om användaren vill titta på ett objekt
-                        else if (objStr1 != null)
+                        else if (inputContainsDirection)
                         {
-
-                            if (currentRoom.Objects.ContainsKey(objStr1))
-                            {
-                                Console.WriteLine(
-                                    Act.Look(currentRoom.Objects[objStr1],
-                                        (Preposition)Enum.Parse(typeof(Preposition), preposStr, true)));
-
-                            }
-                            else if (objStr1.Contains("ficka"))
-                            {
-                                //Console.WriteLine(Player.LookInPocket());
-                                Console.WriteLine(Player.GetContentAsString());
-
-                            }
-                            else
-                            {
-                                Console.WriteLine($"Du ser ingen {objStr1}");
-
-                            }
+                            Console.WriteLine(Player.LookTo(direction));
                         }
-                        // Om användaren bara skrivit "Titta" så ges en beskrivning av rummet
                         else
                         {
-                            Console.WriteLine(currentRoom.GetContentAsString());
-
+                            Console.WriteLine(Player.Look());
                         }
 
                         break;
                     // "Inspektera" ger en mer detaljerad beskrivning av ett objekt
                     case Action.Inspektera:
 
-                        if (objStr1 != null)
+                        if (inputContainsPreposition)
                         {
-                            if (objStr2 != null && objStr2 != "ficka")
+                            if (preposition == Preposition.I)
                             {
-                                if (currentRoom.Objects.ContainsKey(objStr1))
-                                {
-                                    Console.WriteLine(
-                                        Act.Inspect(currentRoom.Objects[objStr1]));
-
-                                }
-                                else
-                                {
-                                    Console.WriteLine($"Du ser ingen {objStr1}");
-
-                                }
+                                Console.WriteLine(Player.InspectIn(objStr1, objStr2));
                             }
-                            else if (objStr1.Contains("ficka"))
-                            {
-                                //Console.WriteLine(Player.LookInPocket());
-                                Console.WriteLine(Player.GetContentAsString());
-
-                            }
-                            else if (objStr2 == "ficka")
-                            {
-                                if (Player.Objects.ContainsKey(objStr1))
-                                {
-                                    Console.WriteLine(
-                                        Act.Inspect(Player.Objects[objStr1]));
-
-                                }
-                                else
-                                {
-                                    Console.WriteLine($"Du har ingen {objStr1} i ficka...");
-
-                                }
-                            }
-                            else
-                            {
-                                if (currentRoom.Objects.ContainsKey(objStr1))
-                                {
-                                    Console.WriteLine(
-                                        Act.Inspect(currentRoom.Objects[objStr1]));
-
-                                }
-                                else
-                                {
-                                    Console.WriteLine($"Du ser ingen {objStr1}");
-
-                                }
-                            }
-
-
                         }
                         else
                         {
-                            Console.WriteLine(currentRoom.Description);
-
+                            Console.WriteLine(Player.Inspect(objStr1));
                         }
-
                         break;
                     case Action.Använd:
-
                         if (split.Length == 4)
                         {
-                            bool hasOject1 = Player.Objects.TryGetValue(objStr1, out GameObject obj1);
-                            bool hasObject2 = currentRoom.Objects.TryGetValue(objStr2, out GameObject obj2);
-                            if (hasOject1 && hasObject2)
-                            {
-
-                                if (Act.Use(Player, obj1, obj2))
-                                {
-                                    Console.WriteLine("Det gick!");
-
-                                    if (obj2 is GameObjectsHolder)
-                                    {
-                                        if ((obj2 as GameObjectsHolder).DropsItemOnUse)
-                                        {
-                                            if ((obj2 as GameObjectsHolder).DropFirstItem(currentRoom))
-                                            {
-                                                Console.WriteLine("Någonting ramlade till marken...");
-                                            }
-                                        }
-                                    }
-                                }
-                                else
-                                {
-                                    Console.WriteLine("Det gick inte...");
-
-                                }
-                            }
-                            else if (!hasOject1 && !hasObject2)
-                            {
-                                Console.WriteLine($"Det finns ingen {objStr1} eller {objStr2}");
-
-                            }
-                            else if (!hasObject2)
-                            {
-                                Console.WriteLine($"Det finns ingen {objStr2}");
-
-                            }
-                            else
-                            {
-                                Console.WriteLine($"Du har ingen {objStr1}...");
-
-                            }
+                            Console.WriteLine(Player.Use(objStr1, objStr2));
                         }
 
                         break;
                     case Action.Släpp:
-                        if (Player.Objects.TryGetValue(objStr1, out GameObject obj))
-                        {
-                            if (Act.Drop(Player, obj, currentRoom))
-                            {
-                                Console.WriteLine("Det gick!");
-
-                            }
-                            else
-                            {
-                                Console.WriteLine("Det gick inte...");
-
-                            }
-                        }
+                        Console.WriteLine(Player.Drop(objStr1));
                         break;
                     case Action.Gå:
-
-                        if (!Enum.TryParse(directionStr, true, out Direction walkDirection))
+                        if (inputContainsDirection)
                         {
-                            Console.WriteLine("Jag förstod inte vad du menade...");
-
-                            Console.Clear();
-                            continue;
+                            Console.WriteLine(Player.Go(direction));
                         }
-
-                        if (currentRoom.TryFindExitFromDirection(currentRoom, walkDirection, out Exit walkExit))
-                        {
-                            if (walkExit.IsLocked)
-                            {
-                                Console.WriteLine("Dörren är låst");
-
-                                Console.Clear();
-                                continue;
-                            }
-                            else
-                            {
-                                if (Act.Go(Player, currentRoom, walkDirection))
-                                {
-                                    currentRoom = Player.PlayerLocation;
-                                    Console.Clear();
-                                    Console.WriteLine(currentRoom.GetContentAsString());
-                                }
-                                else
-                                {
-                                    Console.WriteLine("Du slog i en vägg...");
-
-                                }
-                            }
-                        }
-                        else
-                        {
-                            Console.WriteLine("Du gick in i en vägg...");
-
-                            continue;
-                        }
-
                         break;
                     case Action.Ta:
 
                         // Om spelaren vill ta ett objekt ur ett annat objekt...
-                        if (Enum.TryParse(preposStr, true, out Preposition prep))
+                        if (preposition == Preposition.Från && preposition == Preposition.I)
                         {
-                            Act.Get(Player, objStr1, objStr2);
-                            Console.WriteLine($"Du tog {Player.Objects[objStr1].Name}");
+                            Console.WriteLine(Player.Get(objStr1, objStr2));
 
                         }
                         // Om spelaren vill ta ett objekt i rummet
-                        else if (currentRoom.Objects.TryGetValue(objStr1, out GameObject takeObject))
-                        {
-                            if (Act.Get(Player, takeObject))
-                            {
-                                Console.WriteLine($"Du tog {takeObject.Name}");
-                            }
-                            else
-                            {
-                                Console.WriteLine($"Det går inte att ta upp den...");
-                            }
-
-                        }
                         else
                         {
-                            Console.WriteLine($"Det finns ingen {objStr1} här...");
-
-                        }
-                        break;
-                    case Action.Avsluta:
-                        if (!QuitGameDialog()) return false;
-                        break;
-                    case Action.Slå:
-                        if (Player.Objects.TryGetValue(objStr1, out GameObject hitObj) &&
-                            currentRoom.Objects.TryGetValue(objStr2, out GameObject objToHit))
-                        {
-
+                            Console.WriteLine(Player.Get(objStr1));
                         }
                         break;
                     case Action.Prata:
-                        if (currentRoom.Objects.TryGetValue(objStr1, out GameObject dialogObj))
-                        {
-                            if (dialogObj is Person)
-                            {
-                                Console.WriteLine(Act.Talk(dialogObj as Person));
-                            }
-                            else
-                            {
-                                Console.WriteLine("Den verkar inte kunna prata...");
-                            }
-
-                        }
-                        else
-                        {
-                            Console.WriteLine("Vem?");
-                        }
+                        Console.WriteLine(Player.Talk(objStr1));
+                        break;
+                    case Action.Avsluta:
+                        if (!QuitGameDialog()) return false;
                         break;
                     default:
                         throw new ArgumentOutOfRangeException();
