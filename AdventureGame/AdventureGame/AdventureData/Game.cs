@@ -99,7 +99,6 @@ namespace AdventureGame.AdventureData
                 GoesTo = kok,
                 IsLocked = false,
                 DirectionalPosition = Direction.Väst,
-
             };
 
             var traDorrTillLobby = new Exit
@@ -269,7 +268,7 @@ namespace AdventureGame.AdventureData
             {
                 Name = "en nyckel",
                 Description = "En stor rostig nyckel",
-                CanUseWith = { dorr.Name },
+                //CanUseWith = { dorr.Name },
                 DirectionalPosition = null,
                 ObjectTransformed = null
             };
