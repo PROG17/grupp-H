@@ -10,7 +10,7 @@ namespace AdventureGame.AdventureData
     {
         public Room PlayerLocation { get; set; }
 
-        public bool IsAlive { get; internal set; }
+        public bool IsAlive { get; internal set; } = true;
 
         public override string GetContentAsString()
         {
