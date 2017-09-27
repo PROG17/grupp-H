@@ -11,12 +11,10 @@ namespace AdventureGame.AdventureData
         public Dictionary<string, Exit> Exits { get; set; }
         public bool IsEndPoint { get; set; }
 
-        //public Room(string name, string description, bool isEndPoint)
-        //{
-        //    base.Name = name;
-        //    base.Description = description;
-        //    IsEndPoint = isEndPoint;
-        //}
+        public Room()
+        {
+            Exits = new Dictionary<string, Exit>();
+        }
 
         public bool TryFindExitFromDirection(Room room, Direction key, out Exit exit)
         {

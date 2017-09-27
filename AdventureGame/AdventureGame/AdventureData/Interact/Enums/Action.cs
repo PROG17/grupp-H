@@ -2,7 +2,6 @@
 {
     public enum Action
     {
-        Null,
         Titta,
         Inspektera,
         Använd,

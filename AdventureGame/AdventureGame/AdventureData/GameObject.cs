@@ -12,7 +12,7 @@ namespace AdventureGame.AdventureData
     {
         public string Name { get; set; }
         public string Description { get; set; }
-        public Nullable<Direction> DirectionalPosition { get; set; }
+        public Direction? DirectionalPosition { get; set; }
         public List<string> CanUseWith { get; set; }
         public virtual GameObject ObjectTransformed { get; set; }
         public bool IsGetable { get; set; } = false;

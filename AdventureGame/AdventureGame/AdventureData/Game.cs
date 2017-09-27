@@ -18,7 +18,7 @@ namespace AdventureGame.AdventureData
         {
             Player = new Player
             {
-                Name = "Andreas",
+                Name = "",
                 Description = "Aktuell spelare",
             };
             Rooms = new Dictionary<string, Room>();
@@ -59,7 +59,6 @@ namespace AdventureGame.AdventureData
                 Description = "Längs med väggarna står det förvånansvärt många microvågsugnar. " +
                               "Resterna av Java klassarnas lunch ligger i högar över hela rummet." +
                               "I hörnet står en kran och läcker, ",
-                Exits = new Dictionary<string, Exit>(),
                 IsEndPoint = false
 
             };
@@ -69,9 +68,6 @@ namespace AdventureGame.AdventureData
                 Description = "Priserna i kaffeterian hade tillslut blivit för mycket för eleverna på Nackademin. \n" +
                               "Vad som var kvar av kaffeterian går knappt att urskilja mellan de " +
                               "trasiga bord och stolar som blockerar dess ingång.",
-
-
-                Exits = new Dictionary<string, Exit>(),
                 IsEndPoint = false
             };
             var lektionssal = new Room
@@ -79,7 +75,6 @@ namespace AdventureGame.AdventureData
                 Name = "En lektionssal",
                 Description = "En gammal lektionssal med dålig ventilation. I ena hörnet ligger resterna " +
                               "av den senaste klassen som \"inte upplevde någon aha uplevelse\".",
-                Exits = new Dictionary<string, Exit>(),
                 IsEndPoint = false
             };
             var end = new Room
@@ -87,7 +82,6 @@ namespace AdventureGame.AdventureData
                 Name = "Rökrutan",
                 Description = "Du står på baksidan av huset, luften är frisk. \n " +
                               "Eller nja, den var det tills du tände en cigg...",
-                Exits = new Dictionary<string, Exit>(),
                 IsEndPoint = true
             };
 
@@ -129,7 +123,7 @@ namespace AdventureGame.AdventureData
             };
             var halIVaggenBadrum = new Exit
             {
-                Name = "ett hål i väggen",
+                Name = "en vägg med ett stort hål",
                 Description = "ett stort hål i väggen, förmodligen en misslyckad renovering...",
                 GoesTo = badrum,
                 IsLocked = false,
@@ -137,7 +131,7 @@ namespace AdventureGame.AdventureData
             };
             var halIVaggenURum = new Exit
             {
-                Name = "ett hål i väggen",
+                Name = "en vägg med ett stort hål",
                 Description = "ett stort hål i väggen, förmodligen en misslyckad renovering...",
                 GoesTo = uppehallsrum,
                 IsLocked = false,
@@ -210,7 +204,7 @@ namespace AdventureGame.AdventureData
 
             var kaffe = new Object
             {
-                Name = "kaffe",
+                Name = "en kaffe",
                 Description = "En kopp kaffe med lagom mängd mjölk, även kallad gudarnas nektar.\n" +
                               "Ska enligt gammal grekisk mytologi kunna blidka den argaste läraren...",
                 CanUseWith = { "fredrik" },
@@ -227,7 +221,7 @@ namespace AdventureGame.AdventureData
                 Dialog = "Vet ni hur man blir rik genom objekt orientering? Genom arv! HAHAHA fattar ni?\n" +
                          "Den här då:\n" +
                          "Varför behöver java programmerare använda glasögon?\n" +
-                         "För att dom c#! hahahahahahaha \n" +
+                         "För att dom inte c#! hahahahahahaha \n" +
                          "Eller ja den blir bättre på engelska.",
                 DropsItemOnUse = true
             };
@@ -249,7 +243,7 @@ namespace AdventureGame.AdventureData
             var bokhylla = new Object
             {
                 Name = "en bokhylla",
-                Description = "En bokhylla fylld med böcker om ",
+                Description = "En bokhylla fylld med böcker om programmering",
                 CanUseWith = { "en hammare" },
                 ObjectTransformed = null,
                 DirectionalPosition = Direction.Syd
@@ -297,7 +291,7 @@ namespace AdventureGame.AdventureData
             };
             var elskap = new Object
             {
-                Name = "Elskåp",
+                Name = "ett elskåp",
                 Description = "Förser rummet med ström.",
                 CanUseWith = { "en hammare" },
                 DirectionalPosition = Direction.Öst,
@@ -562,20 +556,22 @@ namespace AdventureGame.AdventureData
                     out string preposStr,
                     out string objStr2);
 
-                // Skapar bools och Enums-variabler för ordklasser
+                // Skapar enum för action till switch-sats nedan
                 Action action = (Action)Enum.Parse(typeof(Action), actionStr, true);
-                Direction direction = Direction.Null;
-                Preposition preposition = Preposition.Null;
-
-                bool inputContainsDirection = Direction.TryParse(directionStr, true, out direction);
-                bool inputContainsPreposition = Preposition.TryParse(preposStr, true, out preposition);
+                // Skapar Nullable-Enums av Direction och Preposition
+                Direction? direction = Direction.TryParse(directionStr, true, out Direction dir)
+                    ? (Direction?) dir
+                    : null;
+                Preposition? preposition = Preposition.TryParse(preposStr, true, out Preposition prep)
+                    ? (Preposition?)prep
+                    : null;
 
                 // Använder action som parameter i switch-sats nedan. Varje case är en giltig handling
                 switch (action)
                 {
                     case Action.Titta:
 
-                        if (inputContainsPreposition)
+                        if (preposition != null)
                         {
                             if (preposition == Preposition.I)
                             {
@@ -586,9 +582,9 @@ namespace AdventureGame.AdventureData
                                 Console.WriteLine(Player.LookAt(objStr1));
                             }
                         }
-                        else if (inputContainsDirection)
+                        else if (direction != null)
                         {
-                            Console.WriteLine(Player.LookTo(direction));
+                            Console.WriteLine(Player.LookTo((Direction)direction));
                         }
                         else
                         {
@@ -599,7 +595,7 @@ namespace AdventureGame.AdventureData
                     // "Inspektera" ger en mer detaljerad beskrivning av ett objekt
                     case Action.Inspektera:
 
-                        if (inputContainsPreposition)
+                        if (preposition != null)
                         {
                             if (preposition == Preposition.I)
                             {
@@ -621,9 +617,9 @@ namespace AdventureGame.AdventureData
                         Console.WriteLine(Player.Drop(objStr1));
                         break;
                     case Action.Gå:
-                        if (inputContainsDirection)
+                        if (direction != null)
                         {
-                            string result = Player.Go(direction, out bool isSuccess);
+                            string result = Player.Go((Direction)direction, out bool isSuccess);
 
                             // Om rum ändras rensas skärmen och skriver ut vad spelaren ser
                             if (isSuccess)
@@ -676,8 +672,14 @@ namespace AdventureGame.AdventureData
                                           "\nExempel: \"använd bilnyckel på bil\" eller \"använd nyckel på trädörr\"\n");
                         break;
                     case Action.Avsluta:
-                        if (!QuitGameDialog()) return false;
-                        break;
+                        if (!QuitGameDialog())
+                        {
+                            return false;
+                        }
+                        else
+                        {
+                            continue;
+                        }
                     default:
                         throw new ArgumentOutOfRangeException();
                 }
@@ -701,19 +703,20 @@ namespace AdventureGame.AdventureData
                 if (answer.ToUpper() == "N")
                 {
                     Console.WriteLine("Okej, spelet fortsätter!");
-
-                    Console.Clear();
+                    Console.ReadLine();
                     break;
                 }
                 else if (answer.ToUpper() == "J")
                 {
                     Console.WriteLine("Hej Då!");
+                    Console.ReadLine();
 
                     return false;
                 }
                 else
                 {
                     Console.WriteLine("Fel! Vänligen mata in J/N...");
+                    Console.ReadLine();
 
                     Console.Clear();
                 }
@@ -731,20 +734,20 @@ namespace AdventureGame.AdventureData
                 if (answer.ToUpper() == "J")
                 {
                     Console.WriteLine("Okej, spelet börjar om!");
-
+                    Console.ReadLine();
                     Console.Clear();
                     break;
                 }
                 else if (answer.ToUpper() == "N")
                 {
                     Console.WriteLine("Hej Då!");
-
+                    Console.ReadLine();
                     return false;
                 }
                 else
                 {
                     Console.WriteLine("Fel! Vänligen mata in J/N...");
-
+                    Console.ReadLine();
                     Console.Clear();
                 }
             }

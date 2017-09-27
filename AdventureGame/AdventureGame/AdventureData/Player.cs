@@ -79,7 +79,7 @@ namespace AdventureGame.AdventureData
                 PlayerLocation.Objects.Add(obj.Key, obj);
                 return $"Du släppte {obj.Name} på marken...";
             }
-            return $"Du har ingen \"{obj.Key}\"...";
+            return $"Du har ingen \"{objStr}\"...";
         }
 
         // Använder objekt med annat objekt, vilket byter ut objekt2 i aktuellt rum 

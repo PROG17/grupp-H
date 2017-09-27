@@ -2,7 +2,6 @@
 {
     public enum Preposition
     {
-        Null,
         I,
         Med,
         På,
