@@ -58,6 +58,7 @@
     <Compile Include="AdventureData\Player.cs" />
     <Compile Include="AdventureData\Room.cs" />
     <Compile Include="AdventureData\RoomList.cs" />
+    <Compile Include="GameMenu.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -65,7 +66,13 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="BeepBox-Song-Menu.wav">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="BeepBox-Song.wav">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="typewriter-1.wav">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

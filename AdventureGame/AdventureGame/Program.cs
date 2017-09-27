@@ -9,21 +9,26 @@ using AdventureGame.AdventureData;
 using AdventureGame.AdventureData.Interact;
 using System.Text.RegularExpressions;
 using Action = AdventureGame.AdventureData.Action;
+using System.Threading;
 
 namespace AdventureGame
 {
     class Program
     {
+        
         static void Main(string[] args)
         {
+            GameMenu.DoMenu();
             Game game = new Game();
 
-            Player player = game.Player;
+            Player player = Game.Player;
             Room currentRoom = player.PlayerLocation;
 
-            //SoundPlayer Music = new SoundPlayer();
-            //Music.SoundLocation = AppDomain.CurrentDomain.BaseDirectory + "\\BeepBox-Song.wav";
-            //Music.Play();
+            SoundPlayer music = new SoundPlayer
+            {
+                SoundLocation = AppDomain.CurrentDomain.BaseDirectory + "\\BeepBox-Song.wav"
+            };
+            music.PlayLooping();
 
             bool isPlaying = true;
             while (isPlaying)

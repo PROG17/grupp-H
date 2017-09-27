@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Runtime.Remoting.Messaging;
 using System.Text;
 using System.Threading.Tasks;
 using AdventureGame.AdventureData.Interact;
+using System.Threading;
 
 namespace AdventureGame.AdventureData
 {
@@ -12,15 +14,19 @@ namespace AdventureGame.AdventureData
     {
 
         public Dictionary<string, Room> Rooms { get; set; }
-        public Player Player { get; set; }
+        public static Player Player { get; set; }
+
+        public static void SetName(string name)
+        {
+            Player.Name = name;
+            Player.Description = "Aktuell Spelare";
+        }
 
         public Game()
         {
-            Player = new Player
-            {
-                Name = "Andreas",
-                Description = "Aktuell spelare",
-            };
+            
+            Player = new Player();
+            
             Rooms = new Dictionary<string, Room>();
 
             // Skapar rum
@@ -269,7 +275,7 @@ namespace AdventureGame.AdventureData
             {
                 Name = "en nyckel",
                 Description = "En stor rostig nyckel",
-                CanUseWith = { dorr.Name },
+                CanUseWith = { null },
                 DirectionalPosition = null,
                 ObjectTransformed = null
             };
@@ -359,6 +365,8 @@ namespace AdventureGame.AdventureData
             Rooms.Add("rum5", lektionssal);
 
         }
+
+        
 
         private static void AddGameObjectsToContainer(Room room, GameObject gameObject)
         {
