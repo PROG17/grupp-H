@@ -189,11 +189,15 @@ namespace AdventureGame.AdventureData
         // Skriver ut mer detaljerad beskrivning av ett objekt
         public string Inspect(string obj)
         {
-            if (PlayerLocation.Objects.TryGetValue(obj, out GameObject gameObject))
+            if (obj != null)
             {
-                return $"Du inspekterar {gameObject.Name}.\n{gameObject.Description}";
+                if (PlayerLocation.Objects.TryGetValue(obj, out GameObject gameObject))
+                {
+                    return $"Du inspekterar {gameObject.Name}.\n{gameObject.Description}";
+                }
+                return $"Det finns ingen \"{obj}\" att inspektera.";
             }
-            return $"Det finns ingen \"{obj}\" att inspektera.";
+            return "Inspektera vad?";
         }
 
         // Skriver ut mer detaljerad beskrivning av ett objekt som är inuti ett annat objekt
@@ -224,20 +228,23 @@ namespace AdventureGame.AdventureData
             return "Va?";
         }
 
-        // Ändrar PlayerLocation till det rum som finns i riktning
+        // Ändrar PlayerLocation till det rum som finns i riktning, skickar ut bool som true.
         // Om inet rum finns returneras en sträng om att spelaren gick in i
-        // en vägg, eller ett objekt som fanns i riktningen.
-        public string Go(Direction direction)
+        // en vägg, eller ett objekt som fanns i riktningen, skickar ut bool som false.
+        public string Go(Direction direction, out bool success)
         {
             if (PlayerLocation.TryFindExitFromDirection(PlayerLocation, direction, out Exit exit))
             {
                 exit.GoThrough(this);
+                success = true;
                 return $"{PlayerLocation.GetContentAsString()}";
             }
             else if (PlayerLocation.TryFindObjectInDirection(PlayerLocation, direction, out GameObject obj))
             {
+                success = false;
                 return$"Du gick in i {obj.Name}.";
             }
+            success = false;
             return $"Du gick in i en vägg.";
         }
 

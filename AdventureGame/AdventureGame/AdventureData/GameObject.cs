@@ -17,10 +17,12 @@ namespace AdventureGame.AdventureData
         public virtual GameObject ObjectTransformed { get; set; }
         public bool IsGetable { get; set; } = false;
         public bool DropsItemOnUse { get; set; } = false;
+        public List<string> KillableObjectsWhenUse { get; set; }
 
         public GameObject()
         {
             CanUseWith = new List<string>();
+            KillableObjectsWhenUse = new List<string>();
         }
 
         public bool CanBeUsedWith(string obj)

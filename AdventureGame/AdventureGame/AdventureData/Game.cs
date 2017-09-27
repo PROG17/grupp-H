@@ -37,7 +37,7 @@ namespace AdventureGame.AdventureData
             {
                 Name = "Badrum",
                 Description = "Du är i ett av skolans badrum. Undrar när det blev städat här senast?\n " +
-                              "Det luktar bygg klassare och gamla strumpor."
+                              "Det luktar byggklassare och gamla strumpor."
 
                               ,
                 Exits = new Dictionary<string, Exit>(),
@@ -65,7 +65,7 @@ namespace AdventureGame.AdventureData
             };
             var uppehallsrum = new Room
             {
-                Name = "Uppehålls rum",
+                Name = "Uppehållsrum",
                 Description = "Priserna i kaffeterian hade tillslut blivit för mycket för eleverna på Nackademin. \n" +
                               "Vad som var kvar av kaffeterian går knappt att urskilja mellan de " +
                               "trasiga bord och stolar som blockerar dess ingång.",
@@ -609,7 +609,6 @@ namespace AdventureGame.AdventureData
                         {
                             Console.WriteLine(Player.Use(objStr1, objStr2));
                         }
-
                         break;
                     case Action.Släpp:
                         Console.WriteLine(Player.Drop(objStr1));
@@ -617,7 +616,18 @@ namespace AdventureGame.AdventureData
                     case Action.Gå:
                         if (inputContainsDirection)
                         {
-                            Console.WriteLine(Player.Go(direction));
+                            string result = Player.Go(direction, out bool isSuccess);
+
+                            // Om rum ändras rensas skärmen och skriver ut vad spelaren ser
+                            if (isSuccess)
+                            {
+                                Console.Clear();
+                                Console.WriteLine(result);
+                            }
+                            else
+                            {
+                                Console.WriteLine(result);
+                            }
                         }
                         break;
                     case Action.Ta:
@@ -637,6 +647,27 @@ namespace AdventureGame.AdventureData
                     case Action.Prata:
                         Console.WriteLine(Player.Talk(objStr1));
                         break;
+                    case Action.Hjälp:
+                        Console.Clear();
+                        Console.WriteLine("\n[GÅ]+[NORR|SYD|ÖST|VÄST]" +
+                                          "\nGå i riktning.  " +
+                                          "\nExempel: \"gå norr\"\n" +
+                                          "\n[TA] + [<FÖREMÅL>]" +
+                                          "\nTar upp ett föremål och lägger i fickan" +
+                                          "\nExempel: \"ta bilnyckel\"\n" +
+                                          "\n[SLÄPP] + [<FÖREMÅL>]" +
+                                          "\nSläpper föremålet i rummet" +
+                                          "\nExempel: \"släpp hammare\"\n" +
+                                          "\n[TITTA] | [TITTA] + [PÅ|I] [<FÖREMÅL>]" +
+                                          "\nTittar på uppplockat föremål, föremål i annat föremål eller på föremål i rummet" +
+                                          "\nExempel: \"titta\" eller \"titta i ficka\" eller \"titta på bilnyckel\"\n" +
+                                          "\n[INSPEKTERA] + [<FÖREMÅL>] | [INSPEKTERA] + [<FÖREMÅL>] + [I] + [<FÖREMÅL>]" +
+                                          "\nGer en detaljerad beskrivning av ett föremål" +
+                                          "\nExempel: \"inspektera hammare\" eller \"inspektera nyckel i ficka\"\n" +
+                                          "\n[ANVÄND] + [<FÖREMÅL>] + [PÅ] + [<FÖREMÅL> | [<UTGÅNG>]" +
+                                          "\nAnvänder föremål på annat föremål eller utgång" +
+                                          "\nExempel: \"använd bilnyckel på bil\" eller \"använd nyckel på trädörr\"\n");
+                        break;
                     case Action.Avsluta:
                         if (!QuitGameDialog()) return false;
                         break;
@@ -646,16 +677,7 @@ namespace AdventureGame.AdventureData
 
                 if (input.ToUpper() == "HJÄLP")
                 {
-                    Console.WriteLine("\n[GÅ]+[NORR|SYD|ÖST|VÄST]" +
-                                      "\n\tGå i riktining\n" +
-                                      "\n[TA|PLOCKA UPP] + [<FÖREMÅL>]" +
-                                      "\n\tTar upp ett föremål\n" +
-                                      "\n[SLÄPP] + [<FÖREMÅL>]" +
-                                      "\n\tSläpper föremålet\n" +
-                                      "\n[TITTA] | [TITTA] + [FÖREMÅL]" +
-                                      "\n\tTittar på uppplockat föremål eller på föremål i rummet\n" +
-                                      "\n[ANVÄND] + [<FÖREMÅL>] + [PÅ] + [<FÖREMÅL> | <UTGÅNG>]" +
-                                      "\n\tAnvänder föremål på annat föremål/utgång\n");
+
                 }
             }
 
