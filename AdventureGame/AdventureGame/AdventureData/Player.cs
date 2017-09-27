@@ -184,7 +184,7 @@ namespace AdventureGame.AdventureData
         // Returnerar namnet på objektet i riktining
         public string LookTo(Direction direction)
         {
-            if (PlayerLocation.TryFindObjectInDirection(PlayerLocation, direction, out GameObject gameObject))
+            if (PlayerLocation.TryFindObjectInDirection(direction, out GameObject gameObject))
             {
                 return $"Till {direction.ToString()} ser du {gameObject.Name}";
             }
@@ -238,13 +238,13 @@ namespace AdventureGame.AdventureData
         // en vägg, eller ett objekt som fanns i riktningen, skickar ut bool som false.
         public string Go(Direction direction, out bool success)
         {
-            if (PlayerLocation.TryFindExitFromDirection(PlayerLocation, direction, out Exit exit))
+            if (PlayerLocation.TryFindExitFromDirection(direction, out Exit exit))
             {
                 exit.GoThrough(this);
                 success = true;
                 return $"{PlayerLocation.GetContentAsString()}";
             }
-            else if (PlayerLocation.TryFindObjectInDirection(PlayerLocation, direction, out GameObject obj))
+            else if (PlayerLocation.TryFindObjectInDirection(direction, out GameObject obj))
             {
                 success = false;
                 return$"Du gick in i {obj.Name}.";

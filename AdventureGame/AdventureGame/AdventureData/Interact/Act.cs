@@ -108,7 +108,7 @@ namespace AdventureGame.AdventureData.Interact
 
         public static bool Go(Player player, Room room, Direction direction)
         {
-            if (room.TryFindExitFromDirection(room, direction, out Exit exit))
+            if (room.TryFindExitFromDirection(direction, out Exit exit))
             {
                 exit.GoThrough(player);
                 return true;

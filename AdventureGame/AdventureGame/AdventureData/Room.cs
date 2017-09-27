@@ -8,18 +8,23 @@ namespace AdventureGame.AdventureData
 {
     public class Room : GameObjectsHolder
     {
+        // Lista med utgångar för varje rum
         public Dictionary<string, Exit> Exits { get; set; }
+
+        // Bool för att kolla om spelaren är i slutrummet
         public bool IsEndPoint { get; set; }
 
+        // Konstruktor
         public Room()
         {
             Exits = new Dictionary<string, Exit>();
         }
 
-        public bool TryFindExitFromDirection(Room room, Direction key, out Exit exit)
+        // Metod för att fösröka hitta en utgång i 
+        public bool TryFindExitFromDirection(Direction key, out Exit exit)
         {
             exit = null;
-            foreach (var e in room.Exits)
+            foreach (var e in this.Exits)
             {
                 if (e.Value.DirectionalPosition == key)
                 {
@@ -59,39 +64,15 @@ namespace AdventureGame.AdventureData
             return sb.ToString();
         }
 
-        public bool TryFindObjectInDirection(Room room, Direction key, out GameObject objects)
+        public bool TryFindObjectInDirection(Direction key, out GameObject objects)
         {
-            foreach (var obj in room.Objects)
+            foreach (var obj in this.Objects)
             {
-                if (obj.Value is Object)
+                if (obj.Value.DirectionalPosition == key)
                 {
-                    if ((obj.Value as Object).DirectionalPosition == key)
-                    {
-                        objects = obj.Value;
-                        return true;
-                    }
-
-
+                    objects = obj.Value;
+                    return true;
                 }
-                else if (obj.Value is Exit)
-                {
-                    if ((obj.Value as Exit).DirectionalPosition == key)
-                    {
-                        objects = obj.Value;
-                        return true;
-                    }
-
-                }
-                else if (obj.Value is ObjectContainer)
-                {
-                    if ((obj.Value as ObjectContainer).DirectionalPosition == key)
-                    {
-                        objects = obj.Value;
-                        return true;
-                    }
-
-                }
-
             }
             objects = null;
             return false;

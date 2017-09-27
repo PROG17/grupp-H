@@ -294,7 +294,7 @@ namespace AdventureGame.AdventureData
                 Name = "ett elskåp",
                 Description = "Förser rummet med ström.",
                 CanUseWith = { "en hammare" },
-                DirectionalPosition = Direction.Öst,
+                DirectionalPosition = Direction.Syd,
                 ObjectTransformed = null,
                 KillsOnUse = {skruvmejsel}
             };
