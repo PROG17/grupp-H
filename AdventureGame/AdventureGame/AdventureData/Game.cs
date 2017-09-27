@@ -561,7 +561,7 @@ namespace AdventureGame.AdventureData
                 // Skapar bools och Enums-variabler för ordklasser
                 Action action = (Action)Enum.Parse(typeof(Action), actionStr, true);
                 bool inputContainsDirection = Direction.TryParse(directionStr, true, out Direction direction);
-                bool inputContainsPreposition = Preposition.TryParse(directionStr, true, out Preposition preposition);
+                bool inputContainsPreposition = Preposition.TryParse(preposStr, true, out Preposition preposition);
 
                 // Använder action som parameter i switch-sats nedan. Varje case är en giltig handling
                 switch (action)
@@ -623,7 +623,7 @@ namespace AdventureGame.AdventureData
                     case Action.Ta:
 
                         // Om spelaren vill ta ett objekt ur ett annat objekt...
-                        if (preposition == Preposition.Från && preposition == Preposition.I)
+                        if (preposition == Preposition.Från || preposition == Preposition.I)
                         {
                             Console.WriteLine(Player.Get(objStr1, objStr2));
 

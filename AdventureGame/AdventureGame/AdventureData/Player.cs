@@ -7,12 +7,15 @@ using System.Threading.Tasks;
 
 namespace AdventureGame.AdventureData
 {
-    public class Player : GameObjectsHolder, IInteractable
+    public class Player : GameObjectsHolder
     {
+        // Det aktuella rummet spelaren befinner sig i
         public Room PlayerLocation { get; set; }
 
+        // En koll om spelare lever
         public bool IsAlive { get; internal set; } = true;
 
+        // Overridad metod från basklass som skriver ut innehållet från "fickan"
         public override string GetContentAsString()
         {
             if (Objects.Count != 0)
@@ -28,6 +31,9 @@ namespace AdventureGame.AdventureData
             }
         }
 
+        //---------------------------METODER FÖR INTERAKTION ----------------------------------
+
+        // Tar ett objekt
         public string Get(string objStr)
         {
             if (PlayerLocation.Objects.TryGetValue(objStr, out GameObject obj))
@@ -44,6 +50,7 @@ namespace AdventureGame.AdventureData
             return $"Det finns ingen \"{objStr}\"";
         }
 
+        // Tar ett objekt ur ett annat objekt
         public string Get(string toGetStr, string getFromStr)
         {
             if (PlayerLocation.Objects.TryGetValue(getFromStr, out GameObject container))
@@ -63,6 +70,7 @@ namespace AdventureGame.AdventureData
             return "Den gick inte att plocka upp...";
         }
 
+        // Släpper ett objekt och placerar det i aktuella rummet
         public string Drop(string objStr)
         {
             if (Objects.TryGetValue(objStr, out GameObject obj))
@@ -74,6 +82,10 @@ namespace AdventureGame.AdventureData
             return $"Du har ingen \"{obj.Key}\"...";
         }
 
+        // Använder objekt med annat objekt, vilket byter ut objekt2 i aktuellt rum 
+        // till inneboende objektvariabel "ObjectTransformed".
+        // Om objekt2 är en dörr så ändras inneboende boolen "IsLocked" till true eller false, 
+        // beroende på aktuellt värde.
         public string Use(string objStr1, string objStr2)
         {
             bool hasOject1 = Objects.TryGetValue(objStr1, out GameObject objToUse);
@@ -127,11 +139,13 @@ namespace AdventureGame.AdventureData
             }
         }
 
+        // Returnerar rumbeskrivning och innehåll
         public string Look()
         {
             return PlayerLocation.GetContentAsString();
         }
 
+        // Returnerar innehåll i objekt
         public string LookIn(string obj)
         {
             if (obj.Contains("ficka"))
@@ -152,6 +166,7 @@ namespace AdventureGame.AdventureData
             return "Va?";
         }
 
+        // Returnerar namnet på objekt 
         public string LookAt(string obj)
         {
             if (PlayerLocation.Objects.TryGetValue(obj, out var gameObject))
@@ -161,6 +176,7 @@ namespace AdventureGame.AdventureData
             return $"Det finns ingen \"{obj}\" att titta på.";
         }
 
+        // Returnerar namnet på objektet i riktining
         public string LookTo(Direction direction)
         {
             if (PlayerLocation.TryFindObjectInDirection(PlayerLocation, direction, out GameObject gameObject))
@@ -170,6 +186,7 @@ namespace AdventureGame.AdventureData
             return $"Till {direction.ToString()} ser du en vägg.";
         }
 
+        // Skriver ut mer detaljerad beskrivning av ett objekt
         public string Inspect(string obj)
         {
             if (PlayerLocation.Objects.TryGetValue(obj, out GameObject gameObject))
@@ -179,14 +196,16 @@ namespace AdventureGame.AdventureData
             return $"Det finns ingen \"{obj}\" att inspektera.";
         }
 
+        // Skriver ut mer detaljerad beskrivning av ett objekt som är inuti ett annat objekt
         public string InspectIn(string obj, string objContainer)
         {
             if (objContainer.Contains("ficka"))
             {
-                if (PlayerLocation.Objects.TryGetValue(obj, out GameObject gameObject))
+                if (Objects.TryGetValue(obj, out GameObject gameObject))
                 {
-                    return this.GetContentAsString();
+                    return $"Det är {gameObject.Description}";
                 }
+                return $"Det finns ingen \"{obj}\" att inspektera.";
             }
             else if (PlayerLocation.Objects.TryGetValue(obj, out GameObject container))
             {
@@ -205,6 +224,9 @@ namespace AdventureGame.AdventureData
             return "Va?";
         }
 
+        // Ändrar PlayerLocation till det rum som finns i riktning
+        // Om inet rum finns returneras en sträng om att spelaren gick in i
+        // en vägg, eller ett objekt som fanns i riktningen.
         public string Go(Direction direction)
         {
             if (PlayerLocation.TryFindExitFromDirection(PlayerLocation, direction, out Exit exit))
@@ -219,13 +241,14 @@ namespace AdventureGame.AdventureData
             return $"Du gick in i en vägg.";
         }
 
+        // Returnerar sträng som ett objekt har i inneboende "Dialog"
         public string Talk(string objStr)
         {
             if(PlayerLocation.Objects.TryGetValue(objStr, out GameObject obj))
             {
                 if (obj is Person)
                 {
-                    return $"{obj.Name} säger:\n";
+                    return $"{obj.Name} säger:\n{(obj as Person).Dialog}";
                 }
                 return $"{obj.Key} svarar inte.";
             }

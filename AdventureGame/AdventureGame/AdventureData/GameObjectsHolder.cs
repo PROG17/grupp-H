@@ -23,7 +23,7 @@ namespace AdventureGame.AdventureData
 
                 return sb.ToString();
             }
-            else return null;
+            else return "Den är tom...";
         }
 
         public GameObjectsHolder()
