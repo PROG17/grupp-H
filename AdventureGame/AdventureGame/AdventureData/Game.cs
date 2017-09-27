@@ -378,135 +378,8 @@ namespace AdventureGame.AdventureData
 
         }
 
-        private static void AddGameObjectsToRoom(Room room, GameObject gameObject)
-        {
-            if (gameObject is Exit)
-            {
-                room.Exits.Add(gameObject.Key, gameObject as Exit);
-                room.Objects.Add(gameObject.Key, gameObject);
-            }
-            else
-            {
-                room.Objects.Add(gameObject.Key, gameObject);
-            }
-        }
-        private static void AddGameObjectsToContainer(GameObjectsHolder container, GameObject gameObject)
-        {
-            container.Objects.Add(gameObject.Key, gameObject);
-        }
-
-        public static bool ValidateSentence(string[] split, out string[] strings)
-        {
-            if (split.Length > 0 && split.Length < 5)
-            {
-                if (split.Length == 1)
-                {
-                    if (Action.TryParse(split[0], true, out Action action))
-                    {
-                        strings = split;
-                        return true;
-                    }
-                }
-                else if (split.Length == 2)
-                {
-                    if (Action.TryParse(split[0], true, out Action action))
-                    {
-                        if (action == Action.Gå || action == Action.Titta)
-                        {
-                            if (Direction.TryParse(split[1], true, out Direction dir))
-                            {
-                                strings = split;
-                                return true;
-                            }
-                        }
-                        else if (action == Action.Släpp || action == Action.Ta || action == Action.Inspektera)
-                        {
-                            strings = split;
-                            return true;
-                        }
-
-                    }
-                }
-                else if (split.Length == 3)
-                {
-                    if (Action.TryParse(split[0], true, out Action action))
-                    {
-                        if (Preposition.TryParse(split[1], true, out Preposition prepos))
-                        {
-                            strings = split;
-                            return true;
-                        }
-                    }
-                }
-                else if (split.Length == 4)
-                {
-                    if (Action.TryParse(split[0], true, out Action action))
-                    {
-                        if (Preposition.TryParse(split[2], true, out Preposition prepos))
-                        {
-                            strings = split;
-                            return true;
-                        }
-                    }
-                }
-            }
-            strings = null;
-            return false;
-        }
-
-        private static void CategorizeSentenceStrings(string[] split, out string actionStr, out string directionStr,
-            out string objStr1, out string preposStr, out string objStr2)
-        {
-            actionStr = split[0];
-            directionStr = null;
-            objStr1 = null;
-            objStr2 = null;
-            preposStr = null;
-
-            if (split.Length == 2)
-            {
-                if (IsDirectionEnum(split[1]))
-                {
-                    directionStr = split[1];
-                }
-                else
-                {
-                    objStr1 = split[1];
-                }
-                preposStr = null;
-                objStr2 = null;
-            }
-            else if (split.Length == 3)
-            {
-                preposStr = split[1];
-                objStr1 = split[2];
-                directionStr = null;
-                objStr2 = null;
-            }
-            else if (split.Length == 4)
-            {
-                objStr1 = split[1];
-                preposStr = split[2];
-                objStr2 = split[3];
-                directionStr = null;
-            }
-        }
-
-        public static bool IsPrepositionEnum(string str)
-        {
-            return Enum.TryParse(str, true, out Preposition prep);
-        }
-
-        public static bool IsDirectionEnum(string str)
-        {
-            return Enum.TryParse(str, true, out Direction dir);
-        }
-
-        public static bool IsActionEnum(string str)
-        {
-            return Enum.TryParse(str, true, out Action act);
-        }
-
+        // Metod där kommandon tas in från användaren och utvärderas samt 
+        // kallar på lämplig metod och skriver ut resultat av kallad metod.
         public bool Prompt()
         {
             Room currentRoom = Player.PlayerLocation;
@@ -560,7 +433,7 @@ namespace AdventureGame.AdventureData
                 Action action = (Action)Enum.Parse(typeof(Action), actionStr, true);
                 // Skapar Nullable-Enums av Direction och Preposition
                 Direction? direction = Direction.TryParse(directionStr, true, out Direction dir)
-                    ? (Direction?) dir
+                    ? (Direction?)dir
                     : null;
                 Preposition? preposition = Preposition.TryParse(preposStr, true, out Preposition prep)
                     ? (Preposition?)prep
@@ -693,6 +566,131 @@ namespace AdventureGame.AdventureData
             return true;
         }
 
+        // Lägger till objekt i rum, om objekt är av typen "exit" så läggs den till i rummets Exit-lista också
+        private static void AddGameObjectsToRoom(Room room, GameObject gameObject)
+        {
+            if (gameObject is Exit)
+            {
+                room.Exits.Add(gameObject.Key, gameObject as Exit);
+                room.Objects.Add(gameObject.Key, gameObject);
+            }
+            else
+            {
+                room.Objects.Add(gameObject.Key, gameObject);
+            }
+        }
+        // Lägger till objekt i ett annat objekt.
+        private static void AddGameObjectsToContainer(GameObjectsHolder container, GameObject gameObject)
+        {
+            container.Objects.Add(gameObject.Key, gameObject);
+        }
+
+        // Metod som kollar om strängen som matats in är enligt tillåten syntax
+        public static bool ValidateSentence(string[] split, out string[] strings)
+        {
+            if (split.Length > 0 && split.Length < 5)
+            {
+                if (split.Length == 1)
+                {
+                    if (Action.TryParse(split[0], true, out Action action))
+                    {
+                        strings = split;
+                        return true;
+                    }
+                }
+                else if (split.Length == 2)
+                {
+                    if (Action.TryParse(split[0], true, out Action action))
+                    {
+                        if (action == Action.Gå || action == Action.Titta)
+                        {
+                            if (Direction.TryParse(split[1], true, out Direction dir))
+                            {
+                                strings = split;
+                                return true;
+                            }
+                        }
+                        else if (action == Action.Släpp || action == Action.Ta || action == Action.Inspektera)
+                        {
+                            strings = split;
+                            return true;
+                        }
+
+                    }
+                }
+                else if (split.Length == 3)
+                {
+                    if (Action.TryParse(split[0], true, out Action action))
+                    {
+                        if (Preposition.TryParse(split[1], true, out Preposition prepos))
+                        {
+                            strings = split;
+                            return true;
+                        }
+                    }
+                }
+                else if (split.Length == 4)
+                {
+                    if (Action.TryParse(split[0], true, out Action action))
+                    {
+                        if (Preposition.TryParse(split[2], true, out Preposition prepos))
+                        {
+                            strings = split;
+                            return true;
+                        }
+                    }
+                }
+            }
+            strings = null;
+            return false;
+        }
+
+        // Kategoriserar användarens strängar efter spelets ordklasser. Returnerar null om inget ord av ordklassen finns med i meningen
+        private static void CategorizeSentenceStrings(string[] split, out string actionStr, out string directionStr,
+            out string objStr1, out string preposStr, out string objStr2)
+        {
+            actionStr = split[0];
+            directionStr = null;
+            objStr1 = null;
+            objStr2 = null;
+            preposStr = null;
+
+            if (split.Length == 2)
+            {
+                if (IsDirectionEnum(split[1]))
+                {
+                    directionStr = split[1];
+                }
+                else
+                {
+                    objStr1 = split[1];
+                }
+                preposStr = null;
+                objStr2 = null;
+            }
+            else if (split.Length == 3)
+            {
+                preposStr = split[1];
+                objStr1 = split[2];
+                directionStr = null;
+                objStr2 = null;
+            }
+            else if (split.Length == 4)
+            {
+                objStr1 = split[1];
+                preposStr = split[2];
+                objStr2 = split[3];
+                directionStr = null;
+            }
+        }
+
+        // Kollar om strängen som skickas in är en Direction
+        public static bool IsDirectionEnum(string str)
+        {
+            return Enum.TryParse(str, true, out Direction dir);
+        }
+
+        // Metod som frågar om användaren vill avsluta
         private static bool QuitGameDialog()
         {
             while (true)
@@ -724,6 +722,7 @@ namespace AdventureGame.AdventureData
             return true;
         }
 
+        // Metod som frågar om användaren vill spela igen om spelet är avklarat eller spelaren dör
         private static bool RestartGameDialog()
         {
             while (true)

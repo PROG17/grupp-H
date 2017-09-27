@@ -8,8 +8,11 @@ namespace AdventureGame.AdventureData
 {
     public class GameObjectsHolder : GameObject
     {
+        // Hållare av GameObjects
         public virtual Dictionary<string, GameObject> Objects { get; set; }
 
+        // Skriver ut innehållet i this.Objects
+        // Är virtual då andra klasser skriver om den en aning
         public virtual string GetContentAsString()
         {
             if (Objects.Count != 0)
@@ -31,16 +34,17 @@ namespace AdventureGame.AdventureData
             Objects = new Dictionary<string, GameObject>();
         }
 
+        // Metod som släpper första objektet i listan
         public bool DropFirstItem(Room currentRoom)
         {
-            Stack<GameObject> listOfObjects = new Stack<GameObject>();
+            Queue<GameObject> listOfObjects = new Queue<GameObject>();
             if (Objects.Count != 0)
             {
                 foreach (var gameObject in Objects)
                 {
-                    listOfObjects.Push(gameObject.Value);
+                    listOfObjects.Enqueue(gameObject.Value);
                 }
-                GameObject obj = listOfObjects.Pop();
+                GameObject obj = listOfObjects.Dequeue();
                 currentRoom.Objects.Add(obj.Key, obj);
                 this.Objects.Remove(obj.Key);
                 return true;

@@ -20,22 +20,7 @@ namespace AdventureGame.AdventureData
             Exits = new Dictionary<string, Exit>();
         }
 
-        // Metod för att fösröka hitta en utgång i 
-        public bool TryFindExitFromDirection(Direction key, out Exit exit)
-        {
-            exit = null;
-            foreach (var e in this.Exits)
-            {
-                if (e.Value.DirectionalPosition == key)
-                {
-                    exit = e.Value;
-                    return true;
-                }
-            }
-            exit = null;
-            return false;
-        }
-
+        // Overridad variant av GetContentAsString som ger en rumbeskrivning med alla objekt
         public override string GetContentAsString()
         {
             StringBuilder sb = new StringBuilder();
@@ -64,6 +49,24 @@ namespace AdventureGame.AdventureData
             return sb.ToString();
         }
 
+        // Metod för att fösröka hitta en utgång i inskickad riktining (Direction).
+        // Returnerar true om lyckat och skickar ut en "Exit" med out-nyckelordet
+        public bool TryFindExitFromDirection(Direction key, out Exit exit)
+        {
+            exit = null;
+            foreach (var e in this.Exits)
+            {
+                if (e.Value.DirectionalPosition == key)
+                {
+                    exit = e.Value;
+                    return true;
+                }
+            }
+            exit = null;
+            return false;
+        }
+
+        // Samma som ovan fast för vilket GameObject som helst
         public bool TryFindObjectInDirection(Direction key, out GameObject objects)
         {
             foreach (var obj in this.Objects)

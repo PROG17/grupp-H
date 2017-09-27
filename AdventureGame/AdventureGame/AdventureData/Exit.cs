@@ -8,24 +8,21 @@ namespace AdventureGame.AdventureData
 {
     public class Exit : GameObject
     {
+        // Innehåller rummet som denna Exit leder till
         public Room GoesTo { get; set; }
+        // Innehåller det objekt som öppnar dörren
         public Object OpensWith { get; set; }
+        // Bool för att kolla om dörren är öppen eller låst
         public bool IsLocked { get; set; }
+        
 
         public Exit()
         {
+            // Gör så dörrar inte går att plocka upp
             IsGetable = false;
         }
-        //public Exit(string name, string description, Room goesTo, Object opensWith, Direction inDirection, bool isLocked)
-        //{
-        //    base.Name = name;
-        //    base.Description = description;
-        //    GoesTo = goesTo;
-        //    OpensWith = opensWith;   
-        //    DirectionalPosition = inDirection;
-        //    IsLocked = isLocked;
-        //}
 
+        // Metod som byter aktuellt rum när spelaren går igenom en exit.
         public void GoThrough(Player player)
         {
             var temp = GoesTo;

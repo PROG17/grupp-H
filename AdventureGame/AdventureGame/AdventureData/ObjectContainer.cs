@@ -8,6 +8,7 @@ namespace AdventureGame.AdventureData
 {
     public class ObjectContainer : GameObjectsHolder
     {
+        // Overridad GetContentAsString
         public override string GetContentAsString()
         {
             string returnString = "Du tittar i den och ser:\n";
