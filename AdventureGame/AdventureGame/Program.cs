@@ -28,7 +28,15 @@ namespace AdventureGame
             bool isPlaying = true;
             while (isPlaying)
             {
-                isPlaying = game.Prompt();
+                bool playAgain = game.Prompt();
+                if (playAgain)
+                {
+                    game = new Game();
+                }
+                else
+                {
+                    break;
+                }
             }
         }
     }

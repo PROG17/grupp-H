@@ -2,6 +2,7 @@
 {
     public enum Direction
     {
+        Null,
         Norr,
         Öst,
         Väst,

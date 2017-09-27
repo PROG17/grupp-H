@@ -94,6 +94,11 @@ namespace AdventureGame.AdventureData
             {
                 if (objToUse.CanUseWith.Contains(objUseOn.Key))
                 {
+                    if (objUseOn.KillsOnUse.Contains(objToUse))
+                    {
+                        IsAlive = false;
+                        return "AAAAHHHHHHHHHHHHHH!";
+                    }
                     if ((objUseOn is Exit))
                     {
                         if ((objUseOn as Exit).IsLocked)

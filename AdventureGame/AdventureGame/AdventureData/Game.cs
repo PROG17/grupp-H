@@ -202,7 +202,7 @@ namespace AdventureGame.AdventureData
             {
                 Name = "en tunna",
                 Description = "en stor tunna i trä och gjutjärn. Tunnan går inte att öppna utan något verktyg...",
-                CanUseWith = { "en hammare" },
+                CanUseWith = { "hammare" },
                 ObjectTransformed = trasigTunna,
                 DirectionalPosition = null,
                 IsGetable = false
@@ -241,7 +241,8 @@ namespace AdventureGame.AdventureData
                 ObjectTransformed = fredrik,
                 DirectionalPosition = Direction.Norr,
                 Dialog = "Jasså du gillar inte mina skämt? Då är det dags för ett oförberett diagnostiskt test!\n" +
-                         "Mohahaha jag kan göra hur många test jag vill!"
+                         "Mohahaha jag kan göra hur många test jag vill!",
+                DropsItemOnUse = true
             };
             fredrik.ObjectTransformed = argaFredrik;
 
@@ -282,7 +283,7 @@ namespace AdventureGame.AdventureData
             {
                 Name = "en hammare",
                 Description = "en robust hammare",
-                CanUseWith = { tunna.Name, fredrik.Name, bokhylla.Name },
+                CanUseWith = { tunna.Key, fredrik.Key, bokhylla.Key },
                 DirectionalPosition = null,
                 ObjectTransformed = null
             };
@@ -290,7 +291,7 @@ namespace AdventureGame.AdventureData
             {
                 Name = "en skruvmejsel",
                 Description = "en skruvmejsel med plasthandtag",
-                CanUseWith = { },
+                CanUseWith = {"elskåp"},
                 DirectionalPosition = null,
                 ObjectTransformed = null
             };
@@ -300,7 +301,8 @@ namespace AdventureGame.AdventureData
                 Description = "Förser rummet med ström.",
                 CanUseWith = { "en hammare" },
                 DirectionalPosition = Direction.Öst,
-                ObjectTransformed = null
+                ObjectTransformed = null,
+                KillsOnUse = {skruvmejsel}
             };
 
             Player.PlayerLocation = start;
@@ -313,7 +315,7 @@ namespace AdventureGame.AdventureData
             //start.Objects.Add(tunna.Key.ToLower(), tunna);
             //start.Exits.Add(platDorrTillURum.Key.ToLower(), platDorrTillURum);
             //start.Objects.Add(platDorrTillURum.Key.ToLower(), platDorrTillURum);
-            AddGameObjectsToContainer(fredrik, skruvmejsel);
+            AddGameObjectsToContainer(argaFredrik, skruvmejsel);
             AddGameObjectsToContainer(fredrik, bilnyckel);
             AddGameObjectsToContainer(trasigTunna, nyckel);
             AddGameObjectsToContainer(soptunna, hammer);
@@ -516,19 +518,21 @@ namespace AdventureGame.AdventureData
             Room currentRoom = Player.PlayerLocation;
             Console.WriteLine(currentRoom.GetContentAsString());
 
-
-            while (true)
+            bool isPlaying = true;
+            while (isPlaying)
             {
                 currentRoom = Player.PlayerLocation;
 
                 if (currentRoom.IsEndPoint)
                 {
                     Console.WriteLine("Grattis! Du klarade spelet!");
-                    return false;
+                    return RestartGameDialog();
                 }
                 if (!Player.IsAlive)
                 {
                     Console.WriteLine("Du dog...");
+                    Console.ReadLine();
+                    return RestartGameDialog();
                 }
 
                 Console.Write("\nVad vill du göra? ");
@@ -560,8 +564,11 @@ namespace AdventureGame.AdventureData
 
                 // Skapar bools och Enums-variabler för ordklasser
                 Action action = (Action)Enum.Parse(typeof(Action), actionStr, true);
-                bool inputContainsDirection = Direction.TryParse(directionStr, true, out Direction direction);
-                bool inputContainsPreposition = Preposition.TryParse(preposStr, true, out Preposition preposition);
+                Direction direction = Direction.Null;
+                Preposition preposition = Preposition.Null;
+
+                bool inputContainsDirection = Direction.TryParse(directionStr, true, out direction);
+                bool inputContainsPreposition = Preposition.TryParse(preposStr, true, out preposition);
 
                 // Använder action som parameter i switch-sats nedan. Varje case är en giltig handling
                 switch (action)
@@ -688,7 +695,7 @@ namespace AdventureGame.AdventureData
         {
             while (true)
             {
-                Console.WriteLine("Är du säker på att du vill avsluta?");
+                Console.WriteLine("Vill du avsluta spelet?");
                 Console.Write("J/N: ");
                 string answer = Console.ReadLine();
                 if (answer.ToUpper() == "N")
@@ -699,6 +706,36 @@ namespace AdventureGame.AdventureData
                     break;
                 }
                 else if (answer.ToUpper() == "J")
+                {
+                    Console.WriteLine("Hej Då!");
+
+                    return false;
+                }
+                else
+                {
+                    Console.WriteLine("Fel! Vänligen mata in J/N...");
+
+                    Console.Clear();
+                }
+            }
+            return true;
+        }
+
+        private static bool RestartGameDialog()
+        {
+            while (true)
+            {
+                Console.WriteLine("Vill du prova igen?");
+                Console.Write("J/N: ");
+                string answer = Console.ReadLine();
+                if (answer.ToUpper() == "J")
+                {
+                    Console.WriteLine("Okej, spelet börjar om!");
+
+                    Console.Clear();
+                    break;
+                }
+                else if (answer.ToUpper() == "N")
                 {
                     Console.WriteLine("Hej Då!");
 
