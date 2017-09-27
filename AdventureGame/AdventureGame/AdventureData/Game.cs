@@ -4,14 +4,11 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
-using AdventureGame.AdventureData.Interact;
 
 namespace AdventureGame.AdventureData
 {
     class Game
     {
-
-        public Dictionary<string, Room> Rooms { get; set; }
         public Player Player { get; set; }
 
         public Game()
@@ -21,7 +18,6 @@ namespace AdventureGame.AdventureData
                 Name = "",
                 Description = "Aktuell spelare",
             };
-            Rooms = new Dictionary<string, Room>();
 
             // Skapar rum
             var start = new Room
@@ -299,83 +295,42 @@ namespace AdventureGame.AdventureData
                 KillsOnUse = {skruvmejsel}
             };
 
+            // Sätter startpunkt
             Player.PlayerLocation = start;
-            //fredrik.Objects.Add(skruvmejsel.Key.ToLower(), skruvmejsel);
-            //fredrik.Objects.Add(bilnyckel.Key.ToLower(), bilnyckel);
-            //trasigTunna.Objects.Add(nyckel.Key.ToLower(), nyckel);
-            //soptunna.Objects.Add(hammer.Key.ToLower(), hammer);
-            //start.Objects.Add(traDorrTillKok.Key.ToLower(), traDorrTillKok);
-            //start.Exits.Add(traDorrTillKok.Key.ToLower(), traDorrTillKok);
-            //start.Objects.Add(tunna.Key.ToLower(), tunna);
-            //start.Exits.Add(platDorrTillURum.Key.ToLower(), platDorrTillURum);
-            //start.Objects.Add(platDorrTillURum.Key.ToLower(), platDorrTillURum);
+
+            // Lägger till objekt i andra objekt
             AddGameObjectsToContainer(argaFredrik, skruvmejsel);
             AddGameObjectsToContainer(fredrik, bilnyckel);
             AddGameObjectsToContainer(trasigTunna, nyckel);
             AddGameObjectsToContainer(soptunna, hammer);
+
+            // Lägger till objekt i rummet "start"
             AddGameObjectsToRoom(start, traDorrTillKok);
             AddGameObjectsToRoom(start, tunna);
             AddGameObjectsToRoom(start, platDorrTillURum);
 
-            //start.Exits.Add(dorr5.Key.ToLower(), dorr5);
-            //start.Objects.Add(dorr5.Key.ToLower(), dorr5);
-            //uppehallsrum.Objects.Add(halIVaggenBadrum.Key.ToLower(), halIVaggenBadrum);
-            //uppehallsrum.Exits.Add(halIVaggenBadrum.Key.ToLower(), halIVaggenBadrum);
-            //uppehallsrum.Objects.Add(platDorrTillLobby.Key.ToLower(), platDorrTillLobby);
-            //uppehallsrum.Exits.Add(platDorrTillLobby.Key.ToLower(), platDorrTillLobby);
-            //uppehallsrum.Exits.Add(hissDorrVent.Key.ToLower(), hissDorrVent);
-            //uppehallsrum.Objects.Add(hissDorrVent.Key.ToLower(),hissDorrVent);
-
+            // Lägger till objekt i rummet "uppehallsrum"
             AddGameObjectsToRoom(uppehallsrum, halIVaggenBadrum);
             AddGameObjectsToRoom(uppehallsrum, platDorrTillLobby);
             AddGameObjectsToRoom(uppehallsrum, hissDorrVent);
 
-
-
-            //badrum.Exits.Add(halIVaggenURum.Key.ToLower(), halIVaggenURum);
-            //badrum.Objects.Add(halIVaggenURum.Key.ToLower(), halIVaggenURum);
-            //badrum.Objects.Add(bokhylla.Key.ToLower(), bokhylla);
-
+            // Lägger till objekt i rummet "badrum"
             AddGameObjectsToRoom(badrum, halIVaggenURum);
             AddGameObjectsToRoom(badrum, bokhylla);
 
-            //ventilationsrum.Exits.Add(hissDorrURum.Key.ToLower(), hissDorrURum);
-            //ventilationsrum.Objects.Add(hissDorrURum.Key.ToLower(), hissDorrURum);
-            //ventilationsrum.Exits.Add(dorrTillKlassRum.Key.ToLower(), dorrTillKlassRum);
-            //ventilationsrum.Objects.Add(dorrTillKlassRum.Key.ToLower(), dorrTillKlassRum);
-            //ventilationsrum.Objects.Add(soptunna.Key.ToLower(), soptunna);
-
+            // Lägger till objekt i rummet "ventilationsrum"
             AddGameObjectsToRoom(ventilationsrum, hissDorrURum);
             AddGameObjectsToRoom(ventilationsrum, dorrTillKlassRum);
             AddGameObjectsToRoom(ventilationsrum, soptunna);
 
-            //kok.Exits.Add(traDorrTillLobby.Key.ToLower(), traDorrTillLobby);
-            //kok.Objects.Add(traDorrTillLobby.Key.ToLower(), traDorrTillLobby);
-
+            // Lägger till objekt i rummet "kok"
             AddGameObjectsToRoom(kok, traDorrTillLobby);
 
-            //lektionssal.Objects.Add(dorrTillVent.Key.ToLower(), dorrTillVent);
-            //lektionssal.Exits.Add(dorrTillVent.Key.ToLower(), dorrTillVent);
-            //lektionssal.Objects.Add(fredrik.Key.ToLower(), fredrik);
-            //lektionssal.Objects.Add(elskap.Key.ToLower(), elskap);
-            //lektionssal.Exits.Add(dorrTillEnd.Key.ToLower(), dorrTillEnd);
-            //lektionssal.Objects.Add(dorrTillEnd.Key.ToLower(), dorrTillEnd);
-
+            // Lägger till objekt i rummet "lektionssal"
             AddGameObjectsToRoom(lektionssal, dorrTillVent);
             AddGameObjectsToRoom(lektionssal, fredrik);
             AddGameObjectsToRoom(lektionssal, elskap);
             AddGameObjectsToRoom(lektionssal, dorrTillEnd);
-
-
-
-            Rooms.Add("start", start);
-            Rooms.Add("end", end);
-            Rooms.Add("rum1", badrum);
-            Rooms.Add("rum2", ventilationsrum);
-            Rooms.Add("rum3", kok);
-            Rooms.Add("rum4", uppehallsrum);
-            Rooms.Add("rum5", lektionssal);
-
         }
 
         // Metod där kommandon tas in från användaren och utvärderas samt 
@@ -390,11 +345,13 @@ namespace AdventureGame.AdventureData
             {
                 currentRoom = Player.PlayerLocation;
 
+                // Om användaren klarat spelet
                 if (currentRoom.IsEndPoint)
                 {
                     Console.WriteLine("Grattis! Du klarade spelet!");
                     return RestartGameDialog();
                 }
+                // Om användaren dör
                 if (!Player.IsAlive)
                 {
                     Console.WriteLine("Du dog...");
@@ -480,15 +437,18 @@ namespace AdventureGame.AdventureData
                             Console.WriteLine(Player.Inspect(objStr1));
                         }
                         break;
+                        // Om användaren försöker använda ett objekt med ett annat
                     case Action.Använd:
                         if (split.Length == 4)
                         {
                             Console.WriteLine(Player.Use(objStr1, objStr2));
                         }
                         break;
+                        // Om användaren släpper ett objekt
                     case Action.Släpp:
                         Console.WriteLine(Player.Drop(objStr1));
                         break;
+                        // Om användaren går i en rikting
                     case Action.Gå:
                         if (direction != null)
                         {
@@ -506,6 +466,7 @@ namespace AdventureGame.AdventureData
                             }
                         }
                         break;
+                        // Om användaren försöker ta ett objekt
                     case Action.Ta:
 
                         // Om spelaren vill ta ett objekt ur ett annat objekt...
@@ -520,9 +481,11 @@ namespace AdventureGame.AdventureData
                             Console.WriteLine(Player.Get(objStr1));
                         }
                         break;
+                        // Om användaren försöker prata med någon/något
                     case Action.Prata:
                         Console.WriteLine(Player.Talk(objStr1));
                         break;
+                        // Om användaren vill ha hjälp med syntax
                     case Action.Hjälp:
                         Console.Clear();
                         Console.WriteLine("\n[GÅ]+[NORR|SYD|ÖST|VÄST]" +
@@ -544,6 +507,7 @@ namespace AdventureGame.AdventureData
                                           "\nAnvänder föremål på annat föremål eller utgång" +
                                           "\nExempel: \"använd bilnyckel på bil\" eller \"använd nyckel på trädörr\"\n");
                         break;
+                        // Om användaren skriver in "avsluta"
                     case Action.Avsluta:
                         if (!QuitGameDialog())
                         {
@@ -555,11 +519,6 @@ namespace AdventureGame.AdventureData
                         }
                     default:
                         throw new ArgumentOutOfRangeException();
-                }
-
-                if (input.ToUpper() == "HJÄLP")
-                {
-
                 }
             }
 

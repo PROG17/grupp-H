@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using AdventureGame.AdventureData.Interact;
 
 namespace AdventureGame.AdventureData
 {
