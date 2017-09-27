@@ -105,7 +105,6 @@ namespace AdventureGame.AdventureData
                 GoesTo = kok,
                 IsLocked = false,
                 DirectionalPosition = Direction.Väst,
-
             };
 
             var traDorrTillLobby = new Exit
@@ -275,7 +274,7 @@ namespace AdventureGame.AdventureData
             {
                 Name = "en nyckel",
                 Description = "En stor rostig nyckel",
-                CanUseWith = { null },
+                //CanUseWith = { dorr.Name },
                 DirectionalPosition = null,
                 ObjectTransformed = null
             };
@@ -323,8 +322,8 @@ namespace AdventureGame.AdventureData
             start.Exits.Add(platDorrTillURum.Key.ToLower(), platDorrTillURum);
             start.Objects.Add(platDorrTillURum.Key.ToLower(), platDorrTillURum);
 
-            //start.Exits.Add(dorr5.Key.ToLower(), dorr5);
-            //start.Objects.Add(dorr5.Key.ToLower(), dorr5);
+            start.Exits.Add(dorr5.Key.ToLower(), dorr5);
+            start.Objects.Add(dorr5.Key.ToLower(), dorr5);
             uppehallsrum.Objects.Add(halIVaggenBadrum.Key.ToLower(), halIVaggenBadrum);
             uppehallsrum.Exits.Add(halIVaggenBadrum.Key.ToLower(), halIVaggenBadrum);
             uppehallsrum.Objects.Add(platDorrTillLobby.Key.ToLower(), platDorrTillLobby);
