@@ -9,7 +9,7 @@ using AdventureGame.AdventureData;
 
 namespace AdventureGame
 {
-    class GameMenu : Game
+    static class GameMenu
     {
         public static void CenterText(int y)
         {
@@ -26,12 +26,46 @@ namespace AdventureGame
             Console.WriteLine(text);
         }
 
+        public static void WriteOutStringToCenter(string text, int yStartPoint)
+        {
+            var split = text.Split('\n');
+            int offSetCounter = yStartPoint;
+            for (int i = 0; i < split.Length; i++)
+            {
+                CenterText(split[i], offSetCounter);
+                offSetCounter--;
+            }
+        }
+
         //Skriver ut alla kontroller
         public static void HelpCommands()
         {
             Console.Clear();
-            CenterText("TRYCK ENTER FÖR ATT KOMMA TILLBAKA TILL MENYN", 4);
-            CenterText("Fyll i alla helpcommands här", 3);
+            CenterText("TRYCK ENTER FÖR ATT GÅ TILLBAKA", 7);
+            CenterText("[GÅ]+[NORR|SYD|ÖST|VÄST]", 5);
+            CenterText("Gå i riktning.", 4);
+            CenterText("Exempel: \"gå norr\"", 3);
+
+            CenterText("[TA] + [<FÖREMÅL>]", 1);
+            CenterText("Tar upp ett föremål och lägger i fickan", 0);
+            CenterText("Exempel: \"ta bilnyckel\"", -1);
+
+            CenterText("[SLÄPP] + [<FÖREMÅL>]", -3);
+            CenterText("Släpper föremålet i rummet", -4);
+            CenterText("Exempel: \"släpp hammare\"", -5);
+
+            CenterText("[TITTA] | [TITTA] + [PÅ|I] [<FÖREMÅL>]", -7);
+            CenterText("Tittar på uppplockat föremål, föremål i annat föremål eller på föremål i rummet", -8);
+            CenterText("Exempel: \"titta\" eller \"titta i ficka\" eller \"titta på bilnyckel\"", -9);
+
+            CenterText("[INSPEKTERA] + [<FÖREMÅL>] | [INSPEKTERA] + [<FÖREMÅL>] + [I] + [<FÖREMÅL>]", -11);
+            CenterText("Ger en detaljerad beskrivning av ett föremål", -12);
+            CenterText("Exempel: \"inspektera hammare\" eller \"inspektera nyckel i ficka\"", -13);
+
+            CenterText("[ANVÄND] + [<FÖREMÅL>] + [PÅ] + [<FÖREMÅL> | [<UTGÅNG>]", -15);
+            CenterText("Använder föremål på annat föremål eller utgång", -16);
+            CenterText("Exempel: \"använd bilnyckel på bil\" eller \"använd nyckel på trädörr\"", -17);
+
             var key = Console.ReadKey();
             while (key.Key == ConsoleKey.Enter)
             {
@@ -87,7 +121,7 @@ namespace AdventureGame
                 
                 if (key.Key == ConsoleKey.Enter && curItem == 0)
                 {
-                    TypeWriterIntroText();
+                    //TypeWriterIntroText();
                     MenuMusic.Stop();
                     break;
                 }
@@ -105,6 +139,7 @@ namespace AdventureGame
             } while (curItem != 6);
             
             Console.CursorVisible = true;
+            Console.Clear();
         }
         public static void TypeWriterIntroText()
         {
@@ -115,10 +150,10 @@ namespace AdventureGame
 
             int itemCount = 0;
             int diff = 0;
-            string Text = "I en galax långt långt borta, i en tid när programerare blivit utbytta av AI:s. " +
-                          "Krigen mellan front-end klasserna och .Net är för längesedan bortglömda " +
-                          "I en skola på utkanten till Solna börjar våran historia. Våran hjälte " +
-                          "vaknar upp i lobbyn till Nackademin, utan något minne av hur hen kom dit." +
+            string Text = "I en galax långt långt borta, i en tid när programerare blivit utbytta av AI:s.\n" +
+                          "Krigen mellan front-end klasserna och .Net är för längesedan bortglömda..." +
+                          "      I en skola på utkanten till Solna börjar våran historia." +
+                          " Våran hjälte vaknar uppi lobbyn till Nackademin, utan något minne av hur hen kom dit." +
                           "Du måste nu hjälpa hen att hitta ut. Gör dig beredd för nu börjar det...";
 
             System.Media.SoundPlayer typewriter = new System.Media.SoundPlayer
@@ -145,6 +180,8 @@ namespace AdventureGame
                 }
                 
             }
+            typewriter.Stop();
+            Thread.Sleep(5000);
             Console.Clear();
         }
 
@@ -159,7 +196,7 @@ namespace AdventureGame
         {
             CenterText("Ange ditt namn", 4);
             string name = Console.ReadLine();
-            Game.SetName(name);
+            //Game.SetName(name);
             TypeWriterIntroText();
             
         }

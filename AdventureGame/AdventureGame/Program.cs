@@ -20,7 +20,7 @@ namespace AdventureGame
             GameMenu.DoMenu();
             Game game = new Game();
 
-            Player player = Game.Player;
+            Player player = game.Player;
             Room currentRoom = player.PlayerLocation;
 
             SoundPlayer music = new SoundPlayer

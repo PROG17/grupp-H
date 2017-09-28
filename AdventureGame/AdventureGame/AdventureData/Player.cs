@@ -99,6 +99,22 @@ namespace AdventureGame.AdventureData
                         IsAlive = false;
                         return "AAAAHHHHHHHHHHHHHH!";
                     }
+                    if (objUseOn is Person)
+                    {
+                        Person person = (Person) objUseOn;
+                        if (person.GetsHappyWith == objToUse)
+                        {
+                            var objToDrop = person.TranformToHappy(PlayerLocation);
+                            objToDrop.PutInRoom(PlayerLocation);
+                            return $"{person.Key} blev glad!\nNågonting ramlade till marken...";
+                        }
+                        else if (person.GetsAngryWith == objToUse)
+                        {
+                            var objToDrop = person.TranformToAngry(PlayerLocation);
+                            objToDrop.PutInRoom(PlayerLocation);
+                            return $"{person.Key} blev arg!\nNågonting ramlade till marken...";
+                        }
+                    }
                     if ((objUseOn is Exit))
                     {
                         if ((objUseOn as Exit).IsLocked)
@@ -240,9 +256,15 @@ namespace AdventureGame.AdventureData
         {
             if (PlayerLocation.TryFindExitFromDirection(direction, out Exit exit))
             {
-                exit.GoThrough(this);
-                success = true;
-                return $"{PlayerLocation.GetContentAsString()}";
+                if (!exit.IsLocked)
+                {
+                    exit.GoThrough(this);
+                    success = true;
+                    return $"{PlayerLocation.GetContentAsString()}";
+                }
+                success = false;
+                return "Det är låst.";
+
             }
             else if (PlayerLocation.TryFindObjectInDirection(direction, out GameObject obj))
             {

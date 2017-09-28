@@ -54,6 +54,7 @@
     <Compile Include="AdventureData\Person.cs" />
     <Compile Include="AdventureData\Player.cs" />
     <Compile Include="AdventureData\Room.cs" />
+    <Compile Include="GameMenu.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

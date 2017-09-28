@@ -12,11 +12,11 @@ namespace AdventureGame.AdventureData
     {
         public Player Player { get; set; }
 
-        public static void SetName(string name)
-        {
-            Player.Name = name;
-            Player.Description = "Aktuell Spelare";
-        }
+        //public static void SetName(string name)
+        //{
+        //    Player.Name = name;
+        //    Player.Description = "Aktuell Spelare";
+        //}
 
         public Game()
         {
@@ -30,8 +30,8 @@ namespace AdventureGame.AdventureData
             var start = new Room
             {
                 Name = "Lobbyn",
-                Description = "Du är i lobbyn till Nackademin. Men det ser inte ut som du mins det." +
-                              "\n När du tänker efter så undrar du om man kan kalla ett " +
+                Description = "Du är i lobbyn till Nackademin. Men det ser inte ut som du minns det." +
+                              "\n När du tänker efter så undrar du om man kan verkligen kan kalla ett " +
                               "litet rum med fyra väggar för lobby?",
                 Exits = new Dictionary<string, Exit>(),
                 IsEndPoint = false,
@@ -39,7 +39,7 @@ namespace AdventureGame.AdventureData
             var badrum = new Room
             {
                 Name = "Badrum",
-                Description = "Du är i ett av skolans badrum. Undrar när det blev städat här senast?\n " +
+                Description = "Du är i ett av skolans badrum. \nUndrar när det blev städat här senast?\n " +
                               "Det luktar byggklassare och gamla strumpor."
 
                               ,
@@ -49,8 +49,8 @@ namespace AdventureGame.AdventureData
             var ventilationsrum = new Room
             {
                 Name = "Ventilationsrum",
-                Description = "Du är i ett bullrigt maskinrum. Kanske är det det här som kallas ventilation " +
-                              "i den här byggnaden? Det luktar diesel...",
+                Description = "Du är i ett bullrigt maskinrum. \nKanske är det det här som kallas ventilation " +
+                              "i den här byggnaden?\n Det luktar diesel...",
                 Exits = new Dictionary<string, Exit>(),
                 IsEndPoint = false
             };
@@ -60,23 +60,23 @@ namespace AdventureGame.AdventureData
             {
                 Name = "Kök",
                 Description = "Längs med väggarna står det förvånansvärt många microvågsugnar. " +
-                              "Resterna av Java klassarnas lunch ligger i högar över hela rummet." +
-                              "I hörnet står en kran och läcker, ",
+                              "\nResterna av Java klassarnas lunch ligger i högar över hela rummet." +
+                              "\nI hörnet står en kran och läcker, ",
                 IsEndPoint = false
 
             };
             var uppehallsrum = new Room
             {
                 Name = "Uppehållsrum",
-                Description = "Priserna i kaffeterian hade tillslut blivit för mycket för eleverna på Nackademin. \n" +
-                              "Vad som var kvar av kaffeterian går knappt att urskilja mellan de " +
-                              "trasiga bord och stolar som blockerar dess ingång.",
+                Description = "Priserna i kaffeterian hade tillslut \nblivit för mycket för eleverna på Nackademin. \n" +
+                              "Vad som var kvar av kaffeterian går \nknappt att urskilja mellan de " +
+                              "trasiga bord och stolar \nsom blockerar dess ingång.",
                 IsEndPoint = false
             };
             var lektionssal = new Room
             {
                 Name = "En lektionssal",
-                Description = "En gammal lektionssal med dålig ventilation. I ena hörnet ligger resterna " +
+                Description = "En gammal lektionssal med dålig ventilation. \nI ena hörnet ligger resterna " +
                               "av den senaste klassen som \"inte upplevde någon aha uplevelse\".",
                 IsEndPoint = false
             };
@@ -126,7 +126,7 @@ namespace AdventureGame.AdventureData
             var halIVaggenBadrum = new Exit
             {
                 Name = "en vägg med ett stort hål",
-                Description = "ett stort hål i väggen, förmodligen en misslyckad renovering...",
+                Description = "ett stort hål i väggen, \nförmodligen en misslyckad renovering...",
                 GoesTo = badrum,
                 IsLocked = false,
                 DirectionalPosition = Direction.Öst,
@@ -134,7 +134,7 @@ namespace AdventureGame.AdventureData
             var halIVaggenURum = new Exit
             {
                 Name = "en vägg med ett stort hål",
-                Description = "ett stort hål i väggen, förmodligen en misslyckad renovering...",
+                Description = "ett stort hål i väggen, \nförmodligen en misslyckad renovering...",
                 GoesTo = uppehallsrum,
                 IsLocked = false,
                 DirectionalPosition = Direction.Väst,
@@ -163,7 +163,7 @@ namespace AdventureGame.AdventureData
             var dorrTillEnd = new Exit
             {
                 Name = "en säkerhetsdörr",
-                Description = "En säkerhetsdörr med ett lås gjort av lego, ett tuggummi, en hårnål och ett batteri. \n" +
+                Description = "En säkerhetsdörr med ett lås gjort av lego, \nett tuggummi, en hårnål och ett batteri. \n" +
                               "Låset som Mcguyver är baserad på.",
                 GoesTo = end,
                 IsLocked = true,
@@ -190,14 +190,14 @@ namespace AdventureGame.AdventureData
             var trasigTunna = new ObjectContainer
             {
                 Name = "en trasig tunna",
-                Description = "en trasig tunna, träflisor och gjutjärnsringar. Kanske ligger det något bland spillrorna",
+                Description = "en trasig tunna, träflisor och gjutjärnsringar.\n Kanske ligger det något bland spillrorna",
                 DirectionalPosition = null,
                 ObjectTransformed = null
             };
             var tunna = new Object
             {
                 Name = "en tunna",
-                Description = "en stor tunna i trä och gjutjärn. Tunnan går inte att öppna utan något verktyg...",
+                Description = "en stor tunna i trä och gjutjärn.\n Tunnan går inte att öppna utan något verktyg...",
                 CanUseWith = { "hammare" },
                 ObjectTransformed = trasigTunna,
                 DirectionalPosition = null,
@@ -207,40 +207,49 @@ namespace AdventureGame.AdventureData
             var kaffe = new Object
             {
                 Name = "en kaffe",
-                Description = "En kopp kaffe med lagom mängd mjölk, även kallad gudarnas nektar.\n" +
-                              "Ska enligt gammal grekisk mytologi kunna blidka den argaste läraren...",
+                Description = "En kopp kaffe med lagom mängd mjölk,\n även kallad gudarnas nektar.\n" +
+                              "Ska enligt gammal grekisk mytologi \nkunna blidka den argaste läraren...",
                 CanUseWith = { "fredrik" },
                 ObjectTransformed = null,
                 DirectionalPosition = null,
+            };
+
+            var argaFredrik = new Person
+            {
+                Name = "en arg Fredrik",
+                Description = "En arg Fredrik. Den arga fredrik håller \nen dator i handen och håller fingret mot \n" +
+                              "en knapp. Om du gjort Fredrik arg " +
+                              "så loggas ditt namn och mailas \nefter programkörning till Fredrik.",
+                DirectionalPosition = Direction.Norr,
+                Dialog = "Jasså du gillar inte mina skämt? \nDå är det dags för ett oförberett diagnostiskt test!\n" +
+                         "Mohahaha jag kan göra hur många test jag vill!",
+                DropsItemOnUse = false
+            };
+
+            var gladaFredrik = new Person
+            {
+                Name = "en glad Fredrik",
+                Description = "En glad Fredrik som nöjt dricker sin kopp kaffe",
+                DirectionalPosition = Direction.Norr,
+                Dialog = $"Åhåå! Tack så mycket {Player.Name}, du är bäst!",
+                DropsItemOnUse = false
             };
 
             var fredrik = new Person
             {
                 Name = "Fredrik",
                 Description = "En lärare på nackademin i sina bästa år. ",
-                CanUseWith = { "en hammare" },
+                CanUseWith = { "en hammare", "en kaffe" },
                 DirectionalPosition = Direction.Norr,
-                Dialog = "Vet ni hur man blir rik genom objekt orientering? Genom arv! HAHAHA fattar ni?\n" +
+                Dialog = "Vet ni hur man blir rik genom objekt orientering? \nGenom arv! HAHAHA fattar ni?\n" +
                          "Den här då:\n" +
                          "Varför behöver java programmerare använda glasögon?\n" +
                          "För att dom inte c#! hahahahahahaha \n" +
                          "Eller ja den blir bättre på engelska.",
-                DropsItemOnUse = true
+                DropsItemOnUse = false,
+                TransformsToHappy = gladaFredrik,
+                TransformsToAngry = argaFredrik
             };
-            var argaFredrik = new Person
-            {
-                Name = "en arg Fredrik",
-                Description = "En arg Fredrik. Den arga fredrik håller en dator i handen och håller fingret mot \n" +
-                              "en knapp. Om du gjort Fredrik arg " +
-                              "så loggas ditt namn och mailas efter programkörning till Fredrik.",
-                CanUseWith = { kaffe.Name },
-                ObjectTransformed = fredrik,
-                DirectionalPosition = Direction.Norr,
-                Dialog = "Jasså du gillar inte mina skämt? Då är det dags för ett oförberett diagnostiskt test!\n" +
-                         "Mohahaha jag kan göra hur många test jag vill!",
-                DropsItemOnUse = true
-            };
-            fredrik.ObjectTransformed = argaFredrik;
 
             var bokhylla = new Object
             {
@@ -287,7 +296,7 @@ namespace AdventureGame.AdventureData
             {
                 Name = "en skruvmejsel",
                 Description = "en skruvmejsel med plasthandtag",
-                CanUseWith = {"elskåp"},
+                CanUseWith = { "elskåp" },
                 DirectionalPosition = null,
                 ObjectTransformed = null
             };
@@ -295,11 +304,26 @@ namespace AdventureGame.AdventureData
             {
                 Name = "ett elskåp",
                 Description = "Förser rummet med ström.",
-                CanUseWith = { "en hammare" },
                 DirectionalPosition = Direction.Syd,
                 ObjectTransformed = null,
-                KillsOnUse = {skruvmejsel}
+                KillsOnUse = { skruvmejsel }
             };
+
+            var kodlapp = new Object
+            {
+                Name = "en lapp",
+                Description = "på lappen står det en kod till en säkerhetsdörr",
+                CanUseWith = { dorrTillEnd.Key },
+                DirectionalPosition = Direction.Syd,
+                ObjectTransformed = null
+            };
+
+            // Sätter några properties
+            fredrik.GetsHappyWith = kaffe;
+            fredrik.GetsAngryWith = hammer;
+            fredrik.DropsIfHappyObject = kodlapp;
+            fredrik.DropsIfAngryObject = skruvmejsel;
+            dorrTillEnd.OpensWith = kodlapp;
 
             // Sätter startpunkt
             Player.PlayerLocation = start;
@@ -331,6 +355,7 @@ namespace AdventureGame.AdventureData
 
             // Lägger till objekt i rummet "kok"
             AddGameObjectsToRoom(kok, traDorrTillLobby);
+            AddGameObjectsToRoom(kok, kaffe);
 
             // Lägger till objekt i rummet "lektionssal"
             AddGameObjectsToRoom(lektionssal, dorrTillVent);
@@ -344,23 +369,24 @@ namespace AdventureGame.AdventureData
         public bool Prompt()
         {
             Room currentRoom = Player.PlayerLocation;
-            Console.WriteLine(currentRoom.GetContentAsString());
+            GameMenu.WriteOutStringToCenter(currentRoom.GetContentAsString(), 13);
 
             bool isPlaying = true;
             while (isPlaying)
             {
+
                 currentRoom = Player.PlayerLocation;
 
                 // Om användaren klarat spelet
                 if (currentRoom.IsEndPoint)
                 {
-                    Console.WriteLine("Grattis! Du klarade spelet!");
+                    GameMenu.CenterText("Grattis! Du klarade spelet!", 13);
                     return RestartGameDialog();
                 }
                 // Om användaren dör
                 if (!Player.IsAlive)
                 {
-                    Console.WriteLine("Du dog...");
+                    GameMenu.WriteOutStringToCenter("Du dog...", 13);
                     Console.ReadLine();
                     return RestartGameDialog();
                 }
@@ -378,7 +404,7 @@ namespace AdventureGame.AdventureData
                 // och spelaren får prova en annan mening.
                 if (!Game.ValidateSentence(split, out string[] sentence))
                 {
-                    Console.WriteLine("Jag förstod inte vad du menade...");
+                    GameMenu.WriteOutStringToCenter("Jag förstod inte vad du menade...", 13);
 
                     continue;
                 }
@@ -411,20 +437,28 @@ namespace AdventureGame.AdventureData
                         {
                             if (preposition == Preposition.I)
                             {
-                                Console.WriteLine(Player.LookIn(objStr1));
+                                Console.Clear();
+                                GameMenu.WriteOutStringToCenter(Player.LookIn(objStr1), 13);
                             }
                             else if (preposition == Preposition.På)
                             {
-                                Console.WriteLine(Player.LookAt(objStr1));
+                                Console.Clear();
+                                GameMenu.WriteOutStringToCenter(Player.LookAt(objStr1), 13);
+                                //GameMenu.WriteOutStringToCenter(Player.LookAt(objStr1));
                             }
                         }
                         else if (direction != null)
                         {
-                            Console.WriteLine(Player.LookTo((Direction)direction));
+                            Console.Clear();
+                            GameMenu.WriteOutStringToCenter(Player.LookTo((Direction)direction), 13);
+                            //GameMenu.WriteOutStringToCenter(Player.LookTo((Direction)direction));
                         }
                         else
                         {
-                            Console.WriteLine(Player.Look());
+                            Console.Clear();
+                            GameMenu.WriteOutStringToCenter(Player.Look(), 13);
+                            //GameMenu.CenterText(, 10);
+                            //GameMenu.WriteOutStringToCenter(Player.Look());
                         }
 
                         break;
@@ -435,26 +469,30 @@ namespace AdventureGame.AdventureData
                         {
                             if (preposition == Preposition.I)
                             {
-                                Console.WriteLine(Player.InspectIn(objStr1, objStr2));
+                                Console.Clear();
+                                GameMenu.WriteOutStringToCenter(Player.InspectIn(objStr1, objStr2), 13);
                             }
                         }
                         else
                         {
-                            Console.WriteLine(Player.Inspect(objStr1));
+                            Console.Clear();
+                            GameMenu.WriteOutStringToCenter(Player.Inspect(objStr1), 13);
                         }
                         break;
-                        // Om användaren försöker använda ett objekt med ett annat
+                    // Om användaren försöker använda ett objekt med ett annat
                     case Action.Använd:
                         if (split.Length == 4)
                         {
-                            Console.WriteLine(Player.Use(objStr1, objStr2));
+                            Console.Clear();
+                            GameMenu.WriteOutStringToCenter(Player.Use(objStr1, objStr2), 13);
                         }
                         break;
-                        // Om användaren släpper ett objekt
+                    // Om användaren släpper ett objekt
                     case Action.Släpp:
-                        Console.WriteLine(Player.Drop(objStr1));
+                        Console.Clear();
+                        GameMenu.WriteOutStringToCenter(Player.Drop(objStr1), 13);
                         break;
-                        // Om användaren går i en rikting
+                    // Om användaren går i en rikting
                     case Action.Gå:
                         if (direction != null)
                         {
@@ -464,56 +502,43 @@ namespace AdventureGame.AdventureData
                             if (isSuccess)
                             {
                                 Console.Clear();
-                                Console.WriteLine(result);
+                                GameMenu.WriteOutStringToCenter(result, 13);
                             }
                             else
                             {
-                                Console.WriteLine(result);
+                                Console.Clear();
+                                GameMenu.WriteOutStringToCenter(result, 13);
                             }
                         }
                         break;
-                        // Om användaren försöker ta ett objekt
+                    // Om användaren försöker ta ett objekt
                     case Action.Ta:
 
                         // Om spelaren vill ta ett objekt ur ett annat objekt...
                         if (preposition == Preposition.Från || preposition == Preposition.I)
                         {
-                            Console.WriteLine(Player.Get(objStr1, objStr2));
+                            Console.Clear();
+                            GameMenu.WriteOutStringToCenter(Player.Get(objStr1, objStr2), 13);
 
                         }
                         // Om spelaren vill ta ett objekt i rummet
                         else
                         {
-                            Console.WriteLine(Player.Get(objStr1));
+                            Console.Clear();
+                            GameMenu.WriteOutStringToCenter(Player.Get(objStr1), 13);
                         }
                         break;
-                        // Om användaren försöker prata med någon/något
+                    // Om användaren försöker prata med någon/något
                     case Action.Prata:
-                        Console.WriteLine(Player.Talk(objStr1));
+                        Console.Clear();
+                        GameMenu.WriteOutStringToCenter(Player.Talk(objStr1), 13);
                         break;
-                        // Om användaren vill ha hjälp med syntax
+                    // Om användaren vill ha hjälp med syntax
                     case Action.Hjälp:
                         Console.Clear();
-                        Console.WriteLine("\n[GÅ]+[NORR|SYD|ÖST|VÄST]" +
-                                          "\nGå i riktning.  " +
-                                          "\nExempel: \"gå norr\"\n" +
-                                          "\n[TA] + [<FÖREMÅL>]" +
-                                          "\nTar upp ett föremål och lägger i fickan" +
-                                          "\nExempel: \"ta bilnyckel\"\n" +
-                                          "\n[SLÄPP] + [<FÖREMÅL>]" +
-                                          "\nSläpper föremålet i rummet" +
-                                          "\nExempel: \"släpp hammare\"\n" +
-                                          "\n[TITTA] | [TITTA] + [PÅ|I] [<FÖREMÅL>]" +
-                                          "\nTittar på uppplockat föremål, föremål i annat föremål eller på föremål i rummet" +
-                                          "\nExempel: \"titta\" eller \"titta i ficka\" eller \"titta på bilnyckel\"\n" +
-                                          "\n[INSPEKTERA] + [<FÖREMÅL>] | [INSPEKTERA] + [<FÖREMÅL>] + [I] + [<FÖREMÅL>]" +
-                                          "\nGer en detaljerad beskrivning av ett föremål" +
-                                          "\nExempel: \"inspektera hammare\" eller \"inspektera nyckel i ficka\"\n" +
-                                          "\n[ANVÄND] + [<FÖREMÅL>] + [PÅ] + [<FÖREMÅL> | [<UTGÅNG>]" +
-                                          "\nAnvänder föremål på annat föremål eller utgång" +
-                                          "\nExempel: \"använd bilnyckel på bil\" eller \"använd nyckel på trädörr\"\n");
+                        GameMenu.WriteOutStringToCenter(GetHelpCommands(0), 13);
                         break;
-                        // Om användaren skriver in "avsluta"
+                    // Om användaren skriver in "avsluta"
                     case Action.Avsluta:
                         if (!QuitGameDialog())
                         {
@@ -529,6 +554,37 @@ namespace AdventureGame.AdventureData
             }
 
             return true;
+        }
+
+        public static string GetHelpCommands(int i)
+        {
+            if (i == 0)
+            {
+                return "\n[GÅ]+[NORR|SYD|ÖST|VÄST]" +
+                       "\nGå i riktning." +
+                       "\nExempel: \"gå norr\"\n" +
+                       "\n[TA] + [<FÖREMÅL>]" +
+                       "\nTar upp ett föremål och lägger i fickan" +
+                       "\nExempel: \"ta bilnyckel\"\n" +
+                       "\n[SLÄPP] + [<FÖREMÅL>]" +
+                       "\nSläpper föremålet i rummet" +
+                       "\nExempel: \"släpp hammare\"\n" +
+                       "\n[TITTA] | [TITTA] + [PÅ|I] [<FÖREMÅL>]" +
+                       "\nTittar på uppplockat föremål, föremål i annat föremål eller på föremål i rummet" +
+                       "\nExempel: \"titta\" eller \"titta i ficka\" eller \"titta på bilnyckel\"\n" +
+                       "\n[INSPEKTERA] + [<FÖREMÅL>] | [INSPEKTERA] + [<FÖREMÅL>] + [I] + [<FÖREMÅL>]" +
+                       "\nGer en detaljerad beskrivning av ett föremål" +
+                       "\nExempel: \"inspektera hammare\" eller \"inspektera nyckel i ficka\"\n" +
+                       "\n[ANVÄND] + [<FÖREMÅL>] + [PÅ] + [<FÖREMÅL> | [<UTGÅNG>]" +
+                       "\nAnvänder föremål på annat föremål eller utgång" +
+                       "\nExempel: \"använd bilnyckel på bil\" eller \"använd nyckel på trädörr\"\n";
+            }
+            if (i == 1)
+            {
+
+                return "Tillåtna verb: GÅ | TA | SLÄPP | TITTA | INSPEKTERA | ANVÄND | AVSLUTA";
+            }
+            else return "";
         }
 
         // Lägger till objekt i rum, om objekt är av typen "exit" så läggs den till i rummets Exit-lista också
@@ -660,25 +716,25 @@ namespace AdventureGame.AdventureData
         {
             while (true)
             {
-                Console.WriteLine("Vill du avsluta spelet?");
+                GameMenu.WriteOutStringToCenter("Vill du avsluta spelet?", 13);
                 Console.Write("J/N: ");
                 string answer = Console.ReadLine();
                 if (answer.ToUpper() == "N")
                 {
-                    Console.WriteLine("Okej, spelet fortsätter!");
+                    GameMenu.WriteOutStringToCenter("Okej, spelet fortsätter!", 13);
                     Console.ReadLine();
                     break;
                 }
                 else if (answer.ToUpper() == "J")
                 {
-                    Console.WriteLine("Hej Då!");
+                    GameMenu.WriteOutStringToCenter("Hej Då!", 13);
                     Console.ReadLine();
 
                     return false;
                 }
                 else
                 {
-                    Console.WriteLine("Fel! Vänligen mata in J/N...");
+                    GameMenu.WriteOutStringToCenter("Fel! Vänligen mata in J/N...", 13);
                     Console.ReadLine();
 
                     Console.Clear();
@@ -692,25 +748,25 @@ namespace AdventureGame.AdventureData
         {
             while (true)
             {
-                Console.WriteLine("Vill du prova igen?");
+                GameMenu.WriteOutStringToCenter("Vill du prova igen?", 13);
                 Console.Write("J/N: ");
                 string answer = Console.ReadLine();
                 if (answer.ToUpper() == "J")
                 {
-                    Console.WriteLine("Okej, spelet börjar om!");
+                    GameMenu.WriteOutStringToCenter("Okej, spelet börjar om!", 13);
                     Console.ReadLine();
                     Console.Clear();
                     break;
                 }
                 else if (answer.ToUpper() == "N")
                 {
-                    Console.WriteLine("Hej Då!");
+                    GameMenu.WriteOutStringToCenter("Hej Då!", 13);
                     Console.ReadLine();
                     return false;
                 }
                 else
                 {
-                    Console.WriteLine("Fel! Vänligen mata in J/N...");
+                    GameMenu.WriteOutStringToCenter("Fel! Vänligen mata in J/N...", 13);
                     Console.ReadLine();
                     Console.Clear();
                 }
