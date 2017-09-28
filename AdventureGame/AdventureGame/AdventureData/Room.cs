@@ -8,31 +8,19 @@ namespace AdventureGame.AdventureData
 {
     public class Room : GameObjectsHolder
     {
+        // Lista med utgångar för varje rum
         public Dictionary<string, Exit> Exits { get; set; }
+
+        // Bool för att kolla om spelaren är i slutrummet
         public bool IsEndPoint { get; set; }
 
-        //public Room(string name, string description, bool isEndPoint)
-        //{
-        //    base.Name = name;
-        //    base.Description = description;
-        //    IsEndPoint = isEndPoint;
-        //}
-
-        public bool TryFindExitFromDirection(Room room, Direction key, out Exit exit)
+        // Konstruktor
+        public Room()
         {
-            exit = null;
-            foreach (var e in room.Exits)
-            {
-                if (e.Value.DirectionalPosition == key)
-                {
-                    exit = e.Value;
-                    return true;
-                }
-            }
-            exit = null;
-            return false;
+            Exits = new Dictionary<string, Exit>();
         }
 
+        // Overridad variant av GetContentAsString som ger en rumbeskrivning med alla objekt
         public override string GetContentAsString()
         {
             StringBuilder sb = new StringBuilder();
@@ -61,39 +49,33 @@ namespace AdventureGame.AdventureData
             return sb.ToString();
         }
 
-        public bool TryFindObjectInDirection(Room room, Direction key, out GameObject objects)
+        // Metod för att fösröka hitta en utgång i inskickad riktining (Direction).
+        // Returnerar true om lyckat och skickar ut en "Exit" med out-nyckelordet
+        public bool TryFindExitFromDirection(Direction key, out Exit exit)
         {
-            foreach (var obj in room.Objects)
+            exit = null;
+            foreach (var e in this.Exits)
             {
-                if (obj.Value is Object)
+                if (e.Value.DirectionalPosition == key)
                 {
-                    if ((obj.Value as Object).DirectionalPosition == key)
-                    {
-                        objects = obj.Value;
-                        return true;
-                    }
-
-
+                    exit = e.Value;
+                    return true;
                 }
-                else if (obj.Value is Exit)
+            }
+            exit = null;
+            return false;
+        }
+
+        // Samma som ovan fast för vilket GameObject som helst
+        public bool TryFindObjectInDirection(Direction key, out GameObject objects)
+        {
+            foreach (var obj in this.Objects)
+            {
+                if (obj.Value.DirectionalPosition == key)
                 {
-                    if ((obj.Value as Exit).DirectionalPosition == key)
-                    {
-                        objects = obj.Value;
-                        return true;
-                    }
-
+                    objects = obj.Value;
+                    return true;
                 }
-                else if (obj.Value is ObjectContainer)
-                {
-                    if ((obj.Value as ObjectContainer).DirectionalPosition == key)
-                    {
-                        objects = obj.Value;
-                        return true;
-                    }
-
-                }
-
             }
             objects = null;
             return false;

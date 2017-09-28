@@ -6,7 +6,6 @@ using System.Security.Permissions;
 using System.Text;
 using System.Threading.Tasks;
 using AdventureGame.AdventureData;
-using AdventureGame.AdventureData.Interact;
 using System.Text.RegularExpressions;
 using Action = AdventureGame.AdventureData.Action;
 using System.Threading;
@@ -33,7 +32,15 @@ namespace AdventureGame
             bool isPlaying = true;
             while (isPlaying)
             {
-                isPlaying = game.Prompt();
+                bool playAgain = game.Prompt();
+                if (playAgain)
+                {
+                    game = new Game();
+                }
+                else
+                {
+                    break;
+                }
             }
         }
     }
