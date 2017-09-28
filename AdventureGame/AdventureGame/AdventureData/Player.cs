@@ -101,7 +101,7 @@ namespace AdventureGame.AdventureData
                     }
                     if (objUseOn is Person)
                     {
-                        Person person = (Person) objUseOn;
+                        Person person = (Person)objUseOn;
                         if (person.GetsHappyWith == objToUse)
                         {
                             var objToDrop = person.TranformToHappy(PlayerLocation);
@@ -130,7 +130,7 @@ namespace AdventureGame.AdventureData
                     }
                     else
                     {
-                        if (objToUse.CanUseWith.Contains(objUseOn.Key))
+                        if (objToUse.CanUseWith.Contains(objUseOn.Key) && objUseOn.ObjectTransformed != null)
                         {
                             PlayerLocation.Objects.Remove(objUseOn.Key);
                             PlayerLocation.Objects.Add(objUseOn.Key, objUseOn.ObjectTransformed);
@@ -214,7 +214,8 @@ namespace AdventureGame.AdventureData
             {
                 if (PlayerLocation.Objects.TryGetValue(obj, out GameObject gameObject))
                 {
-                    return $"Du inspekterar {gameObject.Name}.\n{gameObject.Description}";
+                    return $"Vid närmare inspektion ser du {gameObject.Description}";
+                    //return $"Du inspekterar {gameObject.Name}.\n{gameObject.Description}";
                 }
                 return $"Det finns ingen \"{obj}\" att inspektera.";
             }
@@ -269,7 +270,7 @@ namespace AdventureGame.AdventureData
             else if (PlayerLocation.TryFindObjectInDirection(direction, out GameObject obj))
             {
                 success = false;
-                return$"Du gick in i {obj.Name}.";
+                return $"Du gick in i {obj.Name}.";
             }
             success = false;
             return $"Du gick in i en vägg.";
@@ -278,7 +279,7 @@ namespace AdventureGame.AdventureData
         // Returnerar sträng som ett objekt har i inneboende "Dialog"
         public string Talk(string objStr)
         {
-            if(PlayerLocation.Objects.TryGetValue(objStr, out GameObject obj))
+            if (PlayerLocation.Objects.TryGetValue(objStr, out GameObject obj))
             {
                 if (obj is Person)
                 {
