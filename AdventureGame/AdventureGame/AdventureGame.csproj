@@ -58,6 +58,7 @@
     <Compile Include="AdventureData\Player.cs" />
     <Compile Include="AdventureData\Room.cs" />
     <Compile Include="AdventureData\RoomList.cs" />
+    <Compile Include="GameMenu.cs" />
     <Compile Include="IInteract.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

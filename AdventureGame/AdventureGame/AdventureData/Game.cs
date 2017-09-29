@@ -322,8 +322,8 @@ namespace AdventureGame.AdventureData
             start.Exits.Add(platDorrTillURum.Key.ToLower(), platDorrTillURum);
             start.Objects.Add(platDorrTillURum.Key.ToLower(), platDorrTillURum);
 
-            start.Exits.Add(dorr5.Key.ToLower(), dorr5);
-            start.Objects.Add(dorr5.Key.ToLower(), dorr5);
+            //start.Exits.Add(dorr5.Key.ToLower(), dorr5);
+            //start.Objects.Add(dorr5.Key.ToLower(), dorr5);
             uppehallsrum.Objects.Add(halIVaggenBadrum.Key.ToLower(), halIVaggenBadrum);
             uppehallsrum.Exits.Add(halIVaggenBadrum.Key.ToLower(), halIVaggenBadrum);
             uppehallsrum.Objects.Add(platDorrTillLobby.Key.ToLower(), platDorrTillLobby);
