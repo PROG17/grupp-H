@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Media;
 using System.Runtime.CompilerServices;
 using System.Runtime.Remoting.Messaging;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using AdventureGame.AdventureData;
@@ -11,6 +13,7 @@ namespace AdventureGame.AdventureData
 {
     partial class Game
     {
+
         public Player Player { get; set; }
 
         //public static void SetName(string name)
@@ -21,6 +24,8 @@ namespace AdventureGame.AdventureData
 
         public Game()
         {
+            GameMenu.MusicPlayer(0);
+            
             Player = new Player
             {
                 Name = "",
@@ -515,6 +520,7 @@ namespace AdventureGame.AdventureData
                             {
                                 Console.Clear();
                                 GameMenu.WriteOutStringToCenter(result, 13);
+                                
                             }
                             else
                             {

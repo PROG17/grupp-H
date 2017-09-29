@@ -23,11 +23,7 @@ namespace AdventureGame
                 //Game.GameMenu.DoMenu();
                 Game game = new Game();
                 Game.GameMenu.DoMenu();
-                SoundPlayer music = new SoundPlayer
-                {
-                    SoundLocation = AppDomain.CurrentDomain.BaseDirectory + "\\BeepBox-Song.wav"
-                };
-                music.PlayLooping();
+
 
                 bool playAgain = game.Prompt();
                 if (playAgain)

@@ -68,10 +68,30 @@ namespace AdventureGame.AdventureData
                 Console.ReadLine();
             }
 
+            public static void MusicPlayer(int i)
+            {
+                if (i ==0)
+                {
+                    SoundPlayer music = new SoundPlayer
+                    {
+                        SoundLocation = AppDomain.CurrentDomain.BaseDirectory + "\\BeepBox-Song.wav"
+                    };
+                    music.PlayLooping();
+                }
+                else if (i == 1)
+                {
+                    SoundPlayer dorr = new SoundPlayer();
+                    dorr.SoundLocation = AppDomain.CurrentDomain.BaseDirectory + "\\creaking-door-1.wav";
+                    dorr.Play();
+                }
+                
+
+                
+            }
             public static void MenuBackgroundPos(int i)
             {
                 
-                Console.SetCursorPosition((Console.WindowWidth / 2) - 40, i);
+                Console.SetCursorPosition((Console.WindowWidth / 2) - 25, i);
                 
             }
             public static void MenuBackground(int inp)
