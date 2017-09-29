@@ -1,6 +1,7 @@
 ﻿using System;
 using System.CodeDom;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Media;
 using System.Text;
@@ -18,7 +19,7 @@ namespace AdventureGame.AdventureData
             {
                 int leftOffSet = (Console.WindowWidth / 2) - text.Length/2;
 
-                int topOffSet = (Console.WindowHeight / 2) - y;
+                int topOffSet = (Console.WindowHeight / 2) - y+4;
 
                 Console.SetCursorPosition(leftOffSet, topOffSet);
                 Console.WriteLine(text);
@@ -66,6 +67,55 @@ namespace AdventureGame.AdventureData
 
                 Console.ReadLine();
             }
+
+            public static void MenuBackgroundPos(int i)
+            {
+                
+                Console.SetCursorPosition((Console.WindowWidth / 2) - 40, i);
+                
+            }
+            public static void MenuBackground(int inp)
+            {
+                
+                string[] array =
+                {
+                    " _______________     _______________", " | |_| |_| |_| |     | |_| |_| |_| |" 
+                    ," | |_| |_| |_| |     | ___ ___ ___ |", " | |_| |_| |_| |     | |_| |_| |_| |",
+                    " | |_| |_| |_| |     | ___ ___ ___ | "," | |_| |_| |_| |     | |_| |_| |_| |",
+                    " | |_| |_| |_| |     | ___ ___ ___ |","_| |_| |_| |_| |_    | |_| |_| |_| |_________________  ",
+                    "| ___  ___  ___ |    | ___ ___ ___ | ___  ___  ___  |","| |_|  |_|  |_| |    | |_| | | |_| | |_|  |_|  |_|  |",
+                    "|_______________|    |_____|_|_____|________________|"
+                };
+                string[] array2 =
+                {
+                    "         _______     ________", "        _| |_| |     | |_| |_       ",
+                    "      _|_| |_| |     | ___ _/       ","    _| |_| |_| |     | |_| |_       ",
+                    "  _|_| |_| |_| |     | ___ __\\_   _  "," | |_| |_| |_| |     | |_| |_| |_| |",
+                    " | |_| |_| |_| |     | ___ ___ ___ |","_| |_| |_| |_| |_    | |_| |_| |_| |       __________",
+                    "| ___  ___  ___ |    | ___ ___ ___  \\    _/__  ___  |","| |_|  | |  |_| |    | |_| | | |_|   \\_ / |_|  |_|  |",
+                    "|______|_|______|    |_____|_|_____|________________|"
+
+                };
+                if (inp == 0)
+                {
+                    for (int i = 0; i < array.Length; i++)
+                    {
+                        MenuBackgroundPos(i);
+                        Console.Write(array[i]);
+                    }
+                }
+                else
+                {
+                    for (int i = 0; i < array2.Length; i++)
+                    {
+                        MenuBackgroundPos(i);
+                        Console.Write(array2[i]);
+                    }
+                }
+                
+                
+                
+            }
             //Startar huvudmenyn
             public static void DoMenu()
             {
@@ -78,8 +128,10 @@ namespace AdventureGame.AdventureData
                 MenuMusic.PlayLooping();
                 do
                 {
-                
-                    CenterText("MENY", 6);
+                    MenuBackground(0);
+                    CenterText("NACKOPOLYPS NOW", 8);
+                    CenterText("***************", 7);
+                    CenterText("MENY", 5);
                     for (i = 0; i < menuItems.Length; i++)
                     {
                         int t = 4 - i;
@@ -113,6 +165,8 @@ namespace AdventureGame.AdventureData
                 
                     if (key.Key == ConsoleKey.Enter && curItem == 0)
                     {
+                        MenuBackground(1);
+                        Thread.Sleep(1000);
                         TypeWriterIntroText();
                         MenuMusic.Stop();
                         break;
@@ -135,6 +189,7 @@ namespace AdventureGame.AdventureData
             public static void TypeWriterIntroText()
             {
                 Console.Clear();
+                MenuBackground(1);
                 int leftOffSet = (Console.WindowWidth / 2) - 40;
                 int topOffSet = (Console.WindowHeight / 2) - 3;
                 Console.SetCursorPosition(leftOffSet, topOffSet);
