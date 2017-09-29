@@ -44,7 +44,7 @@ namespace Sudoku
 
 
             // Skapar nytt spel
-            Sudoku game = new Sudoku(medel);
+            Sudoku game = new Sudoku(supersv);
 
             Console.WriteLine("Brädan innan Solve():");
             // Skriver ut brädan innan lösning

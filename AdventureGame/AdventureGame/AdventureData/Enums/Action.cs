@@ -9,7 +9,7 @@
         Gå,
         Ta,
         Prata,
-        Slå,
+        Hjälp,
         Avsluta
     }
 
