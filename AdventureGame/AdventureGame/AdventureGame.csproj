@@ -68,6 +68,9 @@
     <Content Include="BeepBox-Song.wav">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Explosion+11.wav">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="typewriter-1.wav">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

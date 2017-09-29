@@ -88,7 +88,7 @@ namespace AdventureGame.AdventureData
                 };
                 string[] array2 =
                 {
-                    "         _______     ________", "        _| |_| |     | |_| |_       ",
+                    "         _______     ________            ", "        _| |_| |     | |_| |_       ",
                     "      _|_| |_| |     | ___ _/       ","    _| |_| |_| |     | |_| |_       ",
                     "  _|_| |_| |_| |     | ___ __\\_   _  "," | |_| |_| |_| |     | |_| |_| |_| |",
                     " | |_| |_| |_| |     | ___ ___ ___ |","_| |_| |_| |_| |_    | |_| |_| |_| |       __________",
@@ -106,11 +106,16 @@ namespace AdventureGame.AdventureData
                 }
                 else
                 {
+                    SoundPlayer boom = new SoundPlayer();
+                    boom.SoundLocation = AppDomain.CurrentDomain.BaseDirectory + "\\Explosion+11.wav";
+                    boom.Play();
                     for (int i = 0; i < array2.Length; i++)
                     {
                         MenuBackgroundPos(i);
                         Console.Write(array2[i]);
                     }
+                    
+                    Thread.Sleep(25);
                 }
                 
                 
