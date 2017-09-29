@@ -201,11 +201,12 @@ namespace AdventureGame.AdventureData
 
                 int itemCount = 0;
                 int diff = 0;
-                string Text = "I en galax långt långt borta, i en tid när programerare blivit utbytta av AI:s.\n" +
-                              "Krigen mellan front-end klasserna och .Net är för längesedan bortglömda..." +
-                              "      I en skola på utkanten till Solna börjar våran historia." +
-                              " Våran hjälte vaknar uppi lobbyn till Nackademin, utan något minne av hur hen kom dit." +
-                              "Du måste nu hjälpa hen att hitta ut. Gör dig beredd för nu börjar det...";
+                string Text = "I en galax långt långt borta, i en tid när programerare blivit utbytta av AI:s." +
+                              " Krigen mellan front-end klasserna och .Net är för längesedan bortglömda... " +
+                              "I en skola på utkanten till Solna börjar våran historia. " +
+                              "Runtomkring ligger staden i ruiner och på avstånd hörs vrålen från dom skadade. "+
+                              "Våran hjälte vaknar upp i   lobbyn till Nackademin utan några minnen. " +
+                              "Du måste hitta en väg ut, fort! Gör   dig beredd för nu börjar det...";
 
                 SoundPlayer typewriter = new SoundPlayer
                 {
