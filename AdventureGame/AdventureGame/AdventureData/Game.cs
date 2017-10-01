@@ -24,7 +24,7 @@ namespace AdventureGame.AdventureData
 
         public Game()
         {
-            GameMenu.MusicPlayer(0);
+            GameMenu.MusicPlayer(0, true);
             
             Player = new Player
             {
@@ -66,7 +66,7 @@ namespace AdventureGame.AdventureData
             {
                 Name = "Kök",
                 Description = "Längs med väggarna står det förvånansvärt många microvågsugnar. " +
-                              "\nResterna av Java klassarnas lunch ligger i högar över hela rummet." +
+                              "\nResterna av Java klassarnas lunch ligger i högar över hela rummet. \n Vad är det med java klassarna, kunde dom inte bara ha valt C#?" +
                               "\nI hörnet står en kran och läcker, ",
                 IsEndPoint = false
 
@@ -76,7 +76,7 @@ namespace AdventureGame.AdventureData
                 Name = "Uppehållsrum",
                 Description = "Priserna i kafeterian hade tillslut blivit för mycket för eleverna på Nackademin." +
                               " Vad som var kvar av \nkafeterian går knappt att urskilja mellan de" +
-                              "trasiga bord och stolar som blockerar dess ingång.",
+                              "trasiga bord och stolar som blockerar dess ingång. \nBredriv hissdörren är trapphuset blockerat likaså",
                 IsEndPoint = false
             };
             var lektionssal = new Room
@@ -84,7 +84,7 @@ namespace AdventureGame.AdventureData
                 Name = "En lektionssal",
                 Description = "En gammal lektionssal med dålig ventilation. I ena hörnet ligger resterna \n" +
                               "av den senaste klassen som \"inte upplevde någon aha uplevelse\".\n" +
-                              "Den där säkerhetsdörren verkar vara den enda vägen ut. Men vad är det för skum säkerhetsanordning på den?",
+                              "Du skymtar en säkerhetsdörr där tavlan ser ut att ha suttit tidigare.\n Men vad är det för skum säkerhetsanordning på den?",
                 IsEndPoint = false
             };
             var end = new Room
@@ -149,7 +149,7 @@ namespace AdventureGame.AdventureData
             var hissDorrVent = new Exit
             {
                 Name = "en hissdörr",
-                Description = "En perfekt dörr för när man vill åka hiss med stil! " +
+                Description = "En perfekt dörr för när man vill åka hiss med stil! \n " +
                               "Leder endast till våning 4 står det skrivet över dörren.",
                 GoesTo = ventilationsrum,
                 IsLocked = false,
@@ -160,7 +160,7 @@ namespace AdventureGame.AdventureData
             var hissDorrURum = new Exit
             {
                 Name = "en hissdörr",
-                Description = "En perfekt dörr för när man vill åka hiss med stil! " +
+                Description = "En perfekt dörr för när man vill åka hiss med stil! \n" +
                               "Leder endast till våning 0 står det skrivet över dörren.",
                 GoesTo = uppehallsrum,
                 IsLocked = false,
@@ -170,7 +170,7 @@ namespace AdventureGame.AdventureData
             var dorrTillEnd = new Exit
             {
                 Name = "en säkerhetsdörr",
-                Description = "En säkerhetsdörr med ett lås gjort av lego, ett tuggummi, en hårnål och en sifferplatta från en gammal telefon. \n" +
+                Description = "En säkerhetsdörr med ett lås gjort av lego, ett tuggummi, \nen hårnål och en sifferplatta från en gammal telefon. \n" +
                               "Låset som Mcguyver är baserad på.",
                 GoesTo = end,
                 IsLocked = true,
@@ -179,7 +179,7 @@ namespace AdventureGame.AdventureData
             var dorrTillKlassRum = new Exit
             {
                 Name = "en klassrummsdörr",
-                Description = "ngt",
+                Description = "En vanlig klassrummsdörr. Inget att titta på här...",
                 GoesTo = lektionssal,
                 IsLocked = false,
                 DirectionalPosition = Direction.Väst
@@ -187,7 +187,7 @@ namespace AdventureGame.AdventureData
             var dorrTillVent = new Exit
             {
                 Name = "en klassrummsdörr",
-                Description = "ngt",
+                Description = "En vanlig klassrummsdörr. Inget att titta på här...",
                 GoesTo = ventilationsrum,
                 IsLocked = false,
                 DirectionalPosition = Direction.Öst
@@ -238,7 +238,7 @@ namespace AdventureGame.AdventureData
                 Name = "en glad Fredrik",
                 Description = "En glad Fredrik som nöjt dricker sin kopp kaffe",
                 DirectionalPosition = Direction.Norr,
-                Dialog = $"Åhåå! Tack så mycket {Player.Name}, du är bäst!",
+                Dialog = $"Åhåå! Tack så mycket {Player.Name}, du är bäst!\n Du kan gå på rast.",
                 DropsItemOnUse = false
             };
 
@@ -258,11 +258,12 @@ namespace AdventureGame.AdventureData
                 TransformsToAngry = argaFredrik
             };
 
-            var bokhylla = new Object
+            var toalett = new Object
             {
-                Name = "en bokhylla",
-                Description = "En bokhylla fylld med böcker om programmering",
-                CanUseWith = { "en hammare" },
+                Name = "Toalettsitts",
+                Description = "En toalettsits fylld med **** och ****. " +
+                              "\nDet verkar som om någon även ***** och **** i ******.",
+                CanUseWith = null,
                 ObjectTransformed = null,
                 DirectionalPosition = Direction.Syd
             };
@@ -294,8 +295,10 @@ namespace AdventureGame.AdventureData
             var hammer = new Object
             {
                 Name = "en hammare",
-                Description = "en robust hammare som akn slå sönder det mesta.... eller ja, nån grej kanske",
-                CanUseWith = { tunna.Key, fredrik.Key, bokhylla.Key },
+                Description = "en robust hammare som kan slå sönder det mesta....\n" +
+                              " eller ja, några grejer kanske. " +
+                              "\nDet finns garanterat minst en grej den kan slå sönder",
+                CanUseWith = { tunna.Key, fredrik.Key},
                 DirectionalPosition = null,
                 ObjectTransformed = null
             };
@@ -351,7 +354,7 @@ namespace AdventureGame.AdventureData
 
             // Lägger till objekt i rummet "badrum"
             AddGameObjectsToRoom(badrum, halIVaggenURum);
-            AddGameObjectsToRoom(badrum, bokhylla);
+            AddGameObjectsToRoom(badrum, toalett);
 
             // Lägger till objekt i rummet "ventilationsrum"
             AddGameObjectsToRoom(ventilationsrum, hissDorrURum);
@@ -396,7 +399,7 @@ namespace AdventureGame.AdventureData
                     GameMenu.CenterText("Grattis! Du klarade spelet!", 13);
                     Console.ReadLine();
                     Console.Clear();
-                    return RestartGameDialog();
+                    GameMenu.DoMenu();
                 }
                 // Om användaren dör
                 if (!Player.IsAlive)
@@ -404,7 +407,7 @@ namespace AdventureGame.AdventureData
                     GameMenu.WriteOutStringToCenter("Du dog...", 13);
                     Console.ReadLine();
                     Console.Clear();
-                    return RestartGameDialog();
+                    GameMenu.DoMenu();
                 }
 
                 Console.Write($"\nVad vill du göra {Player.Name}? ");

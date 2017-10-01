@@ -67,8 +67,8 @@ namespace AdventureGame.AdventureData
 
                 Console.ReadLine();
             }
-
-            public static void MusicPlayer(int i)
+            //metod för upspelning av musik/ljud. Parametern anger vilken ljudfil som skall köras.
+            public static void MusicPlayer(int i, bool status)
             {
                 if (i ==0)
                 {
@@ -76,17 +76,49 @@ namespace AdventureGame.AdventureData
                     {
                         SoundLocation = AppDomain.CurrentDomain.BaseDirectory + "\\BeepBox-Song.wav"
                     };
-                    music.PlayLooping();
+                    if (status)
+                    {
+                        music.Play();
+                    }
+                    else if (!status)
+                    {
+                        music.Stop();
+                    }
+                    
                 }
-                else if (i == 1)
+               
+                else if (i == 2)
                 {
-                    SoundPlayer dorr = new SoundPlayer();
-                    dorr.SoundLocation = AppDomain.CurrentDomain.BaseDirectory + "\\creaking-door-1.wav";
-                    dorr.Play();
+                    SoundPlayer boom = new SoundPlayer();
+                    boom.SoundLocation = AppDomain.CurrentDomain.BaseDirectory + "\\Explosion+11.wav";
+                    if (status)
+                    {
+                        boom.Play();
+                    }
+                    else if (!status)
+                    {
+                        boom.Stop();
+                    }
+                    
+                }
+                else if (i == 3)
+                {
+                    SoundPlayer MenuMusic = new SoundPlayer();
+                    MenuMusic.SoundLocation = AppDomain.CurrentDomain.BaseDirectory + "\\BeepBox-Song-Menu.wav";
+
+                    if (status)
+                    {
+                        MenuMusic.PlayLooping();
+                    }
+                    else if (!status)
+                    {
+                        MenuMusic.Stop();
+                    }
+                    
                 }
                 
 
-                
+                // Hjälp metod för MenuBackground som anger vart i fönstret den skall skrivas ut.
             }
             public static void MenuBackgroundPos(int i)
             {
@@ -94,6 +126,7 @@ namespace AdventureGame.AdventureData
                 Console.SetCursorPosition((Console.WindowWidth / 2) - 25, i);
                 
             }
+            // En askii art bakgrund som ändras när man startar spelet.
             public static void MenuBackground(int inp)
             {
                 
@@ -126,9 +159,7 @@ namespace AdventureGame.AdventureData
                 }
                 else
                 {
-                    SoundPlayer boom = new SoundPlayer();
-                    boom.SoundLocation = AppDomain.CurrentDomain.BaseDirectory + "\\Explosion+11.wav";
-                    boom.Play();
+                    MusicPlayer(2, true);
                     for (int i = 0; i < array2.Length; i++)
                     {
                         MenuBackgroundPos(i);
@@ -147,14 +178,15 @@ namespace AdventureGame.AdventureData
                 Console.CursorVisible = false;
                 short curItem = 0, i;
                 string[] menuItems = {"Starta Spelet", "Kontroller", "Higscore", "Credits"};
+                MusicPlayer(3, true);
 
-                SoundPlayer MenuMusic = new SoundPlayer();
-                MenuMusic.SoundLocation = AppDomain.CurrentDomain.BaseDirectory + "\\BeepBox-Song-Menu.wav";
-                MenuMusic.PlayLooping();
                 do
                 {
+                    
                     MenuBackground(0);
+                    Console.ForegroundColor = ConsoleColor.DarkRed;
                     CenterText("NACKOPOLYPS NOW", 8);
+                    Console.ForegroundColor = ConsoleColor.White;
                     CenterText("***************", 7);
                     CenterText("MENY", 5);
                     for (i = 0; i < menuItems.Length; i++)
@@ -190,10 +222,11 @@ namespace AdventureGame.AdventureData
                 
                     if (key.Key == ConsoleKey.Enter && curItem == 0)
                     {
+                        MusicPlayer(3, false);
                         MenuBackground(1);
                         Thread.Sleep(1000);
                         TypeWriterIntroText();
-                        MenuMusic.Stop();
+                        
                         break;
                     }
                     else if (key.Key == ConsoleKey.Enter && curItem == 1)
@@ -211,6 +244,7 @@ namespace AdventureGame.AdventureData
                 Console.CursorVisible = true;
                 Console.Clear();
             }
+            //Metod som skriver ut introt som en skrivmaskin. Kallar på ljudfilen med.
             public static void TypeWriterIntroText()
             {
                 Console.Clear();
@@ -234,7 +268,7 @@ namespace AdventureGame.AdventureData
                 };
                 typewriter.Play();
 
-            
+
                 foreach (var item in Text)
                 {
                     itemCount++;
@@ -255,15 +289,20 @@ namespace AdventureGame.AdventureData
                 typewriter.Stop();
                 Thread.Sleep(5000);
                 Console.Clear();
+                IntroText(0);
+                Thread.Sleep(3000);
+                IntroText(1);
+                Thread.Sleep(3000);
+                IntroText(2);
             }
-
+            // Skriver ut credits.
             public static void Credits()
             {
                 Console.WriteLine();
                 Console.ReadLine();
                 DoMenu();
             }
-
+            //Metod för att mata in namn.
             public static void NameInput()
             {
                 CenterText("Ange ditt namn", 4);
@@ -271,6 +310,43 @@ namespace AdventureGame.AdventureData
                 //Game.SetName(name);
                 TypeWriterIntroText();
             
+            }
+
+            public static void IntroText(int state)
+            {
+                if (state == 0)
+                {
+                    Console.Clear();
+                    CenterText("Från skaparna av HANG THE MAN och SUPA SUDOKU kommer:", 7);
+                    Thread.Sleep(1200);
+                }
+                else if (state == 1)
+                {
+                    Console.Clear();
+                    Console.ForegroundColor = ConsoleColor.DarkRed;
+                    CenterText("NACKOPOLYPS NOW", 7);
+                    Console.ForegroundColor = ConsoleColor.White;
+                }
+                else if (state == 2)
+                {
+                    Console.Clear();
+                    CenterText("Om ni som jag gillar läskiga äventyrspel, är NACKOPOLYPS NOW något för er.", 12);
+                    CenterText("Det får 5 solar av 5!", 11);
+                    CenterText("-David Dangerås spelrecensent Gamereaktor ", 10);
+                    Thread.Sleep(1000);
+                    CenterText("Såååå lääääskigt! 5 havrebollar av 5!", 8);
+                    CenterText("-Julia Neriksson Aftonbladen", 7);
+                    Thread.Sleep(1000);
+                    CenterText("Utan några tvivel det bästa spelet den här hösten.", 5);
+                    CenterText("Missa inte! 6 kaniner av 6", 4);
+                    CenterText("-Jonas Hedviksson Expressens", 3);
+                    Thread.Sleep(1000);
+                    Thread.Sleep(3000);
+                    Console.Clear();
+                }
+                
+                
+                
             }
         }
     }

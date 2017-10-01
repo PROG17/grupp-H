@@ -18,11 +18,13 @@ namespace AdventureGame
         {
 
             bool isRunning = true;
+            Game.GameMenu.DoMenu();
+           
             while (isRunning)
             {
-                //Game.GameMenu.DoMenu();
+                
                 Game game = new Game();
-                Game.GameMenu.DoMenu();
+               
 
 
                 bool playAgain = game.Prompt();
