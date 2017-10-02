@@ -181,7 +181,7 @@ namespace AdventureGame.AdventureData
                 Name = "en klassrummsdörr",
                 Description = "En vanlig klassrummsdörr. Inget att titta på här...",
                 GoesTo = lektionssal,
-                IsLocked = false,
+                IsLocked = true,
                 DirectionalPosition = Direction.Väst
             };
             var dorrTillVent = new Exit
@@ -280,7 +280,7 @@ namespace AdventureGame.AdventureData
             {
                 Name = "en nyckel",
                 Description = "En stor rostig nyckel",
-                CanUseWith = null,
+                CanUseWith = {dorrTillKlassRum.Key},
                 DirectionalPosition = null,
                 ObjectTransformed = null
             };
