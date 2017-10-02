@@ -6,7 +6,7 @@ using System.Threading;
 
 namespace Sudoku
 {
-    class Sudoku
+    public class Sudoku
     {
         // Fält för brädan
         private char[,] _board = new char[9, 9];
@@ -41,6 +41,11 @@ namespace Sudoku
         private Sudoku(char[,] boardChar)
         {
             Board = MakeDeepCopyOfBoard(boardChar);
+        }
+
+        public Sudoku()
+        {
+            throw new NotImplementedException();
         }
 
         // Returnerar en "djup" kopia av "board"
@@ -227,7 +232,7 @@ namespace Sudoku
         // Returnerar en sträng av brädan. Används tillsammans med
         // String-metoden Contains() för att kolla om det finns nollor
         // kvar i brädan. Anropas i LogicalSolve
-        private static string GetStringRepOfBoard(char[,] board)
+        public string GetStringRepOfBoard(char[,] board)
         {
             StringBuilder sb = new StringBuilder();
 
@@ -236,6 +241,20 @@ namespace Sudoku
                 for (int x = 0; x < 9; x++)
                 {
                     sb.Append(board[y, x]);
+                }
+            }
+            return sb.ToString();
+        }
+
+        public string GetStringRepOfBoard()
+        {
+            StringBuilder sb = new StringBuilder();
+
+            for (int y = 0; y < 9; y++)
+            {
+                for (int x = 0; x < 9; x++)
+                {
+                    sb.Append(Board[y, x]);
                 }
             }
             return sb.ToString();
