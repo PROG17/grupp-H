@@ -121,6 +121,13 @@ namespace Sudoku
         // i en animation eller ej. Är som default false.
         public void Solve(bool isDebug = false)
         {
+            if (GetStringRepOfBoard(Board)== "000000000000000000000000000" +
+                "000000000000000000000000000" +
+                "000000000000000000000000000")
+            {
+                Board[0, 1] = '1';
+            }
+
             bool isSolved = TrySolve(isDebug, ref _board);
 
             if (!isSolved)
