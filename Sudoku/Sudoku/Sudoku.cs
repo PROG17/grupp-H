@@ -121,6 +121,7 @@ namespace Sudoku
         // i en animation eller ej. Är som default false.
         public void Solve(bool isDebug = false)
         {
+
             bool isSolved = TrySolve(isDebug, ref _board);
 
             if (!isSolved)
