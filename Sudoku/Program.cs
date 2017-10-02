@@ -44,7 +44,7 @@ namespace Sudoku
 
 
             // Skapar nytt spel
-            Sudoku game = new Sudoku(empty);
+            Sudoku game = new Sudoku("090300001000080046000000800405060030003275600060010904001000000580020000200007060");
 
             Console.WriteLine("Brädan innan Solve():");
             // Skriver ut brädan innan lösning

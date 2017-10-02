@@ -8,48 +8,49 @@ namespace UnitTestProject1
     public class UnitTest1
     {
         [TestMethod]
-        public void TestMethod1()
+        public void SolvesNakedSingles()
         {
             //arrange
-            const string easy = "003020600900305001001806400" +
-                                "008102900700000008006708200" +
-                                "002609500800203009005010300";
-
-            const string middle = "830060050" +
-                                  "905000040" +
-                                  "401020300" +
-                                  "100002070" +
-                                  "050040020" +
-                                  "090800005" +
-                                  "009050701" +
-                                  "020000604" +
-                                  "010090082";
-
-            const string medel = "037060000205000800006908000" +
-                                 "000600024001503600650009000" +
-                                 "000302700009000402000050360";
-
-            const string zen = "000000000000000000000000000" +
-                               "000000000000010000000000000" +
-                               "000000000000000000000000000";
-
-            const string empty = "000000000000000000000000000" +
-                                 "000000000000000000000000000" +
-                                 "000000000000000000000000000";
-
-
-            const string supersv = "000900000000000000000000000" +
-                                   "000000000000001000000000000" +
-                                   "000000000000000000000000400";
+            string sudoku = "305420810487901506029056374850793041613208957074065280241309065508670192096512408";
+            string solution = "365427819487931526129856374852793641613248957974165283241389765538674192796512438";
 
 
             //act
-
-
-
+            Sudoku.Sudoku game = new Sudoku.Sudoku(sudoku);
+            game.Solve();
 
             //assert
+            Assert.AreEqual(game.GetStringRepOfBoard(), solution);
+        }
 
+        [TestMethod]
+        public void SolvesHiddenSingles()
+        {
+            //arrange
+            string sudoku = "002030008000008000031020000060050270010000050204060031000080605000000013005310400";
+            string solution = "672435198549178362831629547368951274917243856254867931193784625486592713725316489";
+
+
+            //act
+            Sudoku.Sudoku game = new Sudoku.Sudoku(sudoku);
+            game.Solve();
+
+            //assert
+            Assert.AreEqual(game.GetStringRepOfBoard(), solution);
+        }
+
+        [TestMethod]
+        public void Fails()
+        {
+            //arrange
+            string sudoku = "090300001000080046000000800405060030003275600060010904001000000580020000200007060";
+
+            //act
+            Sudoku.Sudoku game = new Sudoku.Sudoku(sudoku);
+            game.Solve();
+
+            //assert
+            Assert.IsTrue(game.GetStringRepOfBoard().Contains("0"));
         }
     }
 }
