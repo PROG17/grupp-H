@@ -178,16 +178,16 @@ namespace AdventureGame.AdventureData
             };
             var dorrTillKlassRum = new Exit
             {
-                Name = "en klassrummsdörr",
-                Description = "En vanlig klassrummsdörr. Inget att titta på här...",
+                Name = "en klassrumsdörr",
+                Description = "En vanlig klassrumsdörr. Inget att titta på här...",
                 GoesTo = lektionssal,
                 IsLocked = true,
                 DirectionalPosition = Direction.Väst
             };
             var dorrTillVent = new Exit
             {
-                Name = "en klassrummsdörr",
-                Description = "En vanlig klassrummsdörr. Inget att titta på här...",
+                Name = "en klassrumsdörr",
+                Description = "En vanlig klassrumsdörr. Inget att titta på här...",
                 GoesTo = ventilationsrum,
                 IsLocked = false,
                 DirectionalPosition = Direction.Öst
