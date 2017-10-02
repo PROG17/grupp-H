@@ -1,16 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
+using System.Security.Cryptography.X509Certificates;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Sudoku;
 
-namespace Sudoku
+namespace UnitTestProject1
 {
-    class Program
+    [TestClass]
+    public class UnitTest1
     {
-        static void Main(string[] args)
+        [TestMethod]
+        public void TestMethod1()
         {
+            //arrange
             const string easy = "003020600900305001001806400" +
                                 "008102900700000008006708200" +
                                 "002609500800203009005010300";
@@ -42,36 +43,13 @@ namespace Sudoku
                                    "000000000000001000000000000" +
                                    "000000000000000000000000400";
 
+            //act
 
-            // Skapar nytt spel
-            Sudoku game = new Sudoku(empty);
 
-            Console.WriteLine("Brädan innan Solve():");
-            // Skriver ut brädan innan lösning
-            Console.WriteLine(game.BoardAsText());
 
-            // Anropar Solve() för att lösa sudokut
-            game.Solve();
 
-            Console.ReadLine();
+            //assert
 
-            Console.WriteLine("Brädan efter Solve():");
-            // Skriver ut det lösta sudokut
-            Console.WriteLine(game.BoardAsText());
-            Console.WriteLine("Tryck på en tangent för att sätta igång lösningen i \"real-tid.SlowMotion\"");
-            Console.ReadLine();
-
-            // Skapar samma sudoku igen
-            game = new Sudoku(empty);
-
-            // Löser sudokut i "Debug-mode" och får se hur programmet
-            // löser sudokut i "realtid.SlowMotion"
-            game.Solve(true);
-
-            // Skriver ut resultatet
-            Console.WriteLine(game.BoardAsText());
-
-            Console.ReadLine();
         }
     }
 }
