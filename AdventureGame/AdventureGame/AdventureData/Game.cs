@@ -374,7 +374,7 @@ namespace AdventureGame.AdventureData
 
         // Metod där kommandon tas in från användaren och utvärderas samt 
         // kallar på lämplig metod och skriver ut resultat av kallad metod.
-        public bool Prompt()
+        public bool Play()
         {
 
             Console.Write("Vad vill du kalla din spelare? ");
