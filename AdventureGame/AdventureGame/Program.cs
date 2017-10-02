@@ -18,21 +18,21 @@ namespace AdventureGame
         {
 
             bool isRunning = true;
+
+            // Sätter igång spelmenyn
             Game.GameMenu.DoMenu();
            
+            // Loop som håller igång spelet till dess att spelaren väljer att avsluta i game.Prompt
             while (isRunning)
             {
-                
+                // Ny spelomgång skapas
                 Game game = new Game();
-               
 
-
+                // En spelomgång i Prompt
                 bool playAgain = game.Prompt();
-                if (playAgain)
-                {
-                    game = new Game();
-                }
-                else
+
+                // Om spelaren valt att den inte vill spela igen så stängs spelet ner
+                if (!playAgain)
                 {
                     break;
                 }
